@@ -7,7 +7,7 @@
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
-    <RootNamespace>mvp_forums</RootNamespace>
+    <RootNamespace>my_new_app</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 using System;
 
-namespace mvp_forums
+namespace my_new_app
 {
     public class WeatherForecast
     {
