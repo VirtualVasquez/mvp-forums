@@ -1,22 +1,66 @@
-import React, { Component } from 'react';
-import { Route } from 'react-router';
+import React, { useState, useEffect } from 'react';
+import {
+    Routes,
+    Route,
+    Navigate
+} from "react-router-dom";
 import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
+import Protected from "./helpers/Protected";
+import LoginPage from './pages/LoginPage/LoginPage';
+import HomePage from './pages/HomePage/HomePage';
+import GroupPage from './pages/GroupPage/GroupPage';
+import PostPage from './pages/PostPage/PostPage';
+
+
+
 
 import './custom.css'
 
-export default class App extends Component {
-  static displayName = App.name;
+function App() {
+  const [tempTestAuth, setTempTestAuth] = useState(false);
 
-  render () {
-    return (
+  return (
       <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} />
+        <Routes>
+          <Route
+            exact path="/"
+            element={
+              tempTestAuth ? ( 
+                <Navigate to ="/home" replace />
+              ) : (
+                <LoginPage />
+              )
+              }
+          />
+          <Route
+           exact path="/home"
+           element={
+            <Protected tempTestAuth={tempTestAuth}>
+              <HomePage />
+            </Protected>
+           }
+          />
+          {/* Need to figure out a way to dynamically ajdust the path per respective group and post */}
+          <Route
+           exact path="/group"
+           element={
+            <Protected tempTestAuth={tempTestAuth}>
+              <GroupPage />
+            </Protected>
+           }
+          />
+          {/* this should look something like '/GROUPNAME/POSTNAME' */}
+          <Route
+           exact path="/post"
+           element={
+            <Protected tempTestAuth={tempTestAuth}>
+              <PostPage />
+            </Protected>
+           }
+          />
+        </Routes>
       </Layout>
-    );
-  }
+  );
 }
+
+export default App;
