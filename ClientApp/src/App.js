@@ -18,9 +18,13 @@ import './custom.css'
 
 function App() {
   const [tempTestAuth, setTempTestAuth] = useState(false);
+  const [showLoginForm, setShowLoginForm] = useState(true);
 
   return (
-      <Layout>
+      <Layout 
+        tempTestAuth={tempTestAuth}
+        setShowLoginForm={setShowLoginForm}
+      >
         <Routes>
           <Route
             exact path="/"

@@ -8,7 +8,10 @@ export class Layout extends Component {
   render () {
     return (
       <div>
-        <NavMenu />
+        <NavMenu 
+          tempTestAuth={this.props.tempTestAuth} 
+          setShowLoginForm={this.props.setShowLoginForm}
+        />
         <Container>
           {this.props.children}
         </Container>
