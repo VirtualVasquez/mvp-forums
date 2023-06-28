@@ -32,7 +32,9 @@ function App() {
               tempTestAuth ? ( 
                 <Navigate to ="/home" replace />
               ) : (
-                <LoginPage />
+                <LoginPage 
+                  showLoginForm={showLoginForm}
+                />
               )
               }
           />
