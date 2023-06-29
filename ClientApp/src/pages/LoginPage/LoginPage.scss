@@ -1,14 +1,14 @@
 .form-col{
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    margin-top: 20vh;
     .account-forms{
         border: 1px solid black;
         padding: 1rem;
 
         h1{
             margin: 0 0 2rem 0;
+        }
+        .error-message{
+            color: red;
         }
     }
 }
