@@ -34,7 +34,7 @@ export const NavMenu = ({ tempTestAuth, setShowLoginForm }) => {
                   <NavLink tag={Link} className="text-dark" to="/home">Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data" disabled><strong>LogOut</strong></NavLink>
+                  <NavLink tag={Link} className="text-dark" to="/fetch-data" disabled>LogOut</NavLink>
                 </NavItem>
               </ul>
             </Collapse>

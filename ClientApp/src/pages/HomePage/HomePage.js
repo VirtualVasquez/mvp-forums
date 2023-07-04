@@ -1,10 +1,12 @@
 import React from 'react';
+import ForumGroupsTable from './ForumGroupsList';
 
 function HomePage () {
 
     return (
       <div>
-        <h1>HomePage</h1>        
+        <h1>Forums</h1>
+        <ForumGroupsTable />    
       </div>
     );
 }

@@ -17,7 +17,7 @@ import PostPage from './pages/PostPage/PostPage';
 import './custom.css'
 
 function App() {
-  const [tempTestAuth, setTempTestAuth] = useState(false);
+  const [tempTestAuth, setTempTestAuth] = useState(true);
   const [showLoginForm, setShowLoginForm] = useState(true);
 
   return (
