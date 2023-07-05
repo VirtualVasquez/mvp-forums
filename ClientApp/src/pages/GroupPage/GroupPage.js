@@ -1,5 +1,5 @@
 import React from 'react';
-import GroupTitle from '../../components/GroupTitle';
+import GroupTitle from '../../components/GroupTitle/GroupTitle';
 import './GroupPage.scss';
 
 function GroupPage () {
