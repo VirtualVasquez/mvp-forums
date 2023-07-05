@@ -37,8 +37,8 @@ function ForumGroupsItem () {
                 <li className="forumItem_lastPoster_icon"><i></i></li>
                 <li className="forumItem_lastPoster_title"><a href="#">TITLE OF THREAD HERE OR ELLIPSIS</a></li>
                 <li className="forumItem_lastPoster_timestamp">
-                By so-and-so, 1 hour ago,
-                By so-and-so, 1 hour ago
+                 <span className="longForm">By so-and-so, 1 hour ago,</span>
+                 <span className="shortForm">X Units</span>
                 </li>              
             </ul>              
         </li>
