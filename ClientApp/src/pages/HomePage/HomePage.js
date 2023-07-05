@@ -1,12 +1,13 @@
 import React from 'react';
-import ForumGroupsTable from './ForumGroupsList';
+import './HomePage.scss';
+import ForumGroupsList from './ForumGroupsList';
 
 function HomePage () {
 
     return (
-      <div>
-        <h1>Forums</h1>
-        <ForumGroupsTable />    
+      <div className="home-page">
+        <div><h1>Forums</h1></div>
+        <ForumGroupsList />    
       </div>
     );
 }
