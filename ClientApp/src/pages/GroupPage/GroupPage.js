@@ -1,10 +1,12 @@
 import React from 'react';
+import GroupTitle from './GroupTitle';
+import './GroupPage.scss';
 
 function GroupPage () {
 
     return (
-      <div>
-        <h1>GroupPage</h1>        
+      <div className="group-page">
+        <GroupTitle />
       </div>
     );
 }
