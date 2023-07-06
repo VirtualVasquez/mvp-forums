@@ -9,7 +9,7 @@ import Protected from "./helpers/Protected";
 import LoginPage from './pages/LoginPage/LoginPage';
 import HomePage from './pages/HomePage/HomePage';
 import GroupPage from './pages/GroupPage/GroupPage';
-import PostPage from './pages/PostPage/PostPage';
+import ThreadPage from './pages/ThreadPage/ThreadPage';
 
 
 
@@ -55,12 +55,12 @@ function App() {
             </Protected>
            }
           />
-          {/* this should look something like '/GROUPNAME/POSTNAME' */}
+          {/* this should look something like '/GROUPNAME/THREADNAME' */}
           <Route
-           exact path="/post"
+           exact path="/thread"
            element={
             <Protected tempTestAuth={tempTestAuth}>
-              <PostPage />
+              <ThreadPage />
             </Protected>
            }
           />

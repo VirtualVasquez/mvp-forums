@@ -1,0 +1,27 @@
+.thread-header{
+    width: 100%;
+    border: solid 1px gray;
+    padding: 1.5rem 1rem;
+    margin-bottom: 2rem;
+    .thread-header_title{
+        h1{
+            font-size: 1.75rem;
+        }
+    }
+    .thread-header_info{
+        display:flex;
+        align-items: center;
+        .info_profile_image{
+            &:before{
+                content:'\1F464';
+                font-size: 40px;
+                border: 1px solid black;
+                border-radius: 10px;
+            }
+            margin-right: 0.5rem;
+        }
+        p{
+            margin-bottom:0;
+        }
+    }
+}
