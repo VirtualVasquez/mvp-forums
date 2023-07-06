@@ -1,0 +1,42 @@
+.pagination{
+    border: 1px solid gray;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    div{
+        margin: 0.5rem 0;
+        *{
+            margin: 0;
+        }
+        display: flex;
+    }
+    .page-numbers{
+        a{
+            padding: 0.25rem 0.5rem;
+            &:hover{
+                text-decoration-line: none;
+                background-color: lightgray;
+                cursor: pointer;
+            }
+            &.active{
+                background-color: darkslategray;
+                color:white;
+                &:hover{
+                    background-color: lightslategray;
+                }
+            }
+            &.toLastPage{
+                i{
+                    &:before{
+                        font-size: 1rem;
+                        color:black;
+                        content: "\00BB";
+                    }
+                }
+            }
+        }
+        a:not(:first-child){
+            margin-left: 1px;
+        }
+    }
+}
