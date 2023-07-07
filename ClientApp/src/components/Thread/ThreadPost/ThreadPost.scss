@@ -51,7 +51,9 @@
             text-overflow: clip;
             word-wrap: break-word;
             margin-bottom: 0;
-            margin-left: 1rem;
+            @media (max-width: 768px){
+                margin-left: 1rem;
+            }
         }
     }
     .post_contents{
