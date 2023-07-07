@@ -1,0 +1,25 @@
+footer{
+    position: absolute;
+    margin-top: 4rem;
+    width: 100%;
+    border-top: gray 1px solid;
+    text-align: center;
+    padding: 2rem;
+    .social-links{
+        list-style: none;
+        padding-left: 0;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+        li{
+            &:nth-child(2){
+                margin: 0 4rem;
+            }
+        }
+    }
+    div{
+        p{
+            margin-bottom:0;
+        }
+    }
+}
