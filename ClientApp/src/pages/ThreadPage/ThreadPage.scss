@@ -1,0 +1,15 @@
+.thread-page{
+    .button-container{
+        display: flex;
+        justify-content: end;
+    }
+    .to-reply-form{
+        color: white;
+        background-color: blue;
+        margin-bottom: 2rem;
+        padding: 1rem 2rem;
+        @media (max-width: 768px){
+            width: 100%;
+        }
+    }
+}

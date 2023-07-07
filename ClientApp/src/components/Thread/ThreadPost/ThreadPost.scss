@@ -3,11 +3,10 @@
     @media (max-width: 768px){
         flex-direction: column;
     }
-    .post_author, .post_contents{
-        border: 1px solid black;
+   .post_contents{
+        border: 1px solid gray;
     }
     .post_author{
-        background-color: cyan;
         display: flex;
         flex-direction: column;
         text-align: center;
@@ -20,7 +19,7 @@
             justify-content: center;
             &:before{
                 content: '\1F464';
-                border: 1px solid black;
+                border: 1px solid gray;
                 width: 90px;
                 height: 90px;
                 font-size: 60px;
@@ -52,6 +51,7 @@
             text-overflow: clip;
             word-wrap: break-word;
             margin-bottom: 0;
+            margin-left: 1rem;
         }
     }
     .post_contents{
