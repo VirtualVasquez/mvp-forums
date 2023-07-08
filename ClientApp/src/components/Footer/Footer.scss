@@ -1,16 +1,17 @@
 footer{
-    position: absolute;
-    margin-top: 4rem;
+    bottom: 0;
+    margin-top: 2rem;
     width: 100%;
     border-top: gray 1px solid;
     text-align: center;
     padding: 2rem;
+    background-color: white;
     .social-links{
         list-style: none;
         padding-left: 0;
         display: flex;
         justify-content: center;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
         li{
             &:nth-child(2){
                 margin: 0 4rem;

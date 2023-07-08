@@ -12,8 +12,6 @@ import GroupPage from './pages/GroupPage/GroupPage';
 import ThreadPage from './pages/ThreadPage/ThreadPage';
 
 
-
-
 import './custom.css'
 
 function App() {
