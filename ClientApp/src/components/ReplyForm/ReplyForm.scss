@@ -1,0 +1,89 @@
+.reply-form-wrapper{
+    background-color:cyan;
+    padding: 1rem;
+    margin-top: 1rem;
+    display: flex;
+
+    #reply-form{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        
+        .row-one{
+            display: flex;
+            @media (max-width: 768px){
+                flex-direction: column;
+            }  
+            .authorized-user{
+                width: 100px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-size: 14px;
+                @media (max-width: 768px){
+                    width: 100%;
+                    align-items: start;
+                    margin-bottom: 1rem;
+                }
+                i{
+                    &:before{
+                        content: '\1F464';
+                        border: 1px solid gray;
+                        width: 60px;
+                        height: 60px;
+                        font-size: 40px;
+                        text-align: center;
+                        @media (max-width: 768px){
+                           display: none;
+                        }
+                    }
+
+                }
+                p{
+                    margin-bottom: 0;
+                    
+                    @media (min-width: 768px){
+                        width: 100%;
+                    }
+                    span{
+                        @media (min-width: 768px){
+                            display: none;
+                        }
+                    }
+
+                }
+            }
+
+            textarea{
+                margin-left: 1rem;
+                width: 100%;
+                resize: none;
+                height: 100px;
+                @media (max-width: 768px){
+                    margin-left: 0;
+                }  
+            }
+        }
+
+        .row-two{
+            margin-top:1rem;
+            display:flex;
+            justify-content: end;
+            @media (max-width: 768px){
+                justify-content: center;
+            }       
+            
+            button{
+                color: white;
+                background-color: blue;
+                padding: 1rem 2rem;   
+            }
+            
+        }
+    }
+
+
+
+
+
+}
