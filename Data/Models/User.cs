@@ -1,16 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace my_new_app.Data.Models
+namespace User.Data.Models
 {
-    public class User : Controller
+    public class User
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public int Id { get; set; }
+        public string Email { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public DateTime CreatedDate { get; set; }
+    }
+    public class PostAuthor
+    {
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public DateTime CreatedDate { get; set; }
+        // Add any additional properties relevant to the post author
     }
 }
