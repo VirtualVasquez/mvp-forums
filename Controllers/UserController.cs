@@ -23,5 +23,42 @@ namespace User.Controllers
             var users = _dbContext.Users.ToList();
             return Ok(users);
         }
+
+        [HttpGet("[action]")]
+        public IActionResult CreateUser()
+        {
+            //accept user provided arguments of email, username, password, password_check
+            //make sure password and password_check match, otherwise return error
+            //make CREATE request to 'users' db
+            //create refreshToken, store to db
+            //create accessToken, store in localStorage
+            return Ok("Not yet setup");
+        }
+
+
+        [HttpGet("[action]")]
+        public IActionResult LoginUser()
+        {
+            //accept user provided arguments of (email OR username) AND password
+            //find user in DB with matching email OR username
+                //if user not found, return error
+                //if (password argument != stored password), return error
+            //generate refreshToken, store in separate DB.
+            //generate accessToken, store in localstorage.                          
+            return Ok("Not yet setup");
+        }
+
+        [HttpGet("[action]")]
+        public IActionResult LogoutUser()
+        { 
+            //use accessToken as argument
+            //decode accessToken
+            //find corresponding refreshtoken in db
+            //delete refreshtoken
+            //ON THE CLIENT SIDE: delete accessToken            
+            return Ok("Not yet setup");
+        }
+
+
     }
 }
