@@ -15,7 +15,7 @@ import ThreadPage from './pages/ThreadPage/ThreadPage';
 import './custom.css'
 
 function App() {
-  const [tempTestAuth, setTempTestAuth] = useState(true);
+  const [tempTestAuth, setTempTestAuth] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(true);
 
   return (

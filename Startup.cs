@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using User.Data.Models;
 
 namespace my_new_app
 {
@@ -28,6 +31,19 @@ namespace my_new_app
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            var connectionString = GetConnectionStringFromEnv();
+            services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+        }
+        private string GetConnectionStringFromEnv()
+        {
+            var host = Environment.GetEnvironmentVariable("DB_HOST");
+            var port = Environment.GetEnvironmentVariable("DB_PORT");
+            var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+            var user = Environment.GetEnvironmentVariable("DB_USER");
+            var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
+
+            return $"Host={host};Port={port};Database={dbName};Username={user};Password={password}";
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
