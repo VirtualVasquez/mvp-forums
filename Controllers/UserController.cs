@@ -25,19 +25,61 @@ namespace User.Controllers
         }
 
         [HttpPost("[action]")]
+        //accept user provided arguments of email, username, password, password_check
         public IActionResult CreateUser([FromForm] string email, [FromForm] string username, [FromForm] string password, [FromForm] string passwordCheck)
         {
-            if (!ModelState.IsValid)
+            //make sure password and password_check match, otherwise return error
+            if (password != passwordCheck)
             {
-                return BadRequest(ModelState);
+                return BadRequest("Password and Password Check do not match");
             }
-            // Create a concatenated string of all the arguments received
-            string result = $"Email: {email}, Username: {username}, Password: {password}, Password Check: {passwordCheck}";
 
-            // Return the concatenated string as the response
-            return Ok(result);
+            //check if the meail already exists in the database
+            var existingUserWithEmail = _dbContext.Users.FirstOrDefault(u => u.Username == username);
+            if (existingUserWithEmail != null){
+                return BadRequest("Email already exists");
+            }
+
+            // Check if the username already exists in the database
+            var existingUserWithUsername = _dbContext.Users.FirstOrDefault(u => u.Username == username);
+            if (existingUserWithUsername != null)
+            {
+                return BadRequest("Username already exists");
+            }
+
+            // If both email and username are unique, create a new User entity
+            var newUser = new User.Data.Models.User
+            {
+                Email = email,
+                Username = username,
+                Password = password,
+                CreatedDate = DateTime.UtcNow // You can set the created date to the current UTC time
+            };
+
+
+            try
+            {
+                _dbContext.Users.Add(newUser);
+                _dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while saving the user: {ex.Message}");
+            }
+
+
+            return Ok("successfully added a new user"); 
+
+            //create refreshToken, store to db
+            //create accessToken, store in localStorage
         }
+        /*
+        // Create a concatenated string of all the arguments received
+        string result = $"Email: {email}, Username: {username}, Password: {password}, Password Check: {passwordCheck}";
 
+        // Return the concatenated string as the response
+        return Ok(result);
+         */
 
         [HttpGet("[action]")]
         public IActionResult LoginUser()
