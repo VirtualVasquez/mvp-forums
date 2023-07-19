@@ -24,15 +24,18 @@ namespace User.Controllers
             return Ok(users);
         }
 
-        [HttpGet("[action]")]
-        public IActionResult CreateUser()
+        [HttpPost("[action]")]
+        public IActionResult CreateUser([FromForm] string email, [FromForm] string username, [FromForm] string password, [FromForm] string passwordCheck)
         {
-            //accept user provided arguments of email, username, password, password_check
-            //make sure password and password_check match, otherwise return error
-            //make CREATE request to 'users' db
-            //create refreshToken, store to db
-            //create accessToken, store in localStorage
-            return Ok("Not yet setup");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            // Create a concatenated string of all the arguments received
+            string result = $"Email: {email}, Username: {username}, Password: {password}, Password Check: {passwordCheck}";
+
+            // Return the concatenated string as the response
+            return Ok(result);
         }
 
 
