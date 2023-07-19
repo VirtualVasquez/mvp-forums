@@ -2,6 +2,10 @@
 using System;
 using System.Linq;
 using User.Data.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 
 namespace User.Controllers
@@ -16,6 +20,38 @@ namespace User.Controllers
         {
             _dbContext = dbContext;
         }
+
+        private string GenerateJwtToken(User.Data.Models.User user)
+        {
+            // Set the secret key used for signing the token. This should be a secure secret in a production environment.
+            string secretKey = Environment.GetEnvironmentVariable("ACCESS_TOKEN_SECRET");
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+
+            // Set the signing credentials using the secret key
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            // Create the claims for the token (you can add more claims if needed)
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Email, user.Email),
+                // Add any other relevant claims here
+            };
+
+            // Create the JWT token
+            var token = new JwtSecurityToken(
+                issuer: "mvp-forums",
+                audience: "mvp-forums-authenticated-users",
+                claims: claims,
+                signingCredentials: credentials
+            );
+
+            // Serialize the token to a string
+            var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return jwtToken;
+        }
+
 
         [HttpGet("[action]")]
         public IActionResult GetUsers()
@@ -67,19 +103,14 @@ namespace User.Controllers
                 return BadRequest($"An error occurred while saving the user: {ex.Message}");
             }
 
+            string jwtToken = GenerateJwtToken(newUser);
 
-            return Ok("successfully added a new user"); 
+
+            return Ok(new { Token = jwtToken });
 
             //create refreshToken, store to db
             //create accessToken, store in localStorage
         }
-        /*
-        // Create a concatenated string of all the arguments received
-        string result = $"Email: {email}, Username: {username}, Password: {password}, Password Check: {passwordCheck}";
-
-        // Return the concatenated string as the response
-        return Ok(result);
-         */
 
         [HttpGet("[action]")]
         public IActionResult LoginUser()
