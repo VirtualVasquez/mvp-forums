@@ -14,23 +14,24 @@ namespace User.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-
         private readonly AppDbContext _dbContext;
+        private readonly string _accessTokenSecret;
+        private readonly string _refreshTokenSecret;
+
         public UserController(AppDbContext dbContext)
         {
             _dbContext = dbContext;
+            // Load your access token and refresh token secrets from configuration or environment variables
+            _accessTokenSecret = Environment.GetEnvironmentVariable("ACCESS_TOKEN_SECRET");
+            _refreshTokenSecret = Environment.GetEnvironmentVariable("REFRESH_TOKEN_SECRET");
         }
 
-        private string GenerateJwtToken(User.Data.Models.User user)
+        private string GenerateJwtToken(User.Data.Models.User user, bool isAccessToken = true)
         {
-            // Set the secret key used for signing the token. This should be a secure secret in a production environment.
-            string secretKey = Environment.GetEnvironmentVariable("ACCESS_TOKEN_SECRET");
+            var secretKey = isAccessToken ? _accessTokenSecret : _refreshTokenSecret;
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-
-            // Set the signing credentials using the secret key
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            // Create the claims for the token (you can add more claims if needed)
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, user.Username),
@@ -38,20 +39,20 @@ namespace User.Controllers
                 // Add any other relevant claims here
             };
 
-            // Create the JWT token
+            //var expiration = isAccessToken ? DateTime.UtcNow.AddHours(1) : DateTime.UtcNow.AddDays(7);
+
             var token = new JwtSecurityToken(
                 issuer: "mvp-forums",
-                audience: "mvp-forums-authenticated-users",
+                audience: isAccessToken ? "mvp-forums-access" : "mvp-forums-refresh",
                 claims: claims,
+                //expires: expiration,
                 signingCredentials: credentials
             );
 
             // Serialize the token to a string
             var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
-
             return jwtToken;
         }
-
 
         [HttpGet("[action]")]
         public IActionResult GetUsers()
@@ -61,37 +62,32 @@ namespace User.Controllers
         }
 
         [HttpPost("[action]")]
-        //accept user provided arguments of email, username, password, password_check
         public IActionResult CreateUser([FromForm] string email, [FromForm] string username, [FromForm] string password, [FromForm] string passwordCheck)
         {
-            //make sure password and password_check match, otherwise return error
             if (password != passwordCheck)
             {
                 return BadRequest("Password and Password Check do not match");
             }
 
-            //check if the meail already exists in the database
-            var existingUserWithEmail = _dbContext.Users.FirstOrDefault(u => u.Username == username);
-            if (existingUserWithEmail != null){
+            var existingUserWithEmail = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            if (existingUserWithEmail != null)
+            {
                 return BadRequest("Email already exists");
             }
 
-            // Check if the username already exists in the database
             var existingUserWithUsername = _dbContext.Users.FirstOrDefault(u => u.Username == username);
             if (existingUserWithUsername != null)
             {
                 return BadRequest("Username already exists");
             }
 
-            // If both email and username are unique, create a new User entity
             var newUser = new User.Data.Models.User
             {
                 Email = email,
                 Username = username,
                 Password = password,
-                CreatedDate = DateTime.UtcNow // You can set the created date to the current UTC time
+                CreatedDate = DateTime.UtcNow
             };
-
 
             try
             {
@@ -103,15 +99,22 @@ namespace User.Controllers
                 return BadRequest($"An error occurred while saving the user: {ex.Message}");
             }
 
-            string jwtToken = GenerateJwtToken(newUser);
+            // Create access token and refresh token
+            string accessToken = GenerateJwtToken(newUser, isAccessToken: true);
+            string refreshToken = GenerateJwtToken(newUser, isAccessToken: false);
 
+            // Save the refresh token in the database
+            var refreshTokenEntity = new RefreshToken
+            {
+                Token = refreshToken,
+                UserId = newUser.Id
+            };
 
-            return Ok(new { Token = jwtToken });
+            _dbContext.RefreshTokens.Add(refreshTokenEntity);
+            _dbContext.SaveChanges();
 
-            //create refreshToken, store to db
-            //create accessToken, store in localStorage
+            return Ok(new { Token = accessToken });
         }
-
         [HttpGet("[action]")]
         public IActionResult LoginUser()
         {

@@ -35,4 +35,14 @@ namespace User.Data.Models
         public DateTime CreatedDate { get; set; }
         // Add any additional properties relevant to the post author
     }
+    [Table("refresh_tokens")]
+    public class RefreshToken
+    {
+        [Column("id")]
+        public int Id { get; set; }
+        [Column("token")]
+        public string Token { get; set; } // Make sure this property is present
+        [Column("user_id")]
+        public int UserId { get; set; }
+    }
 }
