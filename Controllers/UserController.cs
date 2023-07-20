@@ -89,31 +89,39 @@ namespace User.Controllers
                 CreatedDate = DateTime.UtcNow
             };
 
+            // Begin the database transaction
+            using var transaction = _dbContext.Database.BeginTransaction();
+
             try
             {
                 _dbContext.Users.Add(newUser);
                 _dbContext.SaveChanges();
+
+                // Create access token and refresh token
+                string accessToken = GenerateJwtToken(newUser, isAccessToken: true);
+                string refreshToken = GenerateJwtToken(newUser, isAccessToken: false);
+
+                // Save the refresh token in the database
+                var refreshTokenEntity = new RefreshToken
+                {
+                    Token = refreshToken,
+                    UserId = newUser.Id
+                };
+
+                _dbContext.RefreshTokens.Add(refreshTokenEntity);
+                _dbContext.SaveChanges();
+
+                // Commit the transaction
+                transaction.Commit();
+
+                return Ok(new { Token = accessToken });
             }
             catch (Exception ex)
             {
+                // If an exception occurs, rollback the transaction
+                transaction.Rollback();
                 return BadRequest($"An error occurred while saving the user: {ex.Message}");
             }
-
-            // Create access token and refresh token
-            string accessToken = GenerateJwtToken(newUser, isAccessToken: true);
-            string refreshToken = GenerateJwtToken(newUser, isAccessToken: false);
-
-            // Save the refresh token in the database
-            var refreshTokenEntity = new RefreshToken
-            {
-                Token = refreshToken,
-                UserId = newUser.Id
-            };
-
-            _dbContext.RefreshTokens.Add(refreshTokenEntity);
-            _dbContext.SaveChanges();
-
-            return Ok(new { Token = accessToken });
         }
         [HttpGet("[action]")]
         public IActionResult LoginUser()
