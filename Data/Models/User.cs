@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using BCrypt.Net;
 
 namespace User.Data.Models
 {
@@ -22,6 +23,15 @@ namespace User.Data.Models
 
         [Column("createddate")]
         public DateTime CreatedDate { get; set; }
+
+        // Hash the password before storing it in the database
+        public void HashPassword(string password){
+            this.Password = BCrypt.Net.BCrypt.HashPassword(password);
+        }
+        // Verify hashed password
+        public bool VerifyPassword(string password){
+            return BCrypt.Net.BCrypt.Verify(password, this.Password);
+        }
     }
     public class PostAuthor
     {

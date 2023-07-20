@@ -85,9 +85,11 @@ namespace User.Controllers
             {
                 Email = email,
                 Username = username,
-                Password = password,
                 CreatedDate = DateTime.UtcNow
             };
+
+            // Hash the password before saving the user to the database
+            newUser.HashPassword(password);
 
             // Begin the database transaction
             using var transaction = _dbContext.Database.BeginTransaction();
@@ -123,16 +125,70 @@ namespace User.Controllers
                 return BadRequest($"An error occurred while saving the user: {ex.Message}");
             }
         }
-        [HttpGet("[action]")]
-        public IActionResult LoginUser()
+
+        //need to either
+        //make one form line serve as email OR username
+        //OR
+        //decide to only use email - probably this one
+        [HttpPost("[action]")]
+        public IActionResult LoginUser([FromForm] string email, [FromForm] string password)
         {
             //accept user provided arguments of (email OR username) AND password
             //find user in DB with matching email OR username
-                //if user not found, return error
-                //if (password argument != stored password), return error
-            //generate refreshToken, store in separate DB.
-            //generate accessToken, store in localstorage.                          
-            return Ok("Not yet setup");
+            var existingUserWithEmail = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+
+            //if user not found, return error
+            if (existingUserWithEmail == null)
+            {
+                return BadRequest("No user with that email found.");
+            }
+
+            //if (password argument != stored password), return error
+            if (!existingUserWithEmail.VerifyPassword(password))
+            {
+                return BadRequest("Invalid password.");
+            }
+
+            // Check if a refresh token already exists for the user
+            var existingRefreshToken = _dbContext.RefreshTokens.FirstOrDefault(rt => rt.UserId == existingUserWithEmail.Id);
+
+
+            // Begin the database transaction
+            using var transaction = _dbContext.Database.BeginTransaction();
+            try
+            {
+                // Create access token and refresh token
+                string accessToken = GenerateJwtToken(existingUserWithEmail, isAccessToken: true);
+
+                // If a refresh token already exists, update it; otherwise, add a new one
+                if (existingRefreshToken != null){
+                    existingRefreshToken.Token = GenerateJwtToken(existingUserWithEmail, isAccessToken: false);
+                    _dbContext.RefreshTokens.Update(existingRefreshToken);
+                }
+                else
+                {
+                    string refreshToken = GenerateJwtToken(existingUserWithEmail, isAccessToken: false);
+                    var refreshTokenEntity = new RefreshToken
+                    {
+                        Token = refreshToken,
+                        UserId = existingUserWithEmail.Id
+                    };
+                    _dbContext.RefreshTokens.Add(refreshTokenEntity);
+                }
+
+                _dbContext.SaveChanges();
+
+                // Commit the transaction
+                transaction.Commit();
+
+                return Ok(new { Token = accessToken });
+            }
+            catch (Exception ex)
+            {
+                // If an exception occurs, rollback the transaction
+                transaction.Rollback();
+                return BadRequest($"An error occurred while logging in the user: {ex.Message}");
+            }
         }
 
         [HttpGet("[action]")]
