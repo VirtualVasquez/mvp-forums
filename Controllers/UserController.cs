@@ -34,6 +34,7 @@ namespace User.Controllers
 
             var claims = new[]
             {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), // Add the user ID claim
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Email, user.Email),
                 // Add any other relevant claims here
@@ -52,6 +53,22 @@ namespace User.Controllers
             // Serialize the token to a string
             var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
             return jwtToken;
+        }
+        private int GetUserIdFromAccessToken(string accessToken)
+        {
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var token = tokenHandler.ReadJwtToken(accessToken);
+
+            // Find the user ID claim and convert it to an integer
+            if (token.Payload.TryGetValue(ClaimTypes.NameIdentifier, out var userIdClaim) && int.TryParse(userIdClaim.ToString(), out var userId))
+            {
+                return userId;
+            }
+
+            // Return 0 if the user ID is not found or cannot be parsed
+            return -1;
         }
 
         [HttpGet("[action]")]
@@ -126,10 +143,6 @@ namespace User.Controllers
             }
         }
 
-        //need to either
-        //make one form line serve as email OR username
-        //OR
-        //decide to only use email - probably this one
         [HttpPost("[action]")]
         public IActionResult LoginUser([FromForm] string email, [FromForm] string password)
         {
@@ -152,22 +165,22 @@ namespace User.Controllers
             // Check if a refresh token already exists for the user
             var existingRefreshToken = _dbContext.RefreshTokens.FirstOrDefault(rt => rt.UserId == existingUserWithEmail.Id);
 
-
             // Begin the database transaction
             using var transaction = _dbContext.Database.BeginTransaction();
             try
             {
                 // Create access token and refresh token
                 string accessToken = GenerateJwtToken(existingUserWithEmail, isAccessToken: true);
+                string refreshToken = GenerateJwtToken(existingUserWithEmail, isAccessToken: false);
 
                 // If a refresh token already exists, update it; otherwise, add a new one
-                if (existingRefreshToken != null){
-                    existingRefreshToken.Token = GenerateJwtToken(existingUserWithEmail, isAccessToken: false);
+                if (existingRefreshToken != null)
+                {
+                    existingRefreshToken.Token = refreshToken;
                     _dbContext.RefreshTokens.Update(existingRefreshToken);
                 }
                 else
                 {
-                    string refreshToken = GenerateJwtToken(existingUserWithEmail, isAccessToken: false);
                     var refreshTokenEntity = new RefreshToken
                     {
                         Token = refreshToken,
@@ -191,15 +204,33 @@ namespace User.Controllers
             }
         }
 
-        [HttpGet("[action]")]
-        public IActionResult LogoutUser()
-        { 
-            //use accessToken as argument
-            //decode accessToken
-            //find corresponding refreshtoken in db
-            //delete refreshtoken
-            //ON THE CLIENT SIDE: delete accessToken            
-            return Ok("Not yet setup");
+        [HttpDelete("[action]")]
+        //use accessToken as argument
+        public IActionResult LogoutUser([FromForm] string accessToken)
+        {
+            int userId = (int)GetUserIdFromAccessToken(accessToken);
+
+            // Return an error if the user ID couldn't be extracted from the access token
+            if (userId == -1)
+            {
+                return BadRequest("Invalid access token");
+            }
+
+            // Find the refresh token entity for the given user ID
+            var refreshTokenEntity = _dbContext.RefreshTokens.FirstOrDefault(rt => rt.UserId == userId);
+
+            // Return an error if the refresh token entity is not found
+            if (refreshTokenEntity == null)
+            {
+                return BadRequest("Refresh token not found");
+            }
+
+            // Remove the refresh token entity from the database
+            _dbContext.RefreshTokens.Remove(refreshTokenEntity);
+            _dbContext.SaveChanges();
+
+            //ON THE CLIENT SIDE: delete accessToken from localStorage
+            return Ok("Logout successful");
         }
 
 
