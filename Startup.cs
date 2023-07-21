@@ -23,6 +23,17 @@ namespace my_new_app
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add CORS services
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowLocalhost3000",
+                    builder =>
+                    {
+                        builder.WithOrigins()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
 
             services.AddControllersWithViews();
 
@@ -64,6 +75,9 @@ namespace my_new_app
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
+            // Use the CORS middleware
+            app.UseCors("AllowLocalhost3000");
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -81,6 +95,13 @@ namespace my_new_app
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
+            });
+
+
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
             });
         }
     }

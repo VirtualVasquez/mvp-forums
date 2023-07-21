@@ -233,6 +233,45 @@ namespace User.Controllers
             return Ok("Logout successful");
         }
 
+        [HttpGet("[action]")]
+        public IActionResult ValidateAccessToken([FromHeader(Name = "Authorization")] string accessToken){
+            //Check if the access Token is valid
+            bool isValidToken = IsAccessTokenValid(accessToken);
+            if (isValidToken){
+                return Ok("Valid access token");
+            }
+            else{
+                return BadRequest("Invalid access token");
+            }
+        }
+
+        private bool IsAccessTokenValid(string accessToken)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = "mvp-forums",
+                ValidAudience = "mvp-forums-access",
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_accessTokenSecret))
+            };
+
+            try
+            {
+                // Validate the token
+                SecurityToken validatedToken;
+                var principal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters, out validatedToken);
+                return true;
+            }
+            catch
+            {
+                // Token validation failed
+                return false;
+            }
+        }
+
 
     }
 }

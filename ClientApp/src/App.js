@@ -10,24 +10,49 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import HomePage from './pages/HomePage/HomePage';
 import GroupPage from './pages/GroupPage/GroupPage';
 import ThreadPage from './pages/ThreadPage/ThreadPage';
+import axios from "axios";
 
 
 import './custom.css'
 
 function App() {
+  const [localToken, setLocalToken] = useState(localStorage.getItem('mvp_forums_access_token'));
   const [tempTestAuth, setTempTestAuth] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(true);
 
+    async function verifyAccessToken(token) {
+        try {
+            const response = await axios.get('/api/User/ValidateAccessToken', null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        if (localToken) {
+            verifyAccessToken(localToken).then((verified) => {
+                if (!verified) {
+                    return localStorage.removeItem('mvp_forums_access_token');
+                }
+            })
+        }
+    }, [localToken])
+
   return (
-      <Layout 
-        tempTestAuth={tempTestAuth}
+      <Layout
+        localToken={localToken}
         setShowLoginForm={setShowLoginForm}
       >
         <Routes>
           <Route
             exact path="/"
             element={
-              tempTestAuth ? ( 
+                localToken ? ( 
                 <Navigate to ="/home" replace />
               ) : (
                 <LoginPage 
@@ -39,7 +64,7 @@ function App() {
           <Route
            exact path="/home"
            element={
-            <Protected tempTestAuth={tempTestAuth}>
+            <Protected localToken={localToken}>
               <HomePage />
             </Protected>
            }
@@ -48,7 +73,7 @@ function App() {
           <Route
            exact path="/group"
            element={
-            <Protected tempTestAuth={tempTestAuth}>
+             <Protected localToken={localToken}>
               <GroupPage />
             </Protected>
            }
@@ -57,7 +82,7 @@ function App() {
           <Route
            exact path="/thread"
            element={
-            <Protected tempTestAuth={tempTestAuth}>
+            <Protected localToken={localToken}>
               <ThreadPage />
             </Protected>
            }

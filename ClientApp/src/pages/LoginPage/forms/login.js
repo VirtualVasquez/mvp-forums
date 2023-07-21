@@ -1,20 +1,26 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import axios from "axios";
 
-// async function LoginUser(email, password){
-//     try {
-//         //make axios request
-//         //save access token to localStorage
-//         //either reload the page or navigate to Home authorized
-//     } catch (error) {
-//         //uncomment below when ready
-//         console.error(error)
-//     }
-// }
+async function LoginUser(email, password) {
+    console.log(email);
+    console.log(password);
+     try {
+         //make axios request
+         const response = await axios.post('/api/User/loginuser', {
+             email: email,
+             password: password
+         })
+         //save access token to localStorage
+         localStorage.setItem('mvp_forums_access_token', response.data.accessToken); 
+         window.location.reload();
+     } catch (error) {
+         console.error(error)
+     }
+ }
 
 
 const Login  = ({showLoginForm}) => {
     const [providedEmail, setEmail] = useState(null);
-    const [providedUsername, setUsername] = useState(null);
     const [providedPassword, setPassword] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
 
@@ -40,8 +46,7 @@ const Login  = ({showLoginForm}) => {
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log("You hit submit");
-        // LoginUser(providedEmail, providedUsername, providedPassword);
+        LoginUser(providedEmail, providedPassword);
     }
 
     return (

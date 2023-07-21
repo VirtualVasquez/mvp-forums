@@ -10,7 +10,7 @@ export class Layout extends Component {
     return (
       <div id="layout">
         <NavMenu 
-          tempTestAuth={this.props.tempTestAuth} 
+          localToken={this.props.localToken} 
           setShowLoginForm={this.props.setShowLoginForm}
         />
         <Container>

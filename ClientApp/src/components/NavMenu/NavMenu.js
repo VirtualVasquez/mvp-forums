@@ -3,7 +3,7 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link } from 'react-router-dom';
 import './NavMenu.scss';
 
-export const NavMenu = ({ tempTestAuth, setShowLoginForm }) => {
+export const NavMenu = ({ localToken, setShowLoginForm }) => {
   const [collapsed, setCollapsed] = useState(true);
 
   const toggleNavbar = () => {
@@ -27,7 +27,7 @@ export const NavMenu = ({ tempTestAuth, setShowLoginForm }) => {
         <Container>
           <NavbarBrand tag={Link} to="/home">mvp_forums</NavbarBrand>
           <NavbarToggler onClick={toggleNavbar} className="mr-2" />
-          {tempTestAuth ? (
+          {localToken ? (
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!collapsed} navbar>
               <ul className="navbar-nav flex-grow">
                 <NavItem>
