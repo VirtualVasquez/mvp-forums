@@ -78,53 +78,55 @@ namespace User.Controllers
             return Ok(users);
         }
 
-        [HttpPost("[action]")]
-        public IActionResult CreateUser([FromForm] string email, [FromForm] string username, [FromForm] string password, [FromForm] string passwordCheck)
+        public class CreateUserRequest
         {
-            if (password != passwordCheck)
+            public User.Data.Models.User User { get; set; }
+            public string PasswordCheck { get; set; }
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult CreateUser([FromBody] CreateUserRequest request)
+        {
+            var user = request.User;
+            var passwordCheck = request.PasswordCheck;
+
+            if (user.Password != passwordCheck)
             {
                 return BadRequest("Password and Password Check do not match");
             }
 
-            var existingUserWithEmail = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            var existingUserWithEmail = _dbContext.Users.FirstOrDefault(u => u.Email == user.Email);
             if (existingUserWithEmail != null)
             {
                 return BadRequest("Email already exists");
             }
 
-            var existingUserWithUsername = _dbContext.Users.FirstOrDefault(u => u.Username == username);
+            var existingUserWithUsername = _dbContext.Users.FirstOrDefault(u => u.Username == user.Username);
             if (existingUserWithUsername != null)
             {
                 return BadRequest("Username already exists");
             }
 
-            var newUser = new User.Data.Models.User
-            {
-                Email = email,
-                Username = username,
-                CreatedDate = DateTime.UtcNow
-            };
-
             // Hash the password before saving the user to the database
-            newUser.HashPassword(password);
+            user.HashPassword(user.Password);
 
             // Begin the database transaction
             using var transaction = _dbContext.Database.BeginTransaction();
 
             try
             {
-                _dbContext.Users.Add(newUser);
+                _dbContext.Users.Add(user);
                 _dbContext.SaveChanges();
 
                 // Create access token and refresh token
-                string accessToken = GenerateJwtToken(newUser, isAccessToken: true);
-                string refreshToken = GenerateJwtToken(newUser, isAccessToken: false);
+                string accessToken = GenerateJwtToken(user, isAccessToken: true);
+                string refreshToken = GenerateJwtToken(user, isAccessToken: false);
 
                 // Save the refresh token in the database
                 var refreshTokenEntity = new RefreshToken
                 {
                     Token = refreshToken,
-                    UserId = newUser.Id
+                    UserId = user.Id
                 };
 
                 _dbContext.RefreshTokens.Add(refreshTokenEntity);

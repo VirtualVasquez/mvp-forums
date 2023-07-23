@@ -3,20 +3,17 @@ import axios from "axios";
 
 async function createUser(email, username, password, passwordCheck) {
      try {
-         //make axios request
-         //save access token to localStorage
-         //reload page or navigate to '/home'
-         const response = await axios.get('/api/User/createuser', {
-             email: email,
-             username: username,
-             password: password,
-             passwordCheck: passwordCheck
+         debugger;
+         const response = await axios.post('/api/User/createuser', {
+             Email: email,
+             Username: username,
+             Password: password,
+             PasswordCheck: passwordCheck
          })
          //save access token to localStorage
-         localStorage.setItem('mvp_forums_access_token', response.data.accessToken);
+         localStorage.setItem('mvp_forums_access_token', response.data.token);
          window.location.reload();
      } catch (error) {
-       //uncomment below when ready
        if (error.response) {
          // The request was made and the server responded with a status code
          const status = error.response.status;
