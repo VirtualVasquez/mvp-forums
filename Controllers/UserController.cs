@@ -143,8 +143,15 @@ namespace User.Controllers
             }
         }
 
+        public class LoginModel
+        {
+            public string Email { get; set; }
+
+            public string Password { get; set; }
+        }
+
         [HttpPost("[action]")]
-        public IActionResult LoginUser([FromBody] User.Data.Models.LoginModel loginModel)
+        public IActionResult LoginUser([FromBody] LoginModel loginModel)
         {
             //accept user provided arguments of (email OR username) AND password
             //find user in DB with matching email OR username

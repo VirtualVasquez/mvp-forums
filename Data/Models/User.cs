@@ -33,11 +33,9 @@ namespace User.Data.Models
             return BCrypt.Net.BCrypt.Verify(password, this.Password);
         }
     }
-    
-    public class LoginModel{
-        public string Email { get; set; }
-        public string Password { get; set; }    
-    }
+    /*
+     * DO NOT NEED THIS HERE
+     * WILL NEED THIS WITHIN RESPECTIVE CONTROLLER
     public class PostAuthor
     {
         [Column("id")]
@@ -50,6 +48,7 @@ namespace User.Data.Models
         public DateTime CreatedDate { get; set; }
         // Add any additional properties relevant to the post author
     }
+    */
     [Table("refresh_tokens")]
     public class RefreshToken
     {
