@@ -33,6 +33,11 @@ namespace User.Data.Models
             return BCrypt.Net.BCrypt.Verify(password, this.Password);
         }
     }
+    
+    public class LoginModel{
+        public string Email { get; set; }
+        public string Password { get; set; }    
+    }
     public class PostAuthor
     {
         [Column("id")]
