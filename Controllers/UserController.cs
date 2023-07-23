@@ -143,12 +143,19 @@ namespace User.Controllers
             }
         }
 
+        public class LoginModel
+        {
+            public string Email { get; set; }
+
+            public string Password { get; set; }
+        }
+
         [HttpPost("[action]")]
-        public IActionResult LoginUser([FromForm] string email, [FromForm] string password)
+        public IActionResult LoginUser([FromBody] LoginModel loginModel)
         {
             //accept user provided arguments of (email OR username) AND password
             //find user in DB with matching email OR username
-            var existingUserWithEmail = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            var existingUserWithEmail = _dbContext.Users.FirstOrDefault(u => u.Email == loginModel.Email);
 
             //if user not found, return error
             if (existingUserWithEmail == null)
@@ -157,7 +164,7 @@ namespace User.Controllers
             }
 
             //if (password argument != stored password), return error
-            if (!existingUserWithEmail.VerifyPassword(password))
+            if (!existingUserWithEmail.VerifyPassword(loginModel.Password))
             {
                 return BadRequest("Invalid password.");
             }
