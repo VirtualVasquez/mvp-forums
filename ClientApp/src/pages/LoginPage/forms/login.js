@@ -11,8 +11,9 @@ async function LoginUser(email, password) {
              password: password
          })
          //save access token to localStorage
-         localStorage.setItem('mvp_forums_access_token', response.data.accessToken); 
-         window.location.reload();
+         console.log(response.data.token);
+         localStorage.setItem('mvp_forums_access_token', response.data.token); 
+         //window.location.reload();
      } catch (error) {
          console.error(error)
      }

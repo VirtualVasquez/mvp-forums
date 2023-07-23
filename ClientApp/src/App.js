@@ -22,7 +22,7 @@ function App() {
 
     async function verifyAccessToken(token) {
         try {
-            const response = await axios.get('/api/User/ValidateAccessToken', null, {
+            const response = await axios.get('/api/User/ValidateAccessToken', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

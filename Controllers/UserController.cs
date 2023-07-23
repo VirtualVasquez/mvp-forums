@@ -241,35 +241,43 @@ namespace User.Controllers
         }
 
         [HttpGet("[action]")]
-        public IActionResult ValidateAccessToken([FromHeader(Name = "Authorization")] string accessToken){
-            //Check if the access Token is valid
-            bool isValidToken = IsAccessTokenValid(accessToken);
-            if (isValidToken){
-                return Ok("Valid access token");
-            }
-            else{
-                return BadRequest("Invalid access token");
-            }
-        }
+        public IActionResult ValidateAccessToken([FromHeader(Name = "Authorization")] string accessToken)
+        {
+            // Check if the Authorization header is not null and starts with "Bearer "
+            if (!string.IsNullOrEmpty(accessToken) && accessToken.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+            {
+                // Extract the actual access token (removing the "Bearer " prefix)
+                string actualAccessToken = accessToken.Substring(7); // "Bearer ".Length = 7
 
+                // Check if the access token is valid
+                bool isValidToken = IsAccessTokenValid(actualAccessToken);
+                if (isValidToken)
+                {
+                    return Ok("Valid access token");
+                }
+            }
+            return BadRequest("Invalid access token");
+        }
         private bool IsAccessTokenValid(string accessToken)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = "mvp-forums",
-                ValidAudience = "mvp-forums-access",
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_accessTokenSecret))
-            };
 
             try
             {
                 // Validate the token
                 SecurityToken validatedToken;
-                var principal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters, out validatedToken);
+                var token = tokenHandler.ReadJwtToken(accessToken);
+
+                // Get the issuer and audience claims from the token
+                string issuer = token.Issuer;
+                string audience = token.Audiences.FirstOrDefault();
+
+                // Your existing validation parameters
+                if (issuer != "mvp-forums" || audience != "mvp-forums-access")
+                {
+                    return false;
+                }
+
                 return true;
             }
             catch
@@ -278,7 +286,6 @@ namespace User.Controllers
                 return false;
             }
         }
-
 
     }
 }
