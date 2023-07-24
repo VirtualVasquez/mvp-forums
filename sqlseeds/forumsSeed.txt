@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS public.forums
+(
+    id integer NOT NULL DEFAULT nextval('forums_id_seq'::regclass),
+    title character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    description text COLLATE pg_catalog."default" NOT NULL,
+    date_created timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT forums_pkey PRIMARY KEY (id)
+)
