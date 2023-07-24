@@ -10,7 +10,7 @@ public class AppDbContext : DbContext
     }
     public DbSet<User.Data.Models.User> Users { get; set; }
     public DbSet<User.Data.Models.RefreshToken> RefreshTokens { get; set; }
-    public DbSet<Forum.Data.Models.Forum> Forums { get; }
+    public DbSet<Forum.Data.Models.Forum> Forums { get; set; }
 
 
 }

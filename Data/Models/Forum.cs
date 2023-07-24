@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Forum.Data.Models
@@ -6,17 +7,18 @@ namespace Forum.Data.Models
     [Table("forums")]
     public class Forum
     {
+        [Key]
         [Column("id")]
-        public int Id { get; }
+        public int Id { get; set; }
 
         [Column("title")]
-        public string Title { get; }
+        public string Title { get; set; }
 
         [Column("description")]
-        public string Description { get; }
+        public string Description { get; set; }
 
         [Column("date_created")]
-        public DateTime DateCreated { get; }
+        public DateTime DateCreated { get; set; }
 
     }
 }
