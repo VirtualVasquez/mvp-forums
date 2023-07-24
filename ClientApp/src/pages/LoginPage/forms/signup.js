@@ -3,12 +3,13 @@ import axios from "axios";
 
 async function createUser(email, username, password, passwordCheck) {
      try {
-         debugger;
          const response = await axios.post('/api/User/createuser', {
-             Email: email,
-             Username: username,
-             Password: password,
-             PasswordCheck: passwordCheck
+             user: {
+                 Email: email,
+                 Username: username,
+                 Password: password,
+             },
+             passwordCheck: passwordCheck
          })
          //save access token to localStorage
          localStorage.setItem('mvp_forums_access_token', response.data.token);
