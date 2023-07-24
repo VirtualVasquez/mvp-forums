@@ -110,6 +110,9 @@ namespace User.Controllers
             // Hash the password before saving the user to the database
             user.HashPassword(user.Password);
 
+            // Set the CreatedDate property to the current UTC timestamp
+            user.CreatedDate = DateTime.UtcNow;
+
             // Begin the database transaction
             using var transaction = _dbContext.Database.BeginTransaction();
 
