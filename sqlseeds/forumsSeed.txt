@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS public.forums
     title character varying(255) COLLATE pg_catalog."default" NOT NULL,
     description text COLLATE pg_catalog."default" NOT NULL,
     date_created timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    slug text COLLATE pg_catalog."default",
     CONSTRAINT forums_pkey PRIMARY KEY (id)
 )

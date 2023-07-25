@@ -17,6 +17,9 @@ namespace Forum.Data.Models
         [Column("description")]
         public string Description { get; set; }
 
+        [Column("slug")]
+        public string Slug { get; set; }
+
         [Column("date_created")]
         public DateTime DateCreated { get; set; }
 
