@@ -1,9 +1,9 @@
 import React from 'react';
 
-function ForumGroupsItem () {
+const ForumGroupsItem = ({id, title, description }) => {
 
     return (
-        <li className="forumItem">
+        <li className="forumItem" id={id}>
             <div className="forumItem-icon">
                 <span>
                 <i>
@@ -14,12 +14,12 @@ function ForumGroupsItem () {
             <div className="forumItem-main">
                 <h4 className="forumItem_title">
                     <a href="/">
-                    Forum Group Title                        
+                        {title}                        
                     </a>
                 </h4>
                 <div className="forumItem_meta">
                 <p>
-                    Forum Group Title Meta Description
+                        {description}
                 </p>
                 </div>
             </div>
