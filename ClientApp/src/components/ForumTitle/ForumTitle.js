@@ -1,12 +1,12 @@
 import React from 'react';
-import './GroupTitle.scss';
+import './ForumTitle.scss';
 
-function GroupTitle () {
+function ForumTitle () {
 
     return (
-        <div className="group-title">
+        <div className="forum-title">
             <div className="row row-one">
-            <h1>GroupPage</h1>
+            <h1>ForumPage</h1>
             <div className="threads-quantity">
 
                 <span className="span-wrapper">
@@ -22,11 +22,11 @@ function GroupTitle () {
             </div>
             </div>
             <div className="row row-two">
-            <p>Meta Description of group</p>
+            <p>Meta Description of forum</p>
             </div>
 
         </div>
     );
 }
 
-export default GroupTitle;
+export default ForumTitle;

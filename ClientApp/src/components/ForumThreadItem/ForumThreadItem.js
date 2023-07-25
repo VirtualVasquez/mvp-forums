@@ -1,23 +1,23 @@
 import React from 'react';
-import './GroupThreadItem.scss';
+import './ForumThreadItem.scss';
 
-function GroupThreadItem () {
+function ForumThreadItem () {
 
     return (
-        <li className="groupThreadItem">
-            <div className="groupThreadItem-main">
-                <h4 className="groupThreadItem_title">
+        <li className="forumThreadItem">
+            <div className="forumThreadItem-main">
+                <h4 className="forumThreadItem_title">
                     <a href="/">
-                    Forum Group Title                        
+                    Forum Forum Title                        
                     </a>
                 </h4>
-                <div className="groupThreadItem_author">
+                <div className="forumThreadItem_author">
                 <a>
                     By USERNAME, DATE OF CREATION (MMMM DD, YYYY)
                 </a>
                 </div>
             </div>
-            <div className="groupThreadItem-stats">
+            <div className="forumThreadItem-stats">
                 <p className="replies">
                     <span>XXXX</span>
                     <span>&nbsp;replies</span>
@@ -27,12 +27,12 @@ function GroupThreadItem () {
                     <span>&nbsp;views</span>
                 </p>
             </div>
-            <ul className="groupThreadItem-lastPoster">
-                <li className="groupThreadItem_lastPoster_icon">
+            <ul className="forumThreadItem-lastPoster">
+                <li className="forumThreadItem_lastPoster_icon">
                     <i></i>
                 </li>
-                <li className="groupThreadItem_lastPoster_username"><a href="#">USERNAME</a></li>
-                <li className="groupThreadItem_lastPoster_timestamp">
+                <li className="forumThreadItem_lastPoster_username"><a href="#">USERNAME</a></li>
+                <li className="forumThreadItem_lastPoster_timestamp">
                  <span className="longForm">1 hour ago</span>
                  <span className="shortForm">X Units</span>
                 </li>              
@@ -41,4 +41,4 @@ function GroupThreadItem () {
     );
 }
 
-export default GroupThreadItem;
+export default ForumThreadItem;

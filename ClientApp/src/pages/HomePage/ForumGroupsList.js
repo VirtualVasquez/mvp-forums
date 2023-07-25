@@ -34,6 +34,7 @@ const ForumGroupsList = () => {
                             id={forum.id}
                             title={forum.title}
                             description={forum.description}
+                            slug={forum.slug}
                         />
                     )
                 })

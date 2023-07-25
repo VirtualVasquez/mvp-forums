@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ForumGroupsItem = ({id, title, description }) => {
+const ForumGroupsItem = ({id, title, description, slug }) => {
 
     return (
         <li className="forumItem" id={id}>
@@ -13,7 +13,7 @@ const ForumGroupsItem = ({id, title, description }) => {
             </div>
             <div className="forumItem-main">
                 <h4 className="forumItem_title">
-                    <a href="/">
+                    <a href={`/${id}-${slug}`}>
                         {title}                        
                     </a>
                 </h4>

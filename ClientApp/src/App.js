@@ -8,7 +8,7 @@ import { Layout } from './components/Layout';
 import Protected from "./helpers/Protected";
 import LoginPage from './pages/LoginPage/LoginPage';
 import HomePage from './pages/HomePage/HomePage';
-import GroupPage from './pages/GroupPage/GroupPage';
+import ForumPage from './pages/ForumPage/ForumPage';
 import ThreadPage from './pages/ThreadPage/ThreadPage';
 import axios from "axios";
 
@@ -73,8 +73,8 @@ function App() {
           <Route
            exact path="/group"
            element={
-             <Protected localToken={localToken}>
-              <GroupPage />
+            <Protected localToken={localToken}>
+               <ForumPage />
             </Protected>
            }
           />
