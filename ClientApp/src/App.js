@@ -70,7 +70,7 @@ function App() {
            }
           />
           <Route
-           path="forum/:id-:slug"
+           path="/forum/:id/:slug"
            element={
             <Protected localToken={localToken}>
                <ForumPage />
