@@ -1,12 +1,12 @@
 import React from 'react';
 import './ForumTitle.scss';
 
-function ForumTitle () {
+function ForumTitle({title, description }) {
 
     return (
         <div className="forum-title">
             <div className="row row-one">
-            <h1>ForumPage</h1>
+                <h1>{title}</h1>
             <div className="threads-quantity">
 
                 <span className="span-wrapper">
@@ -18,11 +18,10 @@ function ForumTitle () {
                 </span>
                 </span>
 
-
             </div>
             </div>
             <div className="row row-two">
-            <p>Meta Description of forum</p>
+                <p>{description}</p>
             </div>
 
         </div>

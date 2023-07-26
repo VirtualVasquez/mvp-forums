@@ -1,16 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import { useParams } from 'react-router-dom';
 import ForumTitle from '../../components/ForumTitle/ForumTitle';
 import ForumThreadList from '../../components/ForumThreadList/ForumThreadList'
 import './ForumPage.scss';
 
 function ForumPage() {
-    const { id, slug } = useParams();
+    const { id } = useParams();
+    const [forum, setForum] = useState(null);
 
-    console.log(`ForumPage rendered with ${id} and ${slug}`)
+
+    async function GetForumById(forumId) {
+        try {
+            await axios.get(`/api/forum/${forumId}`).then(response => {
+                setForum(response.data);
+            })
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        GetForumById(id);
+    }, []);
+
+    if (forum === null) {
+        return <div>Loading forum ...</div>
+    }
+    
     return (
       <div className="forum-page">
-        <ForumTitle />
+            <ForumTitle
+                title={forum.title}
+                description={forum.description}
+            />
         <ForumThreadList />
       </div>
     );

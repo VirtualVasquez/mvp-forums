@@ -20,11 +20,6 @@ namespace Forum.Controllers
         [HttpGet("[action]")]
         public IActionResult GetAllForums()
         {
-            /*
-             *  var forums = _dbContext.Forums.ToList();
-                return Ok(forums);
-             */
-
             try
             {
                 var forums = _dbContext.Forums?.ToList();
@@ -41,6 +36,26 @@ namespace Forum.Controllers
                 return StatusCode(500, $"An error occurred while fetching forums: {ex.Message}");
             }
 
+        }
+        
+
+        [HttpGet("{id}")]
+        public IActionResult GetForumById(int id)
+        {
+            try
+            {
+                var forum = _dbContext.Forums.FirstOrDefault(f => f.Id == id);
+                
+                if (forum == null) 
+                {
+                    return NotFound("Forum not found.");
+                }
+                return Ok(forum);   
+            }
+            catch (Exception ex) 
+            {
+                return StatusCode(500, $"An error occurred while fethcing the forum: {ex.Message}");
+            }
         }
     }
 }
