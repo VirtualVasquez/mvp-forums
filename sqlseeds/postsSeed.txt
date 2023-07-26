@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS public.posts
+(
+    id integer NOT NULL DEFAULT nextval('posts_id_seq'::regclass),
+    topic_id integer,
+    user_id integer,
+    text text COLLATE pg_catalog."default",
+    date_created timestamp without time zone NOT NULL DEFAULT now(),
+    CONSTRAINT posts_pkey PRIMARY KEY (id),
+    CONSTRAINT posts_topic_id_fkey FOREIGN KEY (topic_id)
+        REFERENCES public.topics (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)

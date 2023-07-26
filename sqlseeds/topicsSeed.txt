@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS public.topics
+(
+    id integer NOT NULL DEFAULT nextval('topics_id_seq'::regclass),
+    forum_id integer,
+    user_id integer,
+    title character varying(255) COLLATE pg_catalog."default",
+    text text COLLATE pg_catalog."default",
+    date_created timestamp without time zone NOT NULL DEFAULT now(),
+    slug character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT topics_pkey PRIMARY KEY (id),
+    CONSTRAINT topics_forum_id_fkey FOREIGN KEY (forum_id)
+        REFERENCES public.forums (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
