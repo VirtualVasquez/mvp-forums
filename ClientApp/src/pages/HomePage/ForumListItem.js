@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const ForumGroupsItem = ({id, title, description, slug }) => {
+
+const ForumListItem = ({ id, title, description, slug }) => {
 
     return (
         <li className="forumItem" id={id}>
@@ -13,13 +15,13 @@ const ForumGroupsItem = ({id, title, description, slug }) => {
             </div>
             <div className="forumItem-main">
                 <h4 className="forumItem_title">
-                    <a href={`/${id}-${slug}`}>
+                    <Link to={`/forum/${id}-${slug}`}>
                         {title}                        
-                    </a>
+                    </Link>
                 </h4>
                 <div className="forumItem_meta">
                 <p>
-                        {description}
+                    {description}
                 </p>
                 </div>
             </div>
@@ -45,4 +47,4 @@ const ForumGroupsItem = ({id, title, description, slug }) => {
     );
 }
 
-export default ForumGroupsItem;
+export default ForumListItem;

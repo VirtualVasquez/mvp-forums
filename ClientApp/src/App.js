@@ -64,14 +64,13 @@ function App() {
           <Route
            exact path="/home"
            element={
-            <Protected localToken={localToken}>
+               <Protected localToken={localToken}>
               <HomePage />
             </Protected>
            }
           />
-          {/* Need to figure out a way to dynamically ajdust the path per respective group and post */}
           <Route
-           exact path="/group"
+           path="forum/:id-:slug"
            element={
             <Protected localToken={localToken}>
                <ForumPage />

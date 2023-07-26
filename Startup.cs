@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using User.Data.Models;
 using Forum.Data.Models;
+using System.IO;
 
 namespace my_new_app
 {
@@ -73,6 +74,18 @@ namespace my_new_app
             }
 
             //app.UseHttpsRedirection();
+
+            // Add the catch-all route to serve the React app
+            app.Use(async (context, next) =>
+            {
+                await next();
+
+                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
+                {
+                    context.Request.Path = "/index.html";
+                    await next();
+                }
+            });
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
@@ -103,6 +116,9 @@ namespace my_new_app
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

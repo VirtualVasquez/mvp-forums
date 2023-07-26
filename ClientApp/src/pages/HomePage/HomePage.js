@@ -1,13 +1,13 @@
 import React from 'react';
 import './HomePage.scss';
-import ForumGroupsList from './ForumGroupsList';
+import ForumList from './ForumList';
 
 function HomePage () {
 
     return (
       <div className="home-page">
         <div><h1>Forums</h1></div>
-        <ForumGroupsList />    
+        <ForumList />    
       </div>
     );
 }
