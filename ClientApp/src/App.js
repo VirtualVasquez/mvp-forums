@@ -9,7 +9,7 @@ import Protected from "./helpers/Protected";
 import LoginPage from './pages/LoginPage/LoginPage';
 import HomePage from './pages/HomePage/HomePage';
 import ForumPage from './pages/ForumPage/ForumPage';
-import ThreadPage from './pages/ThreadPage/ThreadPage';
+import TopicPage from './pages/TopicPage/TopicPage';
 import axios from "axios";
 
 
@@ -77,12 +77,11 @@ function App() {
             </Protected>
            }
           />
-          {/* this should look something like '/GROUPNAME/THREADNAME' */}
           <Route
-           exact path="/thread"
+           exact path="/topic/:id/:slug"
            element={
             <Protected localToken={localToken}>
-              <ThreadPage />
+                <TopicPage />
             </Protected>
            }
           />

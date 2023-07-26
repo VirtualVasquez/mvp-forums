@@ -1,20 +1,20 @@
 import React from 'react';
-import ThreadHeader from '../../components/ThreadHeader/ThreadHeader';
+import TopicHeader from '../../components/TopicHeader/TopicHeader';
 import Pagination from '../../components/Pagination/Pagination';
-import Thread from '../../components/Thread/Thread';
+import Topic from '../../components/Topic/Topic';
 import ReplyForm from '../../components/ReplyForm/ReplyForm';
-import './ThreadPage.scss'
+import './TopicPage.scss'
 
 function scollToReply(){
   let target = document.getElementById("reply-form");
   target.scrollIntoView({ behavior: "smooth"});
 }
 
-function ThreadPage () {
+function TopicPage () {
 
     return (
-      <div className="thread-page">
-        <ThreadHeader />
+      <div className="topic-page">
+        <TopicHeader />
         <div className="button-container">
           <button 
             className="to-reply-form"
@@ -24,11 +24,11 @@ function ThreadPage () {
           </button>
         </div>
         <Pagination />
-        <Thread />
+        <Topic />
         <Pagination />
         <ReplyForm />      
       </div>
     );
 }
 
-export default ThreadPage;
+export default TopicPage;

@@ -1,10 +1,10 @@
 import React from 'react';
-import './ThreadPost.scss';
+import './TopicPost.scss';
 
-function ThreadPost () {
+function TopicPost () {
 
     return (
-      <div className="thread-post">
+      <div className="topic-post">
         <div className="post_author">
             <i className="author_picture"></i>
             <p className="author_username">USERNAME</p>
@@ -28,4 +28,4 @@ function ThreadPost () {
     );
 }
 
-export default ThreadPost;
+export default TopicPost;

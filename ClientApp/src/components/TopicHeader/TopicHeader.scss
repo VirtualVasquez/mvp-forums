@@ -1,14 +1,14 @@
-.thread-header{
+.topic-header{
     width: 100%;
     border: solid 1px gray;
     padding: 1.5rem 1rem;
     margin-bottom: 2rem;
-    .thread-header_title{
+    .topic-header_title{
         h1{
             font-size: 1.75rem;
         }
     }
-    .thread-header_info{
+    .topic-header_info{
         display:flex;
         align-items: center;
         .info_profile_image{

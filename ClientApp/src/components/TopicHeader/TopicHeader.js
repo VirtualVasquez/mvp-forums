@@ -1,14 +1,14 @@
 import React from 'react';
-import './ThreadHeader.scss';
+import './TopicHeader.scss';
 
-function ThreadHeader () {
+function TopicHeader () {
 
     return (
-        <div className="thread-header">
-            <div className="thread-header_title">
-                <h1>TITLE OF THE THREAD</h1>
+        <div className="topic-header">
+            <div className="topic-header_title">
+                <h1>TITLE OF THE TOPIC</h1>
             </div>
-            <div className="thread-header_info">
+            <div className="topic-header_info">
                 <i className="info_profile_image"></i>
                 <div className="info_author">
                     <p>
@@ -28,7 +28,7 @@ function ThreadHeader () {
                             TITLE OF FORUM GROUP
                         </a>
                         </span>
-                        {/* TITLE OF FORUM GROUP means parent group of thread */}
+                        {/* TITLE OF FORUM GROUP means parent group of topic */}
                     </p>
                 </div>
             </div>
@@ -36,4 +36,4 @@ function ThreadHeader () {
     );
 }
 
-export default ThreadHeader;
+export default TopicHeader;
