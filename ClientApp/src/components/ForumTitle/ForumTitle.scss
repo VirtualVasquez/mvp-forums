@@ -1,36 +1,43 @@
-.group-title{
+.forum-title {
     width: 100%;
     border: solid 1px gray;
     padding: 1.5rem 1rem;
     margin-bottom: 2rem;
-    .row{
+
+    .row {
         padding: 0 1rem;
-        &.row-one{
+
+        &.row-one {
             display: flex;
             justify-content: space-between;
         }
-        &.row-two{
-            margin-top:1rem;
+
+        &.row-two {
+            margin-top: 1rem;
         }
     }
-    .threads-quantity{
+
+    .threads-quantity {
         display: flex;
         align-items: center;
-        @media (max-width: 600px){
-            display:none;
+
+        @media (max-width: 600px) {
+            display: none;
         }
-        .span-wrapper{
+
+        .span-wrapper {
             background-color: lightgray;
             padding: 2px;
             padding: 0.25rem .5rem;
-            .threads_label{
+
+            .threads_label {
                 padding: 0 1rem 0 0.5rem;
             }
-            .threads_number{
+
+            .threads_number {
                 padding: 0 0.5rem;
                 background-color: white;
             }
         }
-        
     }
 }

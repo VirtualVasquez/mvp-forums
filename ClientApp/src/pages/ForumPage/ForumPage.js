@@ -10,7 +10,6 @@ function ForumPage() {
     console.log(`ForumPage rendered with ${id} and ${slug}`)
     return (
       <div className="forum-page">
-        <p>just a test</p>
         <ForumTitle />
         <ForumThreadList />
       </div>

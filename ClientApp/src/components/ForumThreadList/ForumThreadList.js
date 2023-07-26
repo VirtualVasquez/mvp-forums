@@ -7,7 +7,7 @@ import './ForumThreadList.scss';
 function ForumThreadList () {
 
     return (
-      <div className="Forum-thread-list">
+      <div className="forum-thread-list">
         <Pagination />
         <ul>
             {/* Map over number of threads here, no more than 10 Items*/}
