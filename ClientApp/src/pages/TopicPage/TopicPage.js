@@ -21,6 +21,6 @@ function TopicPage () {
         <ReplyForm />      
       </div>
     );
-}
+} 
 
 export default TopicPage;

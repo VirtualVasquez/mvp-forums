@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import HomePage from './pages/HomePage/HomePage';
 import ForumPage from './pages/ForumPage/ForumPage';
 import TopicPage from './pages/TopicPage/TopicPage';
+import CreateTopicPage from './pages/CreateTopicPage/CreateTopicPage';
 import axios from "axios";
 
 
@@ -64,8 +65,9 @@ function App() {
           <Route
            exact path="/home"
            element={
-               <Protected localToken={localToken}>
-              <HomePage />
+            <Protected localToken={localToken}>
+              {/* <HomePage /> */}
+              <CreateTopicPage />
             </Protected>
            }
           />
@@ -78,7 +80,8 @@ function App() {
            }
           />
           <Route
-           exact path="/topic/:id/:slug"
+           //exact path="/topic/:id/:slug"
+           exact path="/topic"
            element={
             <Protected localToken={localToken}>
                 <TopicPage />
