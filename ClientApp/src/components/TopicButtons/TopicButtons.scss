@@ -1,0 +1,33 @@
+.button-container{
+    display: flex;
+    justify-content: end;
+}
+
+button{
+    margin-bottom: 2rem;
+    padding: 1rem 2rem;
+    @media (max-width: 768px){
+        width: 100%;
+    }
+    &:first-child{
+        border-color: white;
+        background-color: white;
+        a:hover{
+            text-decoration: none;
+        }        
+    }
+    &:nth-child(2){
+        margin-left: 1rem;
+    }
+    &:only-child, &:nth-child(2){
+        color:white;
+        background-color: blue;
+        a{
+            color:white;
+        }
+        a:hover{
+            text-decoration: none;
+        } 
+    }
+
+}

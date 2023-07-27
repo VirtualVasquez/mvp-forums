@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import ForumTitle from '../../components/ForumTitle/ForumTitle';
-import ForumThreadList from '../../components/ForumThreadList/ForumThreadList'
+import ForumThreadList from '../../components/ForumThreadList/ForumThreadList';
+import TopicButtons from '../../components/TopicButtons/TopicButtons';
 import './ForumPage.scss';
 
 function ForumPage() {
@@ -30,10 +31,13 @@ function ForumPage() {
     
     return (
       <div className="forum-page">
-            <ForumTitle
-                title={forum.title}
-                description={forum.description}
-            />
+        <ForumTitle
+            title={forum.title}
+            description={forum.description}
+        />
+        <TopicButtons 
+            pageType="forum"
+        />
         <ForumThreadList />
       </div>
     );
