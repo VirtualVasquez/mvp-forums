@@ -66,8 +66,7 @@ function App() {
            exact path="/home"
            element={
             <Protected localToken={localToken}>
-              {/* <HomePage /> */}
-              <CreateTopicPage />
+              <HomePage />
             </Protected>
            }
           />
@@ -80,8 +79,7 @@ function App() {
            }
           />
           <Route
-           //exact path="/topic/:id/:slug"
-           exact path="/topic"
+           exact path="/topic/:id/:slug"
            element={
             <Protected localToken={localToken}>
                 <TopicPage />
