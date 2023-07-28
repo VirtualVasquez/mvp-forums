@@ -16,7 +16,7 @@ const ForumListItem = ({ id, title, description, slug }) => {
             <div className="forumItem-main">
                 <h4 className="forumItem_title">
                     <Link to={`/forum/${id}/${slug}`}>
-                        {title}                        
+                        {title}                       
                     </Link>
                 </h4>
                 <div className="forumItem_meta">

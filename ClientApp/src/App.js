@@ -71,6 +71,14 @@ function App() {
            }
           />
           <Route
+            path="/forum/:id/:slug/addTopic"
+            element={
+            <Protected localToken={localToken}>
+               <CreateTopicPage />
+            </Protected>
+            }
+          />
+          <Route
            path="/forum/:id/:slug"
            element={
             <Protected localToken={localToken}>

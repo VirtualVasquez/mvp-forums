@@ -1,16 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './TopicButtons.scss'
 
+function NewTopicButton(id, slug){
 
-
-function NewTopicButton(){
     return(
+        <Link to={`/forum/${id}/${slug}/addTopic`}>
         <button>
-            <Link>
                 <strong>START NEW TOPIC</strong>
-            </Link>
         </button>
+        </Link>
+
     )
 }
 
@@ -32,19 +32,32 @@ function ReplyToTopicButton(){
 
 
 function TopicButtons ({pageType, statusOpen}) {
+    
+    let {id, slug} = useParams();
 
     if (pageType == "forum"){
         return(            
             <div className="button-container">
-                <NewTopicButton />
+                <NewTopicButton 
+                    id={id}
+                    slug={slug}
+                />
             </div>
         )
     }
 
     if (pageType == "topic"){
+        //may need to change how this is setup later
+        //if button exists on "topic" page, param values will
+        //be of topic, not forum.
+        //need to ensure values of the forum are correctly 
+        //being passed through and used.
         return (
             <div className="button-container">
-              <NewTopicButton />
+              <NewTopicButton 
+                id={id}
+                slug={slug}
+              />
               { statusOpen ? <ReplyToTopicButton /> : null}
             </div>
         );
