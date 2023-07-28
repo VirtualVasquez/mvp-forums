@@ -7,8 +7,9 @@ import TopicButtons from '../../components/TopicButtons/TopicButtons';
 import './ForumPage.scss';
 
 function ForumPage() {
-    const { id } = useParams();
+    const { forum_id } = useParams();
     const [forum, setForum] = useState(null);
+    const [topics, setTopics] = useState(null);
 
 
     async function GetForumById(forumId) {
@@ -22,7 +23,7 @@ function ForumPage() {
     }
 
     useEffect(() => {
-        GetForumById(id);
+        GetForumById(forum_id);
     }, []);
 
     if (forum === null) {

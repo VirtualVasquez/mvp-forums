@@ -71,7 +71,7 @@ function App() {
            }
           />
           <Route
-            path="/forum/:id/:slug/addTopic"
+            path="/forum/:forum_id/:forum_slug/addTopic"
             element={
             <Protected localToken={localToken}>
                <CreateTopicPage />
@@ -79,7 +79,7 @@ function App() {
             }
           />
           <Route
-           path="/forum/:id/:slug"
+           path="/forum/:forum_id/:forum_slug"
            element={
             <Protected localToken={localToken}>
                <ForumPage />
@@ -87,7 +87,7 @@ function App() {
            }
           />
           <Route
-           exact path="/topic/:id/:slug"
+           exact path="/topic/:topic_id/:topic_slug"
            element={
             <Protected localToken={localToken}>
                 <TopicPage />
