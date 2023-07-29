@@ -97,5 +97,21 @@ namespace Topic.Controllers
             // Perform the necessary database query to check for the existence of the slug
             return _dbContext.Topics.Any(t => t.UserId == userId && t.Slug == slug);
         }
+
+        [HttpGet("[action]/{id}")]
+        public IActionResult AllTopicsByForumId(int id)
+        {
+            try
+            {
+                // Find the topics that match the specified forum_id
+                var topics = _dbContext.Topics.Where(t => t.ForumId == id).ToList();
+
+                return Ok(topics);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while fethcing the corresponding topics: {ex.Message}");
+            }
+        }
     }
 }

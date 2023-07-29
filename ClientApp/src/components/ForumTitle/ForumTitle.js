@@ -4,8 +4,10 @@ import { useParams } from 'react-router-dom';
 import './ForumTitle.scss';
 
 function ForumTitle({title, description }) {
+    
+    const [topicsQuantity, setTopicsQuantity] = useState(0);
 
-
+    
 
     return (
         <div className="forum-title">
@@ -17,7 +19,7 @@ function ForumTitle({title, description }) {
                     Topics
                 </span>
                 <span className="topics_number">
-                    XXX
+                    {topicsQuantity}
                 </span>
                 </span>
             </div>
