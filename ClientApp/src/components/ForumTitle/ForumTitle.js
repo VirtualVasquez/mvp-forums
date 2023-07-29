@@ -3,11 +3,7 @@ import axios from "axios";
 import { useParams } from 'react-router-dom';
 import './ForumTitle.scss';
 
-function ForumTitle({title, description }) {
-    
-    const [topicsQuantity, setTopicsQuantity] = useState(0);
-
-    
+function ForumTitle({title, description, topicsTotal }) {    
 
     return (
         <div className="forum-title">
@@ -19,7 +15,7 @@ function ForumTitle({title, description }) {
                     Topics
                 </span>
                 <span className="topics_number">
-                    {topicsQuantity}
+                    {topicsTotal}
                 </span>
                 </span>
             </div>

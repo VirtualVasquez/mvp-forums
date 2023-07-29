@@ -104,7 +104,11 @@ namespace Topic.Controllers
             try
             {
                 // Find the topics that match the specified forum_id
-                var topics = _dbContext.Topics.Where(t => t.ForumId == id).ToList();
+                var topics = _dbContext
+                    .Topics
+                    .Where(t => t.ForumId == id)
+                    .OrderByDescending(t => t.DateCreated)
+                    .ToList();          
 
                 return Ok(topics);
             }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import ForumTitle from '../../components/ForumTitle/ForumTitle';
-import ForumThreadList from '../../components/ForumThreadList/ForumThreadList';
+import ForumTopicList from '../../components/ForumTopicList/ForumTopicList';
 import TopicButtons from '../../components/TopicButtons/TopicButtons';
 import './ForumPage.scss';
 
@@ -22,8 +22,19 @@ function ForumPage() {
         }
     }
 
+    async function GetTopicsByForumId(forumId) {
+        try {
+            await axios.get(`/api/Topic/AllTopicsByForumId/${forumId}`).then(response => {
+                setTopics(response.data);
+            })
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     useEffect(() => {
         GetForumById(forum_id);
+        GetTopicsByForumId(forum_id);
     }, []);
 
     if (forum === null) {
@@ -35,11 +46,12 @@ function ForumPage() {
         <ForumTitle
             title={forum.title}
             description={forum.description}
+            topicsTotal={topics ? topics.length : 0}
         />
         <TopicButtons 
             pageType="forum"
         />
-        <ForumThreadList />
+        <ForumTopicList />
       </div>
     );
 }
