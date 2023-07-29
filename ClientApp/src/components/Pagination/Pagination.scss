@@ -25,6 +25,15 @@
                     background-color: lightslategray;
                 }
             }
+            &.toFirstPage{
+                i{
+                    &:before{
+                        font-size:1rem;
+                        color:black;
+                        content:"\00AB";
+                    }
+                }
+            }
             &.toLastPage{
                 i{
                     &:before{

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from 'react-router-dom';
 import ForumTitle from '../../components/ForumTitle/ForumTitle';
 import ForumTopicList from '../../components/ForumTopicList/ForumTopicList';
+import Pagination from '../../components/Pagination/Pagination';
 import TopicButtons from '../../components/TopicButtons/TopicButtons';
 import './ForumPage.scss';
 
@@ -10,6 +11,11 @@ function ForumPage() {
     const { forum_id } = useParams();
     const [forum, setForum] = useState(null);
     const [topics, setTopics] = useState(null);
+
+    //suggested structure
+    const [currentPage, setCurrentPage] = useState(1);
+    const [paginatedTopics, setPaginatedTopics] = useState([]);
+    const [totalPages, setTotalPages] = useState(1);
 
 
     async function GetForumById(forumId) {
@@ -51,7 +57,11 @@ function ForumPage() {
         <TopicButtons 
             pageType="forum"
         />
-        <ForumTopicList />
+        <Pagination />
+        <ForumTopicList 
+            topics={topics}
+        />
+        <Pagination />
       </div>
     );
 }
