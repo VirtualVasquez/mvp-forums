@@ -55,6 +55,8 @@ namespace Topic.Controllers
             //set the DateCreated property to the current UTC timestamp
             topic.DateCreated = DateTime.UtcNow;
 
+            topic.Open = true;
+
             using var transaction = _dbContext.Database.BeginTransaction();
 
             try
@@ -62,7 +64,11 @@ namespace Topic.Controllers
                 _dbContext.Topics.Add(topic);
                 _dbContext.SaveChanges();
                 transaction.Commit();
-                return Ok("A new topic has been added to the forum successfully.");
+                return Ok
+                (new 
+                 { topicId = topic.Id,
+                   topicSlug = topic.Slug
+                 });
             }
             catch (Exception ex) 
             {

@@ -255,10 +255,13 @@ namespace User.Controllers
                 string actualAccessToken = accessToken.Substring(7); // "Bearer ".Length = 7
 
                 // Check if the access token is valid
-                bool isValidToken = IsAccessTokenValid(actualAccessToken);
-                if (isValidToken)
+                if (IsAccessTokenValid(actualAccessToken))
                 {
-                    return Ok("Valid access token");
+                    int userId = (int)GetUserIdFromAccessToken(actualAccessToken);
+                    return Ok(new 
+                    { message = "Valid access token", 
+                      userId = userId
+                    });
                 }
             }
             return BadRequest("Invalid access token");
