@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import { useParams } from 'react-router-dom';
 import './ForumTitle.scss';
 
 function ForumTitle({title, description }) {
+
+
 
     return (
         <div className="forum-title">
             <div className="row row-one">
                 <h1>{title}</h1>
-            <div className="threads-quantity">
-
+            <div className="topics-quantity">
                 <span className="span-wrapper">
-                <span className="threads_label">
-                    Threads
+                <span className="topics_label">
+                    Topics
                 </span>
-                <span className="threads_number">
+                <span className="topics_number">
                     XXX
                 </span>
                 </span>
-
             </div>
             </div>
             <div className="row row-two">

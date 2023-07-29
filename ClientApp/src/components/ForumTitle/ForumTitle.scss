@@ -17,7 +17,7 @@
         }
     }
 
-    .threads-quantity {
+    .topics-quantity {
         display: flex;
         align-items: center;
 
@@ -30,11 +30,11 @@
             padding: 2px;
             padding: 0.25rem .5rem;
 
-            .threads_label {
+            .topics_label {
                 padding: 0 1rem 0 0.5rem;
             }
 
-            .threads_number {
+            .topics_number {
                 padding: 0 0.5rem;
                 background-color: white;
             }
