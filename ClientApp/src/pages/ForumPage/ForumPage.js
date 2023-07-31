@@ -8,11 +8,11 @@ import TopicButtons from '../../components/TopicButtons/TopicButtons';
 import './ForumPage.scss';
 
 function ForumPage() {
-    const { forum_id } = useParams();
+    const { forum_id, forum_slug, page_number} = useParams();
 
     const [forum, setForum] = useState(null);
 
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(page_number ? page_number : 1);
     const [totalPages, setTotalPages] = useState(1);
     const [totalForumTopics, setTotalForumTopics] = useState(0);
     const [paginatedTopics, setPaginatedTopics] = useState(null);
@@ -43,7 +43,7 @@ function ForumPage() {
     useEffect(() => {
         GetForumById(forum_id);
         GetTopicsByForumId(forum_id);
-    }, []);
+    }, [currentPage]);
 
     if (forum === null) {
         return <div>Loading forum ...</div>
@@ -61,16 +61,20 @@ function ForumPage() {
         />
         <Pagination 
             currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
             totalPages={totalPages}
+            id={forum_id}
+            slug={forum_slug}
+            pageType="forum"
         />
         <ForumTopicList 
             topics={paginatedTopics}
         />
         <Pagination 
             currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
             totalPages={totalPages}
+            id={forum_id}
+            slug={forum_slug}
+            pageType="forum"
         />
       </div>
     );
