@@ -9,14 +9,13 @@ import './ForumPage.scss';
 
 function ForumPage() {
     const { forum_id } = useParams();
+
     const [forum, setForum] = useState(null);
-    const [topics, setTopics] = useState(null);
 
-    //suggested structure
     const [currentPage, setCurrentPage] = useState(1);
-    const [paginatedTopics, setPaginatedTopics] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
-
+    const [totalForumTopics, setTotalForumTopics] = useState(0);
+    const [paginatedTopics, setPaginatedTopics] = useState(null);
 
     async function GetForumById(forumId) {
         try {
@@ -29,10 +28,13 @@ function ForumPage() {
     }
 
     async function GetTopicsByForumId(forumId) {
+        const pageSize = 10;
         try {
-            await axios.get(`/api/Topic/AllTopicsByForumId/${forumId}`).then(response => {
-                setTopics(response.data);
-            })
+            const response = await axios.get(`/api/Topic/AllTopicsByForumId/${forumId}?page=${currentPage}&pageSize=${pageSize}`);
+            const { totalTopics, totalPages, topics } = response.data;
+            setTotalPages(totalPages);
+            setTotalForumTopics(totalTopics);
+            setPaginatedTopics(topics);
         } catch (error) {
             console.error(error);
         }
@@ -52,14 +54,14 @@ function ForumPage() {
         <ForumTitle
             title={forum.title}
             description={forum.description}
-            topicsTotal={topics ? topics.length : 0}
+            topicsTotal={totalForumTopics}
         />
         <TopicButtons 
             pageType="forum"
         />
         <Pagination />
         <ForumTopicList 
-            topics={topics}
+            topics={paginatedTopics}
         />
         <Pagination />
       </div>
