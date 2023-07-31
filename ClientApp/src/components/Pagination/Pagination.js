@@ -76,10 +76,27 @@ function EndPagesButton ({toFirstPage}){
 
 function Pagination ({currentPage, setCurrentPage, totalPages}) {
 
+  const renderNumbers = () => {
+    const links = [];
+    let startingNumber = totalPages < 5 ? 1 : currentPage;
+    let endingNumber = totalPages < 5 ? totalPages : startingNumber + 4;
+
+    for (let i = startingNumber; i <= endingNumber; i++){
+      links.push(
+        <a 
+          key={i}           
+          className={i == currentPage ? "active" : null}
+        >
+          {i}
+        </a>
+      );
+    }
+    return links
+  } 
+
     return (
       <div className="pagination">
         <div className="page-numbers">
-            {/* Produce only 5 links of pages */}
             {currentPage == 1 ? 
             null :
             <div>
@@ -92,14 +109,7 @@ function Pagination ({currentPage, setCurrentPage, totalPages}) {
               />
             </div>
             }
-            
-            <a className="active">1</a>
-            <a>2</a>
-            <a>3</a>
-            <a>4</a>
-            <a>5</a>
-
-
+            {renderNumbers()}            
             {currentPage == totalPages ? 
             null :
             <div>
