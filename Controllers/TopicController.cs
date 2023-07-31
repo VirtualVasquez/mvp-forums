@@ -99,15 +99,19 @@ namespace Topic.Controllers
         }
 
         [HttpGet("[action]/{id}")]
-        public IActionResult AllTopicsByForumId(int id)
+        public IActionResult AllTopicsByForumId(int id, int page = 1, int pageSize = 10)
         {
             try
             {
+                Console.WriteLine("Page number: " + page);
+                Console.WriteLine("Page Size: " + pageSize);
+
                 // Find the topics that match the specified forum_id
                 var topics = _dbContext
                     .Topics
                     .Where(t => t.ForumId == id)
                     .OrderByDescending(t => t.DateCreated)
+                    .Skip((page - 1) * pageSize)
                     .ToList();          
 
                 return Ok(topics);

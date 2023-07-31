@@ -73,7 +73,7 @@ namespace my_new_app
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             // Add the catch-all route to serve the React app
             app.Use(async (context, next) =>
@@ -111,15 +111,6 @@ namespace my_new_app
                 }
             });
 
-
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
         }
     }
 }
