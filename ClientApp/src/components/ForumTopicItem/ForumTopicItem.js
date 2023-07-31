@@ -1,19 +1,38 @@
 import React from 'react';
 import './ForumTopicItem.scss';
 
-function ForumTopicItem () {
+function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug}) {
+
+    //need endpoint to fetch username by userId
+    
+    //need endpoint to capture the number of replies made to topic
+    
+    //need endpoint to fetch username of the last person to reply to the forum.
+    
+    //need endpoint to fetch number of views based on topicId
+
+    const formatDate = (isoDate) => {
+        const dateObj = new Date(isoDate);
+        const formattedDate = dateObj.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
+        return formattedDate;
+    }
 
     return (
         <li className="forumTopicItem">
             <div className="forumTopicItem-main">
                 <h4 className="forumTopicItem_title">
                     <a href="/">
-                    Forum Forum Title                        
+                    {title}                       
                     </a>
                 </h4>
                 <div className="forumTopicItem_author">
                 <a>
-                    By USERNAME, DATE OF CREATION (MMMM DD, YYYY)
+                    By {userId}, {formatDate(dateCreated)}
+                    {/* By USERNAME, DATE OF CREATION (MMMM DD, YYYY) */}
                 </a>
                 </div>
             </div>
