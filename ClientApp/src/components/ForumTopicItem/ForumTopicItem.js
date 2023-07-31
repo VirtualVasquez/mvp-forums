@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import './ForumTopicItem.scss';
 
 function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug}) {
 
-    //need endpoint to fetch username by userId
+    const [topicCreator, setTopicCreator] = useState(null);
+
+    async function getUsernameById(id){
+        try{
+            await axios.get(`/api/User/NameById/${id}`).then(response => {
+                setTopicCreator(response.data);
+            })
+        } catch (error){
+            console.error(error);
+        }
+    };
     
     //need endpoint to capture the number of replies made to topic
     
@@ -21,6 +32,10 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug}) {
         return formattedDate;
     }
 
+    useEffect(() => {
+        getUsernameById(userId);
+    }, []);
+
     return (
         <li className="forumTopicItem">
             <div className="forumTopicItem-main">
@@ -31,7 +46,7 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug}) {
                 </h4>
                 <div className="forumTopicItem_author">
                 <a>
-                    By {userId}, {formatDate(dateCreated)}
+                    By {topicCreator}, {formatDate(dateCreated)}
                     {/* By USERNAME, DATE OF CREATION (MMMM DD, YYYY) */}
                 </a>
                 </div>
