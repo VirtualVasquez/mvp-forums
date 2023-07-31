@@ -40,14 +40,13 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug}) {
         <li className="forumTopicItem">
             <div className="forumTopicItem-main">
                 <h4 className="forumTopicItem_title">
-                    <a href="/">
+                    <a href={`topic/${topicId}/${slug}`}>
                     {title}                       
                     </a>
                 </h4>
                 <div className="forumTopicItem_author">
                 <a>
                     By {topicCreator}, {formatDate(dateCreated)}
-                    {/* By USERNAME, DATE OF CREATION (MMMM DD, YYYY) */}
                 </a>
                 </div>
             </div>

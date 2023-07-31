@@ -8,7 +8,6 @@ function ForumTopicList ({topics}) {
     return (
       <div className="forum-topic-list">
         <ul>
-            {/* Map over number of topics here, no more than 10 Items*/}
             {Array.isArray(topics) ? topics.map(topic => {
               return(
                 <ForumTopicItem 
