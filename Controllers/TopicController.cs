@@ -107,14 +107,27 @@ namespace Topic.Controllers
                 Console.WriteLine("Page Size: " + pageSize);
 
                 // Find the topics that match the specified forum_id
-                var topics = _dbContext
+                var query = _dbContext
                     .Topics
                     .Where(t => t.ForumId == id)
-                    .OrderByDescending(t => t.DateCreated)
-                    .Skip((page - 1) * pageSize)
-                    .ToList();          
+                    .OrderByDescending(t => t.DateCreated); // Reverted to descending order
 
-                return Ok(topics);
+                var totalTopics = query.Count();
+                var totalPages = (int)Math.Ceiling(totalTopics / (double)pageSize);
+
+                var topics = query
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                var response = new
+                {
+                    TotalTopics = totalTopics,
+                    TotalPages = totalPages,
+                    Topics = topics
+                };
+
+                return Ok(response);
             }
             catch (Exception ex)
             {
