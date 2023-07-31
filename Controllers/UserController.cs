@@ -295,5 +295,28 @@ namespace User.Controllers
             }
         }
 
+        [HttpGet("[action]/{id}")]
+        public IActionResult NameById(int id)
+        {
+            try{
+                var user = _dbContext.Users
+                    .Where(u => u.Id == id)
+                    .Select(u => u.Username)
+                    .FirstOrDefault();  
+
+                if (user != null)
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return NotFound("User not found.");
+                }
+            } catch (Exception ex) {
+                return BadRequest($"An error occurred while fetching the username: {ex.Message}");
+            }
+
+        }
+
     }
 }
