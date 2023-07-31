@@ -59,11 +59,19 @@ function ForumPage() {
         <TopicButtons 
             pageType="forum"
         />
-        <Pagination />
+        <Pagination 
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+        />
         <ForumTopicList 
             topics={paginatedTopics}
         />
-        <Pagination />
+        <Pagination 
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+        />
       </div>
     );
 }
