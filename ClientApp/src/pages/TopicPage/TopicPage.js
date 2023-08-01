@@ -16,7 +16,7 @@ function TopicPage () {
   const [totalPages, setTotalPages] = useState(1);
   const [paginatedPosts, setPaginatedPosts] = useState(null);
 
-  async function getTopicById(topicId) {
+  async function GetTopicById(topicId) {
     try{
       await axios.get(`/api/topic/TopicById/${topicId}`).then( response => {
         setTopic(response.data);
@@ -26,20 +26,39 @@ function TopicPage () {
     }
   }
 
+  const formatDate = (isoDate) => {
+    const dateObj = new Date(isoDate);
+    const formattedDate = dateObj.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+    return formattedDate;
+}
+
   // //Need to setup the endpoint and table for this.
   // async function getPostsByTopicId(topicId){
 
   // }
 
   useEffect(() => {
-    getTopicById(topic_id);
-    //getPostsByTopicId(topicId);
+    GetTopicById(topic_id);
+    ////getPostsByTopicId(topicId);
   }, [currentPage]);
 
+  if (topic === null){
+    return <div>Loading forum ...</div>
+  }
 
     return (
       <div className="topic-page">
-        <TopicHeader />
+        <TopicHeader
+          title={topic.title}
+          userId={topic.userId}
+          forumId={topic.forumId}
+          dateCreated={topic.dateCreated}
+          formatDate={formatDate}
+        />
         <TopicButtons 
             pageType="topic"
             statusOpen={true}
