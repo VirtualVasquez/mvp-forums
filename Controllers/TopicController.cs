@@ -134,5 +134,25 @@ namespace Topic.Controllers
                 return StatusCode(500, $"An error occurred while fethcing the corresponding topics: {ex.Message}");
             }
         }
+        
+        [HttpGet("[action]/{id}")]
+        public IActionResult TopicById(int id)
+        {
+            try{
+                var topic = _dbContext.Topics.FirstOrDefault(t => t.Id == id);
+            
+                if(topic == null)
+                {
+                    return NotFound("Topic not found.");
+                }
+                else{
+                    return Ok(topic);
+                }
+
+            } catch(Exception ex) 
+            {
+                return BadRequest($"An error occurred while fetching the topic: {ex.Message}");
+            }
+        }
     }
 }

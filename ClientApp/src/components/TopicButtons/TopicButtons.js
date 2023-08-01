@@ -46,7 +46,6 @@ function TopicButtons ({pageType, statusOpen}) {
     }
 
     if (pageType == "topic"){
-        console.log("page type topic");
         //may need to change how this is setup later
         //if button exists on "topic" page, param values will
         //be of topic, not forum.

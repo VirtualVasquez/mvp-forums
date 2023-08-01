@@ -92,6 +92,14 @@ function App() {
             <Protected localToken={localToken}>
                <ForumPage />
             </Protected>
+           }           
+          />
+          <Route
+           exact path="/topic/:topic_id/:topic_slug/page/:page_number"
+           element={
+            <Protected localToken={localToken}>
+                <TopicPage />
+            </Protected>
            }
           />
           <Route
