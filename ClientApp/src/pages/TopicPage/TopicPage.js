@@ -43,7 +43,7 @@ function TopicPage () {
     } catch (error){
         console.error(error);
     }
-};
+  };
 
   useEffect(() => {
     GetTopicById(topic_id);
@@ -53,50 +53,51 @@ function TopicPage () {
     return <div>Loading forum ...</div>
   }
 
-    return (
-      <div className="topic-page">
-        <TopicHeader
-          title={topic.title}
-          userId={topic.userId}
-          forumId={topic.forumId}
-          dateCreated={topic.dateCreated}
-          formatDate={formatDate}
-          topicAuthor={topicAuthor}
-          getUsernameById={getUsernameById}
-          setAuthor={setAuthor}
-        />
-        <TopicButtons 
-            pageType="topic"
-            statusOpen={true}
-        />
-        <Pagination 
-          currentPage={currentPage}
-          totalPages={totalPages}
-          id={topic_id}
-          slug={topic_slug}
+  return (
+    <div className="topic-page">
+      <TopicHeader
+        title={topic.title}
+        userId={topic.userId}
+        forumId={topic.forumId}
+        dateCreated={topic.dateCreated}
+        formatDate={formatDate}
+        topicAuthor={topicAuthor}
+        getUsernameById={getUsernameById}
+        setAuthor={setAuthor}
+      />
+      <TopicButtons 
           pageType="topic"
-        />
-        <Topic
-          topicAuthor={topicAuthor}
-          topicId={topic_id}
-          topicSlug={topic_slug}
-          currentPage={currentPage}
-          setTotalPages={setTotalPages}
-          setTotalTopicPosts={setTotalTopicPosts}
-          topicText={topic.text}
-          dateCreated={topic.dateCreated}
-          formatDate={formatDate}
-          getUsernameById={getUsernameById}
-        />
-        <Pagination 
-          currentPage={currentPage}
-          totalPages={totalPages}
-          id={topic_id}
-          slug={topic_slug}
-          pageType="topic"
-        />        <ReplyForm />      
-      </div>
-    );
+          statusOpen={true}
+      />
+      <Pagination 
+        currentPage={currentPage}
+        totalPages={totalPages}
+        id={topic_id}
+        slug={topic_slug}
+        pageType="topic"
+      />
+      <Topic
+        topicAuthor={topicAuthor}
+        topicId={topic_id}
+        topicSlug={topic_slug}
+        currentPage={currentPage}
+        setTotalPages={setTotalPages}
+        setTotalTopicPosts={setTotalTopicPosts}
+        topicText={topic.text}
+        dateCreated={topic.dateCreated}
+        formatDate={formatDate}
+        getUsernameById={getUsernameById}
+      />
+      <Pagination 
+        currentPage={currentPage}
+        totalPages={totalPages}
+        id={topic_id}
+        slug={topic_slug}
+        pageType="topic"
+      />        
+      <ReplyForm />      
+    </div>
+  );
 } 
 
 export default TopicPage;
