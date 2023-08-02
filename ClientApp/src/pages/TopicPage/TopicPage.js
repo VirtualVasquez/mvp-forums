@@ -12,9 +12,9 @@ function TopicPage () {
   const { topic_id, topic_slug, page_number} = useParams();
 
   const [topic, setTopic] = useState(null);
-  const [currentPage, setCurrentPage] = useState(page_number ? page_number : 1);  
+  const [topicAuthor, setAuthor] = useState(null);
+  const [currentPage] = useState(page_number ? page_number : 1);  
   const [totalPages, setTotalPages] = useState(1);
-  const [paginatedPosts, setPaginatedPosts] = useState(null);
 
   async function GetTopicById(topicId) {
     try{
@@ -36,14 +36,8 @@ function TopicPage () {
     return formattedDate;
 }
 
-  // //Need to setup the endpoint and table for this.
-  // async function getPostsByTopicId(topicId){
-
-  // }
-
   useEffect(() => {
     GetTopicById(topic_id);
-    ////getPostsByTopicId(topicId);
   }, [currentPage]);
 
   if (topic === null){
@@ -58,6 +52,8 @@ function TopicPage () {
           forumId={topic.forumId}
           dateCreated={topic.dateCreated}
           formatDate={formatDate}
+          topicAuthor={topicAuthor}
+          setAuthor={setAuthor}
         />
         <TopicButtons 
             pageType="topic"
@@ -70,7 +66,16 @@ function TopicPage () {
           slug={topic_slug}
           pageType="topic"
         />
-        <Topic />
+        <Topic
+          topicAuthor={topicAuthor}
+          topicId={topic_id}
+          topicSlug={topic_slug}
+          pageNumber={page_number}
+          setTotalPages={setTotalPages}
+          topicText={topic.text}
+          dateCreated={topic.dateCreated}
+          formatDate={formatDate}
+        />
         <Pagination 
           currentPage={currentPage}
           totalPages={totalPages}

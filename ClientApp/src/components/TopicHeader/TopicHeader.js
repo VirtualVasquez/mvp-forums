@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './TopicHeader.scss';
 
-function TopicHeader ({title, userId, forumId, dateCreated, formatDate}) {
+function TopicHeader ({title, userId, forumId, dateCreated, formatDate, topicAuthor, setAuthor}) {
 
-    const [author, setAuthor] = useState(null);
     const [forum, setForum] = useState(null);
 
     async function getUsernameById(id){
@@ -43,7 +42,7 @@ function TopicHeader ({title, userId, forumId, dateCreated, formatDate}) {
                     <p>
                         <strong>
                             By <span className="info_author_name">
-                                {author}
+                                {topicAuthor}
                             </span>
                         </strong>
                     </p>
