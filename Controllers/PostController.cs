@@ -64,19 +64,19 @@ namespace Topic.Controllers
                     .Where(p => p.TopicId == id)
                     .OrderByDescending(p => p.DateCreated); // Sorted in descending order
 
-                var totalTopics = query.Count();
-                var totalPages = (int)Math.Ceiling(totalTopics / (double)pageSize);
+                var totalPosts = query.Count();
+                var totalPages = (int)Math.Ceiling(totalPosts / (double)pageSize);
 
-                var topics = query
+                var posts = query
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToList();
 
                 var response = new
                 {
-                    TotalTopics = totalTopics,
+                    TotalPosts = totalPosts,
                     TotalPages = totalPages,
-                    Topics = topics
+                    Posts = posts
                 };
 
                 return Ok(response);
