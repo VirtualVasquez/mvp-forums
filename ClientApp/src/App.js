@@ -38,7 +38,10 @@ function App() {
         if (localToken) {
             verifyAccessToken(localToken).then((verified) => {
                 if (!verified) {
+                    localStorage.removeItem('mvp_forums_active_id', verified.data.userId) 
                     return localStorage.removeItem('mvp_forums_access_token');
+                } else { 
+                  localStorage.setItem('mvp_forums_active_id', verified.data.userId) 
                 }
             })
         }

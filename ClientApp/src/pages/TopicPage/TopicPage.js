@@ -95,7 +95,9 @@ function TopicPage () {
         slug={topic_slug}
         pageType="topic"
       />        
-      <ReplyForm />      
+      <ReplyForm 
+        getUsernameById={getUsernameById}
+      />      
     </div>
   );
 } 
