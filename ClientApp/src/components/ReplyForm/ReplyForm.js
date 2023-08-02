@@ -4,11 +4,32 @@ import './ReplyForm.scss';
 
 function ReplyForm ({getUsernameById}) {
 
+    const [activeId] = useState(localStorage.getItem('mvp_forums_active_id'))
     const [loggedInUsername, setloggedInUsername] = useState(null);
+
+    async function addPost (text, topicId, userId){
+        try {
+            const response = await axios.post('/api/Post/AddPost', {
+                Text: text,
+                TopicId: topicId,
+                UserId: userId
+            })
+            //may need to implement navigation?
+        } catch (error) {
+            throw new Error (`An error occurred while making the request: ${error.message}`)
+        }
+    }
+
+    async function handleSubmit(event){
+        event.preventDefault();
+        console.log("need logic here");
+        // try{
+        // }
+    }
+
 
     useEffect(() => {
         async function fetchData() {
-            let activeId = localStorage.getItem('mvp_forums_active_id');
             let activeUsername = await getUsernameById(activeId);
             setloggedInUsername(activeUsername);
         }
@@ -17,7 +38,10 @@ function ReplyForm ({getUsernameById}) {
 
     return(
         <div className="reply-form-wrapper">
-            <form id="reply-form">
+            <form 
+                id="reply-form"
+                onSubmit={handleSubmit}
+            >
                 <div className="row-one">
                     <div className="authorized-user">
                         <i className="user_picture"></i>
@@ -28,7 +52,13 @@ function ReplyForm ({getUsernameById}) {
                     <textarea></textarea>
                 </div>
                 <div className="row-two">
-                    <button><strong>SUBMIT REPLY</strong></button> 
+                    <button
+                        type="submit"
+                    >
+                        <strong>
+                            SUBMIT REPLY
+                        </strong>
+                    </button> 
                 </div>
             </form>
         </div>
