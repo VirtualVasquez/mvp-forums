@@ -13,7 +13,5 @@ public class AppDbContext : DbContext
     public DbSet<User.Data.Models.RefreshToken> RefreshTokens { get; set; }
     public DbSet<Forum.Data.Models.Forum> Forums { get; set; }
     public DbSet<Topic.Data.Models.Topic> Topics { get; set; }
-
-
-
+    public DbSet<Post.Data.Models.Post> Posts { get; set; }
 }
