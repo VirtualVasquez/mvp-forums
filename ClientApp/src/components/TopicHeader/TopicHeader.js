@@ -2,19 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './TopicHeader.scss';
 
-function TopicHeader ({title, userId, forumId, dateCreated, formatDate, topicAuthor, setAuthor}) {
+function TopicHeader ({title, userId, forumId, dateCreated, formatDate, topicAuthor, setAuthor, getUsernameById}) {
 
     const [forum, setForum] = useState(null);
 
-    async function getUsernameById(id){
-        try{
-            await axios.get(`/api/User/NameById/${id}`).then(response =>{
-              setAuthor(response.data);
-            })
-        } catch (error){
-            console.error(error);
-        }
-    };
+
 
     async function GetForumById(id) {
         try {
@@ -27,8 +19,12 @@ function TopicHeader ({title, userId, forumId, dateCreated, formatDate, topicAut
     }
     
     useEffect(() => {
-        getUsernameById(userId);
-        GetForumById(forumId)
+        async function fetchData() {
+            const username = await getUsernameById(userId);
+            setAuthor(username);
+            GetForumById(forumId);
+        }
+        fetchData();
     }, [])
     
     return (

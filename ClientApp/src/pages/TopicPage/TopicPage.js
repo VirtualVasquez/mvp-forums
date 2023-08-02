@@ -35,7 +35,15 @@ function TopicPage () {
         day: 'numeric',
     });
     return formattedDate;
-}
+  }
+  async function getUsernameById(id){
+    try{
+        const response = await axios.get(`/api/User/NameById/${id}`);
+        return response.data;
+    } catch (error){
+        console.error(error);
+    }
+};
 
   useEffect(() => {
     GetTopicById(topic_id);
@@ -54,6 +62,7 @@ function TopicPage () {
           dateCreated={topic.dateCreated}
           formatDate={formatDate}
           topicAuthor={topicAuthor}
+          getUsernameById={getUsernameById}
           setAuthor={setAuthor}
         />
         <TopicButtons 
