@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';import TopicPost from './TopicPost/TopicPost';
+import React, { useState, useEffect } from 'react';
+import TopicPost from './TopicPost/TopicPost';
 import axios from "axios";
 import './Topic.scss';
 
-function Topic ({topicAuthor, topicId, topicSlug, currentPage, setTotalPages, topicText, dateCreated, formatDate, setTotalTopicPosts}) {
+function Topic ({topicAuthor, topicId, topicSlug, currentPage, setTotalPages, topicText, dateCreated, formatDate, setTotalTopicPosts, getUsernameById}) {
 
     const [paginatedPosts, setPaginatedPosts] = useState(null);
-      // //Need to setup the endpoint and table for this.
-      
+
     async function getPostsByTopicId(id){
       const pageSize = 10;
       try {
@@ -28,22 +28,27 @@ function Topic ({topicAuthor, topicId, topicSlug, currentPage, setTotalPages, to
       <div className="topic">
         { currentPage == 1
         ? <TopicPost
-            topicAuthor={topicAuthor}         
             firstPost={true}
-            topicText={topicText}
+            topicAuthor={topicAuthor}         
+            text={topicText}
             dateCreated={dateCreated}
             formatDate={formatDate}
+            getUsernameById={getUsernameById}
           /> 
         : null }
         {/* map the posts here */}
         {Array.isArray(paginatedPosts) ? 
           paginatedPosts.map(post => {
             return(
-              <TopicPost 
+              <TopicPost
                 key={post.id}                              
-                postId={post.id}
+                firstPost={false}
+                text={post.text} 
                 dateCreated={dateCreated}
                 formatDate={formatDate}
+                getUsernameById={getUsernameById}
+                postId={post.id}
+                userId={post.userId}
               />
             )
           }) : null}

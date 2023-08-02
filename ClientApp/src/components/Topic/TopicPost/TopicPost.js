@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './TopicPost.scss';
 
-function TopicPost ({topicAuthor, firstPost, topicText, dateCreated, formatDate}) {
+function TopicPost ({firstPost, topicAuthor, text, dateCreated, formatDate, getUsernameById, postId, userId}) {
+
+    const [author, setAuthor] = useState(null);
+    const [postNumber, setPostNumber] = useState(firstPost ? 1 : null);
+
+    useEffect(() => {
+        async function fetchData() {
+            const username = await getUsernameById(userId);
+            setAuthor(username); 
+        }
+        firstPost ? setAuthor(topicAuthor) : fetchData();
+    })
 
     return (
       <div 
@@ -10,10 +21,11 @@ function TopicPost ({topicAuthor, firstPost, topicText, dateCreated, formatDate}
             "topic-post first-post" : 
             "topic-post"
             }
+        id={!firstPost ? id=`post-${postId}` : null}
       >
         <div className="post_author">
             <i className="author_picture"></i>
-            <p className="author_username">{firstPost ? topicAuthor : null}</p>
+            <p className="author_username">{author}</p>
         </div>
         <div className="post_contents">
             <div className="contents_meta">
@@ -21,11 +33,11 @@ function TopicPost ({topicAuthor, firstPost, topicText, dateCreated, formatDate}
                     Posted <span> {formatDate(dateCreated)}</span>
                 </p>
                 <p className="meta_post_number">
-                    Post #{firstPost ? 1 : null}
+                    Post #{postNumber}
                 </p>
             </div>
             <div className="contents_text">
-                {topicText}
+                {text}
             </div>
         </div>
       </div>

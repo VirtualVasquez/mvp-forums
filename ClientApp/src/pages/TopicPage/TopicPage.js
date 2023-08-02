@@ -86,6 +86,7 @@ function TopicPage () {
           topicText={topic.text}
           dateCreated={topic.dateCreated}
           formatDate={formatDate}
+          getUsernameById={getUsernameById}
         />
         <Pagination 
           currentPage={currentPage}
