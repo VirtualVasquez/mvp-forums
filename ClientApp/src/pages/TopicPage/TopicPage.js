@@ -15,6 +15,7 @@ function TopicPage () {
   const [topicAuthor, setAuthor] = useState(null);
   const [currentPage] = useState(page_number ? page_number : 1);  
   const [totalPages, setTotalPages] = useState(1);
+  const [totalTopicPosts, setTotalTopicPosts] = useState(null);
 
   async function GetTopicById(topicId) {
     try{
@@ -70,8 +71,9 @@ function TopicPage () {
           topicAuthor={topicAuthor}
           topicId={topic_id}
           topicSlug={topic_slug}
-          pageNumber={page_number}
+          currentPage={currentPage}
           setTotalPages={setTotalPages}
+          setTotalTopicPosts={setTotalTopicPosts}
           topicText={topic.text}
           dateCreated={topic.dateCreated}
           formatDate={formatDate}

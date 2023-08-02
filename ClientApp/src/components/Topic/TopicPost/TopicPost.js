@@ -21,7 +21,7 @@ function TopicPost ({topicAuthor, firstPost, topicText, dateCreated, formatDate}
                     Posted <span> {formatDate(dateCreated)}</span>
                 </p>
                 <p className="meta_post_number">
-                    Post # {firstPost ? 1 : null}
+                    Post #{firstPost ? 1 : null}
                 </p>
             </div>
             <div className="contents_text">
