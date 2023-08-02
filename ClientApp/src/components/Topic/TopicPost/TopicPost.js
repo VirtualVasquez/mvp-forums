@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './TopicPost.scss';
 
-function TopicPost ({firstPost, topicAuthor, text, dateCreated, formatDate, getUsernameById, postId, userId}) {
+function TopicPost ({firstPost, topicAuthor, text, dateCreated, formatDate, getUsernameById, postId, userId, postNum}) {
 
     const [author, setAuthor] = useState(null);
-    const [postNumber, setPostNumber] = useState(firstPost ? 1 : null);
+    const [postNumber, setPostNumber] = useState(firstPost ? 1 : postNum);
 
     useEffect(() => {
         async function fetchData() {
@@ -21,7 +21,7 @@ function TopicPost ({firstPost, topicAuthor, text, dateCreated, formatDate, getU
             "topic-post first-post" : 
             "topic-post"
             }
-        id={!firstPost ? id=`post-${postId}` : null}
+        id={!firstPost ? `post-${postId}` : "first-post"}
       >
         <div className="post_author">
             <i className="author_picture"></i>

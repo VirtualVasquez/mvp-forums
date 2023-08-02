@@ -7,8 +7,7 @@ function Topic ({topicAuthor, topicId, topicSlug, currentPage, setTotalPages, to
 
     const [paginatedPosts, setPaginatedPosts] = useState(null);
 
-    async function getPostsByTopicId(id){
-      const pageSize = 10;
+    async function getPostsByTopicId(id, pageSize = 10){
       try {
           const response = await axios.get(`/api/Post/AllPostsByTopicId/${id}?page=${currentPage}&pageSize=${pageSize}`);
           const { totalPosts, totalPages, posts } = response.data;
@@ -21,7 +20,7 @@ function Topic ({topicAuthor, topicId, topicSlug, currentPage, setTotalPages, to
     }
 
     useEffect(() => {
-      getPostsByTopicId(topicId);
+      currentPage == 1 ? getPostsByTopicId(topicId, 9) : getPostsByTopicId(topicId, 10)      
     }, [currentPage]);
 
     return (
@@ -38,7 +37,12 @@ function Topic ({topicAuthor, topicId, topicSlug, currentPage, setTotalPages, to
         : null }
         {/* map the posts here */}
         {Array.isArray(paginatedPosts) ? 
-          paginatedPosts.map(post => {
+          paginatedPosts.map((post, index) => {
+
+            let postNum;            
+            postNum = index + 1 + ( (currentPage-1) * 10);
+            currentPage == 1 ? postNum++ : postNum;                   
+
             return(
               <TopicPost
                 key={post.id}                              
@@ -49,6 +53,7 @@ function Topic ({topicAuthor, topicId, topicSlug, currentPage, setTotalPages, to
                 getUsernameById={getUsernameById}
                 postId={post.id}
                 userId={post.userId}
+                postNum={postNum}
               />
             )
           }) : null}
