@@ -3,6 +3,7 @@ using System.Linq;
 using Post.Data.Models;
 using Microsoft.AspNetCore.HttpsPolicy;
 using System;
+using User.Data.Models;
 
 namespace Topic.Controllers
 {
@@ -43,14 +44,38 @@ namespace Topic.Controllers
                 _dbContext.Posts.Add(post);
                 _dbContext.SaveChanges();
                 transaction.Commit();
-                return Ok
-                (post);
+                int postPageNumber = GetPageNumberOfPost(post.Id, post.TopicId);
+                return Ok(new{
+                    post = post,
+                    pageNumber = postPageNumber
+                });
             }
             catch (Exception ex)
             {
                 transaction.Rollback();
                 return BadRequest($"An error occurred while create the post: {ex.Message}");
             }
+        }
+        private int GetPageNumberOfPost(int postId, int topicId)
+        { 
+                // Find the posts that match the specified topic_id
+                var query = _dbContext
+                    .Posts
+                    .Where(p => p.TopicId == topicId)
+                    .ToList();
+
+                // Find the index of the post with the given postId
+                int index = query.FindIndex(p => p.Id == postId);
+                int pageNumber = 1;
+
+                if ( index < 8) {
+                    return pageNumber;
+                } else {
+                    var totalPosts = query.Count();
+                    double calculation = (totalPosts + 1) / 10; //10 is default page size
+                    pageNumber = (int)Math.Ceiling(calculation);
+                    return pageNumber;
+                }
         }
 
         [HttpGet("[action]/{id}")]
