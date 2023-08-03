@@ -61,8 +61,7 @@ namespace Topic.Controllers
                 // Find the posts that match the specified topic_id
                 var query = _dbContext
                     .Posts
-                    .Where(p => p.TopicId == id)
-                    .OrderByDescending(p => p.DateCreated); // Sorted in descending order
+                    .Where(p => p.TopicId == id);
 
                 var totalPosts = query.Count();
                 var totalPages = (int)Math.Ceiling(totalPosts / (double)pageSize);
