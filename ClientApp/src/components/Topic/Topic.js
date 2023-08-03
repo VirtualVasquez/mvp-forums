@@ -54,6 +54,7 @@ function Topic ({topicAuthor, topicId, topicSlug, currentPage, setTotalPages, to
                 postId={post.id}
                 userId={post.userId}
                 postNum={postNum}
+                topicSlug={topicSlug}
               />
             )
           }) : null}

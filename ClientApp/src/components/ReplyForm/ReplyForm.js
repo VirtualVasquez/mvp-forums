@@ -1,22 +1,31 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import './ReplyForm.scss';
 
 
-function ReplyForm ({getUsernameById, topicId, }) {
+function ReplyForm ({getUsernameById, topicId, topicSlug}) {
 
     const [activeId] = useState(localStorage.getItem('mvp_forums_active_id'));
     const [loggedInUsername, setloggedInUsername] = useState(null);
     const [postText, setPostText] = useState(null);
+    const navigate = useNavigate()
 
-    async function addPost (text, idOfTopic, idOfUser){
+    async function addPost (text, idOfTopic, idOfUser, slugOfTopic){
+
         try {
             const response = await axios.post('/api/Post/AddPost', {
                 Text: text,
                 TopicId: idOfTopic,
                 UserId: idOfUser
             })
-            //may need to implement navigation?
+            const pageNumber = response.data.pageNumber;
+            const newPostId = response.data.post.id;
+            let topicUrl;
+            pageNumber == 1 
+            ? topicUrl = `/topic/${topicId}/${slugOfTopic}/#post-${newPostId}` 
+            : topicUrl = `/topic/${topicId}/${slugOfTopic}/page/${pageNumber}/#post-${newPostId}`;
+            navigate(topicUrl, {replace: true});
         } catch (error) {
             throw new Error (`An error occurred while making the request: ${error.message}`)
         }
@@ -25,13 +34,11 @@ function ReplyForm ({getUsernameById, topicId, }) {
     async function handleSubmit(event){
         event.preventDefault();
         try{
-            await addPost(postText, topicId, activeId);
-                        
+            await addPost(postText, topicId, activeId, topicSlug);                        
         } catch (error) {
             console.error(error);
         }
     }
-
 
     useEffect(() => {
         async function fetchData() {

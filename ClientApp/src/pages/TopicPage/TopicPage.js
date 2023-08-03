@@ -98,6 +98,7 @@ function TopicPage () {
       <ReplyForm 
         getUsernameById={getUsernameById}
         topicId={topic_id}
+        topicSlug={topic_slug}
       />      
     </div>
   );
