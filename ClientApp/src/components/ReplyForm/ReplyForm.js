@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import './ReplyForm.scss';
 
 
-function ReplyForm ({getUsernameById}) {
+function ReplyForm ({getUsernameById, topicId, }) {
 
-    const [activeId] = useState(localStorage.getItem('mvp_forums_active_id'))
+    const [activeId] = useState(localStorage.getItem('mvp_forums_active_id'));
     const [loggedInUsername, setloggedInUsername] = useState(null);
+    const [postText, setPostText] = useState(null);
 
-    async function addPost (text, topicId, userId){
+    async function addPost (text, idOfTopic, idOfUser){
         try {
             const response = await axios.post('/api/Post/AddPost', {
                 Text: text,
-                TopicId: topicId,
-                UserId: userId
+                TopicId: idOfTopic,
+                UserId: idOfUser
             })
             //may need to implement navigation?
         } catch (error) {
@@ -22,9 +24,12 @@ function ReplyForm ({getUsernameById}) {
 
     async function handleSubmit(event){
         event.preventDefault();
-        console.log("need logic here");
-        // try{
-        // }
+        try{
+            await addPost(postText, topicId, activeId);
+                        
+        } catch (error) {
+            console.error(error);
+        }
     }
 
 
@@ -49,7 +54,13 @@ function ReplyForm ({getUsernameById}) {
                             <span>Reply to thread as</span> {loggedInUsername}
                         </p>                
                     </div>
-                    <textarea></textarea>
+                    <textarea
+                        id="post-text"
+                        name="post-text"
+                        required
+                        onChange={e=>setPostText(e.target.value)}
+                    >                        
+                    </textarea>
                 </div>
                 <div className="row-two">
                     <button
