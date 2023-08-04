@@ -4,6 +4,7 @@ using Post.Data.Models;
 using Microsoft.AspNetCore.HttpsPolicy;
 using System;
 using User.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Topic.Controllers
 {

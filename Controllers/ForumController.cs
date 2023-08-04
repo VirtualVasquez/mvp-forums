@@ -3,6 +3,7 @@ using System.Linq;
 using Forum.Data.Models;
 using Microsoft.AspNetCore.HttpsPolicy;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace Forum.Controllers
 {
@@ -56,13 +57,43 @@ namespace Forum.Controllers
             {
                 return StatusCode(500, $"An error occurred while fethcing the forum: {ex.Message}");
             }
-        }
-        
-        [HttpGet("total-posts/{id}")]
-        public IActionResult GetTotalPostsInForum(int id) 
+        }       
+
+        [HttpGet("posts-details/{forumId}")]
+        public IActionResult GetForumPostsData(int forumId)
         {
-            var totalPosts = _dbContext.Posts.Where(p => p.ForumId == id).Count();
-            return Ok(totalPosts);
+
+            var totalPosts = _dbContext.Posts
+                 .Where(p => p.ForumId == forumId)
+                 .Count();
+
+            var mostRecentPost = totalPosts > 0 
+                ?_dbContext.Posts
+                    .Where(p => p.ForumId == forumId)
+                    .OrderByDescending(p => p.DateCreated)
+                    .FirstOrDefault()
+                : null;     
+
+            if (totalPosts == 0)
+            {
+                var message = "This forum has no associated posts.";
+                var forumDetails = new
+                {
+                    TotalPosts = totalPosts,
+                    Message = message
+                };
+
+                return Ok(forumDetails);
+            }
+
+
+            var forumData = new
+            {
+                TotalPosts = totalPosts,
+                MostRecentPost = mostRecentPost
+            };
+
+            return Ok(forumData);
         }
     }
 }

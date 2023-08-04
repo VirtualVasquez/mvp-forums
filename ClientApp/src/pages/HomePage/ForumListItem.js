@@ -6,11 +6,36 @@ import { Link } from 'react-router-dom';
 const ForumListItem = ({ id, title, description, slug }) => {
 
     const [totalPosts, setTotalPosts] = useState(0);
-
-    async function GetTotalPosts(id) {
+    const [recentPost, setRecentPost] = useState(null);
+    const [recentAuthor, setRecentAuthor] = useState(null);
+    const [topicOfRecentPost, setTopicOfRecentPost] = useState(null);
+    
+    async function GetPostsDetails(forumId) {
         try {
-            await axios.get(`/api/forum/total-posts/${id}`).then(response => {
-                setTotalPosts(response.data);
+            await axios.get(`/api/forum/posts-details/${forumId}`).then(response => {
+                const {totalPosts, mostRecentPost } = response.data;
+                setTotalPosts(totalPosts);
+                setRecentPost(mostRecentPost)
+            })
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function getUsernameById(userId){
+        try{
+            await axios.get(`/api/User/NameById/${id}`).then(response => {
+                setRecentAuthor(response.data);
+            })
+        } catch (error){
+            console.error(error);
+        }
+      };
+
+    async function GetTopicOfPost(topicId){
+        try {
+            await axios.get(`/apii/Topic/TopicById/${topicId}`).then(response => {
+                setTopicOfRecentPost(response.data);
             })
         } catch (error) {
             console.error(error);
@@ -19,11 +44,11 @@ const ForumListItem = ({ id, title, description, slug }) => {
 
     function formatNumberOfPosts(total){
         let calculation;
-        if(total > 999,999){
+        if(total > 999999){
             calculation = total/1000000;
             return `${calculation}m`
         }
-        if (total > 999){
+        if(total > 999){
             calculation = total/1000;
             return `${calculation}k`
         }
@@ -31,8 +56,15 @@ const ForumListItem = ({ id, title, description, slug }) => {
     }
 
     useEffect(() => {
-        GetTotalPosts(id);
-    }, []);
+        GetPostsDetails(id);
+    }, [id]);
+
+    useEffect(() => {
+        if (recentPost) {
+            getUsernameById(recentPost.userId);
+            GetTopicOfPost(recentPost.topicId);
+        }
+    }, [recentPost]);
 
     return (
         <li className="forumItem" id={id}>
