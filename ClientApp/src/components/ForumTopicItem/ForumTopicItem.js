@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './ForumTopicItem.scss';
 
-function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug, currentPage}) {
+function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage}) {
 
     const [topicCreator, setTopicCreator] = useState(null);
     const [totalReplies, setTotalReplies] = useState(null);
@@ -13,6 +13,16 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug, cu
         try{
             await axios.get(`/api/User/NameById/${id}`).then(response => {
                 setTopicCreator(response.data);
+            })
+        } catch (error){
+            console.error(error);
+        }
+    };
+
+    async function getAuthorofLastPostById(id){
+        try{
+            await axios.get(`/api/User/NameById/${id}`).then(response => {
+                setAuthorOfMostRecent(response.data);
             })
         } catch (error){
             console.error(error);
@@ -73,6 +83,12 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug, cu
         getTotalPostsByTopicId(topicId);
     }, []);
 
+    useEffect(() => {
+        if(mostRecentPost){
+            getAuthorofLastPostById(mostRecentPost.userId);
+        }
+    }, [mostRecentPost]);
+
     return (
         <li className="forumTopicItem">
             <div className="forumTopicItem-main">
@@ -101,7 +117,7 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug, cu
                 <li className="forumTopicItem_lastPoster_icon">
                     <i></i>
                 </li>
-                <li className="forumTopicItem_lastPoster_username"><a href="#">{authorOfMostRecent}</a></li>
+                <li className="forumTopicItem_lastPoster_username"><a href="#">{authorOfMostRecent ? authorOfMostRecent : null}</a></li>
                 <li className="forumTopicItem_lastPoster_timestamp">
                 <span className="longForm">
                     {
