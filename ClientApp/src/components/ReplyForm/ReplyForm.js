@@ -4,20 +4,20 @@ import axios from "axios";
 import './ReplyForm.scss';
 
 
-function ReplyForm ({getUsernameById, topicId, topicSlug, getPostsByTopicId,currentPage}) {
+function ReplyForm ({getUsernameById, topicId, topicSlug, forumId, getPostsByTopicId,currentPage}) {
 
     const [activeId] = useState(localStorage.getItem('mvp_forums_active_id'));
     const [loggedInUsername, setloggedInUsername] = useState(null);
     const [postText, setPostText] = useState(null);
     const navigate = useNavigate()
 
-    async function addPost (text, idOfTopic, idOfUser, slugOfTopic, currentPageNumber){
-
+    async function addPost (text, idOfTopic, idOfForum, idOfUser, slugOfTopic, currentPageNumber){
         try {
             const response = await axios.post('/api/Post/AddPost', {
                 Text: text,
                 TopicId: idOfTopic,
-                UserId: idOfUser
+                UserId: idOfUser,
+                ForumId: idOfForum
             })
             const pageNumber = response.data.pageNumber;
             const newPostId = response.data.post.id;
@@ -32,7 +32,6 @@ function ReplyForm ({getUsernameById, topicId, topicSlug, getPostsByTopicId,curr
             if (pageNumber == currentPageNumber){
                 getPostsByTopicId(idOfTopic);
                 navigate(topicUrl, {replace: true});
-                setPostText('');
             } else{
                 navigate(topicUrl, {replace: true});
                 location.reload();
@@ -46,7 +45,7 @@ function ReplyForm ({getUsernameById, topicId, topicSlug, getPostsByTopicId,curr
     async function handleSubmit(event){
         event.preventDefault();
         try{
-            await addPost(postText, topicId, activeId, topicSlug, currentPage); 
+            await addPost(postText, topicId, forumId, activeId, topicSlug, currentPage);
         } catch (error) {
             console.error(error);
         }

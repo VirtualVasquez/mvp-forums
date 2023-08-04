@@ -13,7 +13,10 @@ namespace Post.Data.Models
 
         [Column("topic_id")]
         public int TopicId { get; set; }
-        
+
+        [Column("forum_id")]
+        public int ForumId { get; set; }
+
         [Column("user_id")]
         public int UserId { get; set; }
 

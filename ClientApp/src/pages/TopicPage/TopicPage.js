@@ -127,6 +127,7 @@ function TopicPage () {
         getUsernameById={getUsernameById}
         topicId={topic_id}
         topicSlug={topic_slug}
+        forumId={topic.forumId}
         getPostsByTopicId={getPostsByTopicId}
         currentPage={currentPage}
       />      
