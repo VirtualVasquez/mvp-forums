@@ -70,6 +70,7 @@ function ForumPage() {
         />
         <ForumTopicList 
             topics={paginatedTopics}
+            currentPage={currentPage}
         />
         <Pagination 
             currentPage={currentPage}

@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './ForumTopicItem.scss';
 
-function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug}) {
+function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug, currentPage}) {
 
     const [topicCreator, setTopicCreator] = useState(null);
+    const [totalReplies, setTotalReplies] = useState(null);
 
     async function getUsernameById(id){
         try{
@@ -17,6 +18,15 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug}) {
     };
     
     //need endpoint to capture the number of replies made to topic
+    async function getTotalRepliesByTopicId(id){
+        try {
+            const response = await axios.get(`/api/Post/AllPostsByTopicId/${id}?page=${currentPage}&pageSize=9`);
+            const { totalPosts } = response.data;
+            setTotalReplies(totalPosts);
+        } catch (error) {
+            console.error(error);
+        }
+      }
     
     //need endpoint to fetch username of the last person to reply to the forum.
     
@@ -34,6 +44,7 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug}) {
 
     useEffect(() => {
         getUsernameById(userId);
+        getTotalRepliesByTopicId(topicId);
     }, []);
 
     return (
@@ -52,7 +63,7 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug}) {
             </div>
             <div className="forumTopicItem-stats">
                 <p className="replies">
-                    <span>XXXX</span>
+                    <span>{totalReplies}</span>
                     <span>&nbsp;replies</span>
                 </p>
                 <p className="views">

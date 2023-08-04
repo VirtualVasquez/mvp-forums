@@ -3,7 +3,7 @@ import ForumTopicItem from '../ForumTopicItem/ForumTopicItem';
 
 import './ForumTopicList.scss';
 
-function ForumTopicList ({topics}) {
+function ForumTopicList ({topics, currentPage}) {
 
     return (
       <div className="forum-topic-list">
@@ -18,6 +18,7 @@ function ForumTopicList ({topics}) {
                   title={topic.title}
                   dateCreated={topic.dateCreated}
                   slug={topic.slug}
+                  currentPage={currentPage}
                 />
               )
             }) : null
