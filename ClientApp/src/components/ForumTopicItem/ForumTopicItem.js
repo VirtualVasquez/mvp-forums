@@ -6,6 +6,8 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug, cu
 
     const [topicCreator, setTopicCreator] = useState(null);
     const [totalReplies, setTotalReplies] = useState(null);
+    const [mostRecentPost, setMostRecentPost] = useState(null);
+    const [authorOfMostRecent, setAuthorOfMostRecent] = useState(null);
 
     async function getUsernameById(id){
         try{
@@ -17,18 +19,26 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug, cu
         }
     };
     
-    //need endpoint to capture the number of replies made to topic
-    async function getTotalRepliesByTopicId(id){
+    async function getTotalPostsByTopicId(id){
         try {
             const response = await axios.get(`/api/Post/AllPostsByTopicId/${id}?page=${currentPage}&pageSize=9`);
-            const { totalPosts } = response.data;
+            const { totalPosts, lastPost } = response.data;
             setTotalReplies(totalPosts);
+            setMostRecentPost(lastPost);
+            getUsernameById(lastPost.userId);
         } catch (error) {
             console.error(error);
         }
       }
     
-    //need endpoint to fetch username of the last person to reply to the forum.
+    async function getUsernameById(id){
+        try{
+            const response = await axios.get(`/api/User/NameById/${id}`);
+            setAuthorOfMostRecent(response.data);
+        } catch (error){
+            console.error(error);
+        }
+      };
     
     //need endpoint to fetch number of views based on topicId
 
@@ -44,7 +54,8 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug, cu
 
     useEffect(() => {
         getUsernameById(userId);
-        getTotalRepliesByTopicId(topicId);
+        getTotalPostsByTopicId(topicId);
+        // getUsernameById(mostRecentPost.userId);
     }, []);
 
     return (
@@ -75,7 +86,7 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug, cu
                 <li className="forumTopicItem_lastPoster_icon">
                     <i></i>
                 </li>
-                <li className="forumTopicItem_lastPoster_username"><a href="#">USERNAME</a></li>
+                <li className="forumTopicItem_lastPoster_username"><a href="#">{authorOfMostRecent}</a></li>
                 <li className="forumTopicItem_lastPoster_timestamp">
                  <span className="longForm">1 hour ago</span>
                  <span className="shortForm">X Units</span>

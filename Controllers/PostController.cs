@@ -90,6 +90,7 @@ namespace Topic.Controllers
 
                 var totalPosts = query.Count();
                 var totalPages = (int)Math.Ceiling(totalPosts / (double)pageSize);
+                var lastPost = query.OrderByDescending(p => p.Id).FirstOrDefault();
 
                 var posts = query
                     .Skip((page - 1) * pageSize)
@@ -100,6 +101,7 @@ namespace Topic.Controllers
                 {
                     TotalPosts = totalPosts,
                     TotalPages = totalPages,
+                    LastPost = lastPost,
                     Posts = posts
                 };
 
