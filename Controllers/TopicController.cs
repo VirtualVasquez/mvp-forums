@@ -103,8 +103,6 @@ namespace Topic.Controllers
         {
             try
             {
-                Console.WriteLine("Page number: " + page);
-                Console.WriteLine("Page Size: " + pageSize);
 
                 // Find the topics that match the specified forum_id
                 var query = _dbContext
