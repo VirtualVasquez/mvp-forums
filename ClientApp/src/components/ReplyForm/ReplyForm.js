@@ -4,14 +4,14 @@ import axios from "axios";
 import './ReplyForm.scss';
 
 
-function ReplyForm ({getUsernameById, topicId, topicSlug}) {
+function ReplyForm ({getUsernameById, topicId, topicSlug, getPostsByTopicId,currentPage}) {
 
     const [activeId] = useState(localStorage.getItem('mvp_forums_active_id'));
     const [loggedInUsername, setloggedInUsername] = useState(null);
     const [postText, setPostText] = useState(null);
     const navigate = useNavigate()
 
-    async function addPost (text, idOfTopic, idOfUser, slugOfTopic){
+    async function addPost (text, idOfTopic, idOfUser, slugOfTopic, currentPageNumber){
 
         try {
             const response = await axios.post('/api/Post/AddPost', {
@@ -22,10 +22,22 @@ function ReplyForm ({getUsernameById, topicId, topicSlug}) {
             const pageNumber = response.data.pageNumber;
             const newPostId = response.data.post.id;
             let topicUrl;
-            pageNumber == 1 
-            ? topicUrl = `/topic/${topicId}/${slugOfTopic}/#post-${newPostId}` 
-            : topicUrl = `/topic/${topicId}/${slugOfTopic}/page/${pageNumber}/#post-${newPostId}`;
-            navigate(topicUrl, {replace: true});
+
+            if(pageNumber == 1 ){
+                topicUrl = `/topic/${topicId}/${slugOfTopic}/#post-${newPostId}`;
+            } else{
+                topicUrl = `/topic/${topicId}/${slugOfTopic}/page/${pageNumber}/#post-${newPostId}`
+            }
+
+            if (pageNumber == currentPageNumber){
+                getPostsByTopicId(idOfTopic);
+                navigate(topicUrl, {replace: true});
+                setPostText('');
+            } else{
+                navigate(topicUrl, {replace: true});
+                location.reload();
+            }
+
         } catch (error) {
             throw new Error (`An error occurred while making the request: ${error.message}`)
         }
@@ -34,7 +46,7 @@ function ReplyForm ({getUsernameById, topicId, topicSlug}) {
     async function handleSubmit(event){
         event.preventDefault();
         try{
-            await addPost(postText, topicId, activeId, topicSlug);                        
+            await addPost(postText, topicId, activeId, topicSlug, currentPage); 
         } catch (error) {
             console.error(error);
         }

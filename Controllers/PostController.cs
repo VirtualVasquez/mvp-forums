@@ -72,14 +72,14 @@ namespace Topic.Controllers
                     return pageNumber;
                 } else {
                     var totalPosts = query.Count();
-                    double calculation = (totalPosts + 1) / 10; //10 is default page size
+                    double calculation = (totalPosts + 1) / 9.0; //9 is default page size
                     pageNumber = (int)Math.Ceiling(calculation);
                     return pageNumber;
                 }
         }
 
         [HttpGet("[action]/{id}")]
-        public IActionResult AllPostsByTopicId(int id, int page = 1, int pageSize = 10)
+        public IActionResult AllPostsByTopicId(int id, int page = 1, int pageSize = 9)
         {
             try
             {

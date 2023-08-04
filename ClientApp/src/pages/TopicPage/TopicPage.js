@@ -15,6 +15,7 @@ function TopicPage () {
   const [topicAuthor, setAuthor] = useState(null);
   const [currentPage] = useState(page_number ? page_number : 1);  
   const [totalPages, setTotalPages] = useState(1);
+  const [paginatedPosts, setPaginatedPosts] = useState(null);
   const [totalTopicPosts, setTotalTopicPosts] = useState(null);
 
   async function GetTopicById(topicId) {
@@ -24,6 +25,17 @@ function TopicPage () {
       })
     } catch (error) {
       console.error(error);
+    }
+  }
+  async function getPostsByTopicId(id, pageSize = 9){
+    try {
+        const response = await axios.get(`/api/Post/AllPostsByTopicId/${id}?page=${currentPage}&pageSize=${pageSize}`);
+        const { totalPosts, totalPages, posts } = response.data;
+        setTotalPages(totalPages);
+        setTotalTopicPosts(totalPosts);
+        setPaginatedPosts(posts);
+    } catch (error) {
+        console.error(error);
     }
   }
 
@@ -81,12 +93,12 @@ function TopicPage () {
         topicId={topic_id}
         topicSlug={topic_slug}
         currentPage={currentPage}
-        setTotalPages={setTotalPages}
-        setTotalTopicPosts={setTotalTopicPosts}
         topicText={topic.text}
         dateCreated={topic.dateCreated}
         formatDate={formatDate}
         getUsernameById={getUsernameById}
+        paginatedPosts={paginatedPosts}
+        getPostsByTopicId={getPostsByTopicId}
       />
       <Pagination 
         currentPage={currentPage}
@@ -99,6 +111,8 @@ function TopicPage () {
         getUsernameById={getUsernameById}
         topicId={topic_id}
         topicSlug={topic_slug}
+        getPostsByTopicId={getPostsByTopicId}
+        currentPage={currentPage}
       />      
     </div>
   );
