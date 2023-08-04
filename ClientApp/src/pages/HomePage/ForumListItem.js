@@ -1,8 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import { Link } from 'react-router-dom';
 
 
 const ForumListItem = ({ id, title, description, slug }) => {
+
+    const [totalPosts, setTotalPosts] = useState(0);
+
+    async function GetTotalPosts(id) {
+        try {
+            await axios.get(`/api/forum/total-posts/${id}`).then(response => {
+                setTotalPosts(response.data);
+            })
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    function formatNumberOfPosts(total){
+        let calculation;
+        if(total > 999,999){
+            calculation = total/1000000;
+            return `${calculation}m`
+        }
+        if (total > 999){
+            calculation = total/1000;
+            return `${calculation}k`
+        }
+        return total;
+    }
+
+    useEffect(() => {
+        GetTotalPosts(id);
+    }, []);
 
     return (
         <li className="forumItem" id={id}>
@@ -28,7 +58,7 @@ const ForumListItem = ({ id, title, description, slug }) => {
             <div className="forumItem-stats">
                 <dl>
                     <dt>
-                        9999k
+                        {formatNumberOfPosts(1000000)}
                     </dt>
                     <dd>
                         posts

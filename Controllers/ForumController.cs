@@ -57,5 +57,12 @@ namespace Forum.Controllers
                 return StatusCode(500, $"An error occurred while fethcing the forum: {ex.Message}");
             }
         }
+        
+        [HttpGet("total-posts/{id}")]
+        public IActionResult GetTotalPostsInForum(int id) 
+        {
+            var totalPosts = _dbContext.Posts.Where(p => p.ForumId == id).Count();
+            return Ok(totalPosts);
+        }
     }
 }
