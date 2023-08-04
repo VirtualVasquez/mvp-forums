@@ -58,7 +58,7 @@ const ForumListItem = ({ id, title, description, slug }) => {
             <div className="forumItem-stats">
                 <dl>
                     <dt>
-                        {formatNumberOfPosts(1000000)}
+                        {formatNumberOfPosts(totalPosts)}
                     </dt>
                     <dd>
                         posts
