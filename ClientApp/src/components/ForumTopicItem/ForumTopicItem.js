@@ -9,7 +9,7 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug, cu
     const [mostRecentPost, setMostRecentPost] = useState(null);
     const [authorOfMostRecent, setAuthorOfMostRecent] = useState(null);
 
-    async function getUsernameById(id){
+    async function getTopicCreatorById(id){
         try{
             await axios.get(`/api/User/NameById/${id}`).then(response => {
                 setTopicCreator(response.data);
@@ -25,37 +25,52 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug, cu
             const { totalPosts, lastPost } = response.data;
             setTotalReplies(totalPosts);
             setMostRecentPost(lastPost);
-            getUsernameById(lastPost.userId);
         } catch (error) {
             console.error(error);
         }
-      }
-    
-    async function getUsernameById(id){
-        try{
-            const response = await axios.get(`/api/User/NameById/${id}`);
-            setAuthorOfMostRecent(response.data);
-        } catch (error){
-            console.error(error);
-        }
-      };
-    
-    //need endpoint to fetch number of views based on topicId
-
-    const formatDate = (isoDate) => {
-        const dateObj = new Date(isoDate);
-        const formattedDate = dateObj.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        });
-        return formattedDate;
     }
-
+        
+    function formatTimestamp(timestamp) {
+        const now = new Date();
+        const postTime = new Date(timestamp); // Convert the timestamp to a Date object
+        const diffInMilliseconds = now - postTime;
+        const diffInSeconds = Math.floor(diffInMilliseconds / 1000);
+        const diffInMinutes = Math.floor(diffInSeconds / 60);
+        const diffInHours = Math.floor(diffInMinutes / 60);
+        const diffInDays = Math.floor(diffInHours / 24);
+        const diffInWeeks = Math.floor(diffInDays / 7);
+      
+        if (diffInMinutes < 60) {
+          return `${diffInMinutes} minutes ago`;
+        } else if (diffInHours < 24) {
+          return `${diffInHours} hours ago`;
+        } else if (diffInDays < 7) {
+          const dayOfTheWeek = postTime.toLocaleString('en-US', { weekday: 'long' });
+          const formattedTime = postTime.toLocaleString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          });
+          return `${dayOfTheWeek} at ${formattedTime}`;
+        } else if (diffInDays < 365) {
+          const formattedTime = postTime.toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+          });
+          return formattedTime;
+        } else {
+          const formattedTime = postTime.toLocaleString('en-US', {
+            month: 'numeric',
+            day: 'numeric',
+            year: 'numeric',
+          });
+          return formattedTime;
+        }
+    }
+      
     useEffect(() => {
-        getUsernameById(userId);
+        getTopicCreatorById(userId);
         getTotalPostsByTopicId(topicId);
-        // getUsernameById(mostRecentPost.userId);
     }, []);
 
     return (
@@ -68,7 +83,7 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug, cu
                 </h4>
                 <div className="forumTopicItem_author">
                 <a>
-                    By {topicCreator}, {formatDate(dateCreated)}
+                    By {topicCreator}, {formatTimestamp(dateCreated)}
                 </a>
                 </div>
             </div>
@@ -88,8 +103,14 @@ function ForumTopicItem ({topicId, forumId, userId, title, dateCreated, slug, cu
                 </li>
                 <li className="forumTopicItem_lastPoster_username"><a href="#">{authorOfMostRecent}</a></li>
                 <li className="forumTopicItem_lastPoster_timestamp">
-                 <span className="longForm">1 hour ago</span>
-                 <span className="shortForm">X Units</span>
+                <span className="longForm">
+                    {
+                        mostRecentPost 
+                        ? formatTimestamp(mostRecentPost.dateCreated) 
+                        : null
+                   }
+                </span>
+                <span className="shortForm">X Units</span>
                 </li>              
             </ul>              
         </li>
