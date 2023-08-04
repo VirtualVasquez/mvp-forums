@@ -40,7 +40,7 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
         }
     }
         
-    function formatTimestamp(timestamp) {
+    function longFormatTimestamp(timestamp) {
         const now = new Date();
         const postTime = new Date(timestamp); // Convert the timestamp to a Date object
         const diffInMilliseconds = now - postTime;
@@ -77,7 +77,32 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
           return formattedTime;
         }
     }
+
+    function shortFormatTimestamp(timestamp) {
+        const now = new Date();
+        const postTime = new Date(timestamp);
+        const diffInMilliseconds = now - postTime;
+        const diffInSeconds = Math.floor(diffInMilliseconds / 1000);
+        const diffInMinutes = Math.floor(diffInSeconds / 60);
+        const diffInHours = Math.floor(diffInMinutes / 60);
+        const diffInDays = Math.floor(diffInHours / 24);
+        const diffInWeeks = Math.floor(diffInDays / 7);
       
+        if (diffInMinutes < 60) {
+          return `${diffInMinutes} min`;
+        } else if (diffInHours < 24) {
+          return `${diffInHours} hr`;
+        } else if (diffInDays < 7) {
+          return `${diffInDays} dy`;
+        } else {
+          const formattedTime = postTime.toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+          });
+          return formattedTime;
+        }
+    }
+            
     useEffect(() => {
         getTopicCreatorById(userId);
         getTotalPostsByTopicId(topicId);
@@ -99,7 +124,7 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
                 </h4>
                 <div className="forumTopicItem_author">
                 <a>
-                    By {topicCreator}, {formatTimestamp(dateCreated)}
+                    By {topicCreator}, {longFormatTimestamp(dateCreated)}
                 </a>
                 </div>
             </div>
@@ -122,11 +147,17 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
                 <span className="longForm">
                     {
                         mostRecentPost 
-                        ? formatTimestamp(mostRecentPost.dateCreated) 
+                        ? longFormatTimestamp(mostRecentPost.dateCreated) 
                         : null
                    }
                 </span>
-                <span className="shortForm">X Units</span>
+                <span className="shortForm">
+                    {
+                        mostRecentPost 
+                        ? shortFormatTimestamp(mostRecentPost.dateCreated) 
+                        : null
+                   }
+                </span>
                 </li>              
             </ul>              
         </li>
