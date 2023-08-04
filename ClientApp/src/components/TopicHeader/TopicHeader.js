@@ -1,22 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import React, { useEffect } from 'react';
 import './TopicHeader.scss';
 
-function TopicHeader ({title, userId, forumId, dateCreated, formatDate, topicAuthor, setAuthor, getUsernameById}) {
-
-    const [forum, setForum] = useState(null);
-
-
-
-    async function GetForumById(id) {
-        try {
-            await axios.get(`/api/forum/${id}`).then(response => {
-                setForum(response.data);
-            })
-        } catch (error) {
-            console.error(error);
-        }
-    }
+function TopicHeader ({title, userId, forumId, dateCreated, formatDate, topicAuthor, setAuthor, getUsernameById, forum, GetForumById}) {
     
     useEffect(() => {
         async function fetchData() {
@@ -54,7 +39,6 @@ function TopicHeader ({title, userId, forumId, dateCreated, formatDate, topicAut
                             {forum ? forum.title : null}
                         </a>
                         </span>
-                        {/* TITLE OF FORUM GROUP means parent group of topic */}
                     </p>
                 </div>
             </div>

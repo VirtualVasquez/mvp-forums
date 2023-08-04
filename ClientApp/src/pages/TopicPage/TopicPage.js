@@ -11,6 +11,18 @@ import './TopicPage.scss'
 function TopicPage () {
   const { topic_id, topic_slug, page_number} = useParams();
 
+  const [forum, setForum] = useState(null);
+
+  async function GetForumById(id) {
+      try {
+          await axios.get(`/api/forum/${id}`).then(response => {
+              setForum(response.data);
+          })
+      } catch (error) {
+          console.error(error);
+      }
+  }
+
   const [topic, setTopic] = useState(null);
   const [topicAuthor, setAuthor] = useState(null);
   const [currentPage] = useState(page_number ? page_number : 1);  
@@ -76,10 +88,14 @@ function TopicPage () {
         topicAuthor={topicAuthor}
         getUsernameById={getUsernameById}
         setAuthor={setAuthor}
+        forum={forum}
+        GetForumById={GetForumById}
       />
       <TopicButtons 
           pageType="topic"
           statusOpen={true}
+          forumId={forum?.id}
+          forumSlug={forum?.slug}
       />
       <Pagination 
         currentPage={currentPage}

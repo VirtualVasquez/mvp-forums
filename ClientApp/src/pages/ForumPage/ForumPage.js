@@ -58,6 +58,8 @@ function ForumPage() {
         />
         <TopicButtons 
             pageType="forum"
+            forumId={forum_id}
+            forumSlug={forum_slug}
         />
         <Pagination 
             currentPage={currentPage}
