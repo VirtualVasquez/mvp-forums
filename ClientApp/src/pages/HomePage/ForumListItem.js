@@ -178,41 +178,51 @@ const ForumListItem = ({ id, title, description, slug }) => {
                 !recentPost 
                 ? 
                 <div className="forumItem-lastPoster">
-                    No posts yet
+                    <p>No posts yet</p>
                 </div> 
                 : 
-                <ul className="forumItem-lastPoster">
-                    {!topicOfRecentPost ? null : 
+                <div className="forumItem-lastPoster">
                     <Link to={
+                        topicOfRecentPost ?
                         formatTopicURL(
                             topicOfRecentPost.id,
                             topicOfRecentPost.slug, 
                             pageNumOfPost, 
                             recentPost.id 
-                        )
+                        ) : null
                     }>
-                        <li className="forumItem_lastPoster_icon">
+                        <div className="forumItem_lastPoster_icon">
                             <i></i>
-                        </li>
-                        <li className="forumItem_lastPoster_title">
-                            {
-                            topicOfRecentPost ? 
-                                topicOfRecentPost.title
+                        </div>
+                    </Link>
+
+                    <div class="lastPoster_info">
+                        <Link to={
+                            topicOfRecentPost ?
+                            formatTopicURL(
+                                topicOfRecentPost.id,
+                                topicOfRecentPost.slug, 
+                                pageNumOfPost, 
+                                recentPost.id 
+                            ) : null
+                        }>
+                        <div className="forumItem_lastPoster_title">
+                            { topicOfRecentPost 
+                                ? <p>{topicOfRecentPost.title}</p>
                                 : null
                             }
-                        </li>
-                    </Link>
-                    }
-
-                    <li className="forumItem_lastPoster_timestamp">
-                        <span className="longForm">
-                            By {recentAuthor}, {longFormatTimestamp(recentPost.dateCreated)}
-                        </span>
-                        <span className="shortForm">
-                            {shortFormatTimestamp(recentPost.dateCreated)}
-                        </span>
-                    </li>              
-                </ul>          
+                        </div>                    
+                        </Link>
+                        <div className="forumItem_lastPoster_timestamp">
+                            <span className="longForm">
+                                By {recentAuthor}, {longFormatTimestamp(recentPost.dateCreated)}
+                            </span>
+                            <span className="shortForm">
+                                {shortFormatTimestamp(recentPost.dateCreated)}
+                            </span>
+                        </div> 
+                    </div>                        
+                </div>                      
             }
     
         </li>

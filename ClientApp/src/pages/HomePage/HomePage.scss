@@ -1,4 +1,7 @@
 .home-page{
+    p{
+        margin-bottom: 0;
+    }
     .forum-groups{
         padding: 0;
         .forum-groups-list{
@@ -8,6 +11,10 @@
                 border: solid 1px gray;
                 width: 100%;
                 display:flex;
+                height: 120px;
+                &:not(:first-child){
+                    border-top: 0;
+                }
             }
             [class*='forumItem-']{
                 padding: 12px 20px;
@@ -42,6 +49,11 @@
                     }
                     a:active { text-decoration: none; }
                 }
+                .forumItem_meta{
+                    p{
+                        height: 2rem;
+                    }
+                }
             }
             .forumItem-stats{
                 width: 15%;
@@ -68,8 +80,9 @@
                 width: 270px;
                 max-width: 270px;
                 min-width: 270px;
-                display: grid;
-                grid-template-columns: auto auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 @media (max-width: 1200px){
                     width: 160px;
                     max-width: 160px;
@@ -83,58 +96,52 @@
                     max-width: unset;
                     min-width: unset;
                 }
-                li{
-                    list-style:none;
-                    &.forumItem_lastPoster_icon{
-                        grid-row: 1 / span 2;
-                        i{
-                            &:before{
-                                content:'\1F464';
-                                font-size: 40px;
-                                margin-left: -1rem;
-                                margin-right: 0.5rem;
-                                @media (max-width: 980px){
-                                    margin-left: 0;
-                                    margin-right: 0;
-                                }
+                a{
+                    color: black;
+                    font-weight: 500;
+                    &:link{
+                        text-decoration: none;
+                    }
+                    &:visited{
+                        text-decoration: none;
+                    }
+                    &:hover{
+                        text-decoration: none; 
+                        color: blue;
+                    }
+                    &:active{
+                        text-decoration: none;
+                    }
+                }
+                .forumItem_lastPoster_icon{
+                    i{
+                        &:before{
+                            content:'\1F464';
+                            font-size: 40px;
+                            margin-left: -1rem;
+                            margin-right: 0.5rem;
+                            @media (max-width: 980px){
+                                margin-left: 0;
+                                margin-right: 0;
                             }
-
-                        }
-                        @media (max-width: 1200px) and (min-width:980px){
-                            display:none;
                         }
 
                     }
-                    &.forumItem_lastPoster_title{
-                        max-width: 196px;
+                    @media (max-width: 1200px) and (min-width:980px){
+                        display:none;
+                    }
+
+                }
+                .lastPoster_info{                 
+                    .forumItem_lastPoster_title{
                         overflow: hidden;
                         text-overflow: ellipsis;
                         white-space: nowrap;
-                        margin-top: 0.25rem;
-                        a{
-                            color: black;
-                            font-weight: 500;
-                            margin-top: 1rem;
-                            &:link{
-                                text-decoration: none;
-                            }
-                            &:visited{
-                                text-decoration: none;
-                            }
-                            &:hover{
-                                text-decoration: none; 
-                                color: blue;
-                            }
-                            &:active{
-                                text-decoration: none;
-                            }
-                        }
                         @media (max-width:980px){
                             display:none;
                         }
                     }
-                    &.forumItem_lastPoster_timestamp
-                    {
+                    .forumItem_lastPoster_timestamp{
                         font-size: 14px;
                         line-height: 1;
                         @media (max-width:980px){
@@ -150,8 +157,8 @@
                                 display:none;
                             }
                         }
-                    }
-                }                
+                    }                    
+                }         
             }
         }
     }
