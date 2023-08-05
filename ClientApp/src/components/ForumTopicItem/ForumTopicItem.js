@@ -142,7 +142,7 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
                 <li className="forumTopicItem_lastPoster_icon">
                     <i></i>
                 </li>
-                <li className="forumTopicItem_lastPoster_username"><a href="#">{authorOfMostRecent ? authorOfMostRecent : null}</a></li>
+                <li className="forumTopicItem_lastPoster_username">{authorOfMostRecent ? authorOfMostRecent : null}</li>
                 <li className="forumTopicItem_lastPoster_timestamp">
                 <span className="longForm">
                     {
