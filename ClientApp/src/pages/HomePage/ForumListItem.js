@@ -24,13 +24,13 @@ const ForumListItem = ({ id, title, description, slug }) => {
 
     async function getUsernameById(userId){
         try{
-            await axios.get(`/api/User/NameById/${id}`).then(response => {
+            await axios.get(`/api/User/NameById/${userId}`).then(response => {
                 setRecentAuthor(response.data);
             })
         } catch (error){
             console.error(error);
         }
-      };
+    };
 
     async function GetTopicOfPost(topicId){
         try {
@@ -101,7 +101,7 @@ const ForumListItem = ({ id, title, description, slug }) => {
                 <li className="forumItem_lastPoster_icon"><i></i></li>
                 <li className="forumItem_lastPoster_title"><a href="#">TITLE OF THREAD HERE OR ELLIPSIS</a></li>
                 <li className="forumItem_lastPoster_timestamp">
-                 <span className="longForm">By so-and-so, 1 hour ago,</span>
+                 <span className="longForm">By {recentAuthor}, 1 hour ago,</span>
                  <span className="shortForm">X Units</span>
                 </li>              
             </ul>              
