@@ -34,7 +34,7 @@ const ForumListItem = ({ id, title, description, slug }) => {
 
     async function GetTopicOfPost(topicId){
         try {
-            await axios.get(`/apii/Topic/TopicById/${topicId}`).then(response => {
+            await axios.get(`/api/Topic/TopicById/${topicId}`).then(response => {
                 setTopicOfRecentPost(response.data);
             })
         } catch (error) {
@@ -53,6 +53,69 @@ const ForumListItem = ({ id, title, description, slug }) => {
             return `${calculation}k`
         }
         return total;
+    }
+
+    function longFormatTimestamp(timestamp) {
+        const now = new Date();
+        const postTime = new Date(timestamp); // Convert the timestamp to a Date object
+        const diffInMilliseconds = now - postTime;
+        const diffInSeconds = Math.floor(diffInMilliseconds / 1000);
+        const diffInMinutes = Math.floor(diffInSeconds / 60);
+        const diffInHours = Math.floor(diffInMinutes / 60);
+        const diffInDays = Math.floor(diffInHours / 24);
+        const diffInWeeks = Math.floor(diffInDays / 7);
+      
+        if (diffInMinutes < 60) {
+          return `${diffInMinutes} minutes ago`;
+        } else if (diffInHours < 24) {
+          return `${diffInHours} hours ago`;
+        } else if (diffInDays < 7) {
+          const dayOfTheWeek = postTime.toLocaleString('en-US', { weekday: 'long' });
+          const formattedTime = postTime.toLocaleString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          });
+          return `${dayOfTheWeek} at ${formattedTime}`;
+        } else if (diffInDays < 365) {
+          const formattedTime = postTime.toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+          });
+          return formattedTime;
+        } else {
+          const formattedTime = postTime.toLocaleString('en-US', {
+            month: 'numeric',
+            day: 'numeric',
+            year: 'numeric',
+          });
+          return formattedTime;
+        }
+    }
+
+    function shortFormatTimestamp(timestamp) {
+        const now = new Date();
+        const postTime = new Date(timestamp);
+        const diffInMilliseconds = now - postTime;
+        const diffInSeconds = Math.floor(diffInMilliseconds / 1000);
+        const diffInMinutes = Math.floor(diffInSeconds / 60);
+        const diffInHours = Math.floor(diffInMinutes / 60);
+        const diffInDays = Math.floor(diffInHours / 24);
+        const diffInWeeks = Math.floor(diffInDays / 7);
+      
+        if (diffInMinutes < 60) {
+          return `${diffInMinutes} min`;
+        } else if (diffInHours < 24) {
+          return `${diffInHours} hr`;
+        } else if (diffInDays < 7) {
+          return `${diffInDays} dy`;
+        } else {
+          const formattedTime = postTime.toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+          });
+          return formattedTime;
+        }
     }
 
     useEffect(() => {
@@ -97,14 +160,37 @@ const ForumListItem = ({ id, title, description, slug }) => {
                     </dd>
                 </dl>
             </div>
-            <ul className="forumItem-lastPoster">
-                <li className="forumItem_lastPoster_icon"><i></i></li>
-                <li className="forumItem_lastPoster_title"><a href="#">TITLE OF THREAD HERE OR ELLIPSIS</a></li>
-                <li className="forumItem_lastPoster_timestamp">
-                 <span className="longForm">By {recentAuthor}, 1 hour ago,</span>
-                 <span className="shortForm">X Units</span>
-                </li>              
-            </ul>              
+            {
+                !recentPost 
+                ? 
+                <div className="forumItem-lastPoster">
+                    No posts yet
+                </div> 
+                : 
+                <ul className="forumItem-lastPoster">
+                    <a href="#">
+                        <li className="forumItem_lastPoster_icon">
+                            <i></i>
+                        </li>
+                        <li className="forumItem_lastPoster_title">
+                            {
+                            topicOfRecentPost ? 
+                                topicOfRecentPost.title
+                                : null
+                            }
+                        </li>
+                    </a>
+                    <li className="forumItem_lastPoster_timestamp">
+                        <span className="longForm">
+                            By {recentAuthor}, {longFormatTimestamp(recentPost.dateCreated)}
+                        </span>
+                        <span className="shortForm">
+                            {shortFormatTimestamp(recentPost.dateCreated)}
+                        </span>
+                    </li>              
+                </ul>          
+            }
+    
         </li>
     );
 }
