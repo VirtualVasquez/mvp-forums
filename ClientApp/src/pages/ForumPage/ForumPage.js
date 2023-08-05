@@ -61,6 +61,12 @@ function ForumPage() {
             forumId={forum_id}
             forumSlug={forum_slug}
         />
+        {!paginatedTopics 
+        ? 
+        <p className="text-center">No topics were able to be succesfully fetched.</p> 
+        :
+        paginatedTopics.length > 0 ? 
+        <div>
         <Pagination 
             currentPage={currentPage}
             totalPages={totalPages}
@@ -79,6 +85,11 @@ function ForumPage() {
             slug={forum_slug}
             pageType="forum"
         />
+        </div>         
+        :
+        <p className="text-center">No topics have been created for this forum yet.</p>
+        }
+
       </div>
     );
 }
