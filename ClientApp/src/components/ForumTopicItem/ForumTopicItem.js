@@ -138,28 +138,30 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
                     <span>&nbsp;views</span>
                 </p>
             </div>
-            <ul className="forumTopicItem-lastPoster">
-                <li className="forumTopicItem_lastPoster_icon">
+            <div className="forumTopicItem-lastPoster">
+                <div className="forumTopicItem_lastPoster_icon">
                     <i></i>
-                </li>
-                <li className="forumTopicItem_lastPoster_username">{authorOfMostRecent ? authorOfMostRecent : null}</li>
-                <li className="forumTopicItem_lastPoster_timestamp">
-                <span className="longForm">
-                    {
-                        mostRecentPost 
-                        ? longFormatTimestamp(mostRecentPost.dateCreated) 
-                        : null
-                   }
-                </span>
-                <span className="shortForm">
-                    {
-                        mostRecentPost 
-                        ? shortFormatTimestamp(mostRecentPost.dateCreated) 
-                        : null
-                   }
-                </span>
-                </li>              
-            </ul>              
+                </div>
+                <div className="lastPoster-info">
+                    <li className="forumTopicItem_lastPoster_username">{authorOfMostRecent ? authorOfMostRecent : null}</li>
+                    <li className="forumTopicItem_lastPoster_timestamp">
+                    <span className="longForm">
+                        {
+                            mostRecentPost 
+                            ? longFormatTimestamp(mostRecentPost.dateCreated) 
+                            : null
+                    }
+                    </span>
+                    <span className="shortForm">
+                        {
+                            mostRecentPost 
+                            ? shortFormatTimestamp(mostRecentPost.dateCreated) 
+                            : null
+                    }
+                    </span>
+                    </li>  
+                </div>            
+            </div>              
         </li>
     );
 }
