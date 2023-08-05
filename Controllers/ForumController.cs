@@ -86,14 +86,43 @@ namespace Forum.Controllers
                 return Ok(forumDetails);
             }
 
+            var lastPageNumber = GetPageNumberOfPost(mostRecentPost.Id, mostRecentPost.TopicId);
+
 
             var forumData = new
             {
                 TotalPosts = totalPosts,
+                LastPage = lastPageNumber,
                 MostRecentPost = mostRecentPost
             };
 
             return Ok(forumData);
+
+        }
+
+        private int GetPageNumberOfPost(int postId, int topicId)
+        {
+            // Find the posts that match the specified topic_id
+            var query = _dbContext
+                .Posts
+                .Where(p => p.TopicId == topicId)
+                .ToList();
+
+            // Find the index of the post with the given postId
+            int index = query.FindIndex(p => p.Id == postId);
+            int pageNumber = 1;
+
+            if (index < 8)
+            {
+                return pageNumber;
+            }
+            else
+            {
+                var totalPosts = query.Count();
+                double calculation = (totalPosts + 1) / 9.0; //9 is default page size
+                pageNumber = (int)Math.Ceiling(calculation);
+                return pageNumber;
+            }
         }
     }
 }

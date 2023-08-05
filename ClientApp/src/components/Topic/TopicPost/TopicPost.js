@@ -12,6 +12,13 @@ function TopicPost ({firstPost, topicAuthor, text, dateCreated, formatDate, getU
             setAuthor(username); 
         }
         firstPost ? setAuthor(topicAuthor) : fetchData();
+        const hash = window.location.hash;
+        if (hash){
+          const element = document.querySelector(hash);
+          if(element){
+            element.scrollIntoView({behavior: 'smooth'});
+          }
+        }
     })
 
     return (

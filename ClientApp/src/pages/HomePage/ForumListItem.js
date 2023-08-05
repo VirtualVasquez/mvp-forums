@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const ForumListItem = ({ id, title, description, slug }) => {
 
     const [totalPosts, setTotalPosts] = useState(0);
+    const [pageNumOfPost, setpageNumOfPost] = useState(null);
     const [recentPost, setRecentPost] = useState(null);
     const [recentAuthor, setRecentAuthor] = useState(null);
     const [topicOfRecentPost, setTopicOfRecentPost] = useState(null);
@@ -13,9 +14,10 @@ const ForumListItem = ({ id, title, description, slug }) => {
     async function GetPostsDetails(forumId) {
         try {
             await axios.get(`/api/forum/posts-details/${forumId}`).then(response => {
-                const {totalPosts, mostRecentPost } = response.data;
+                const {totalPosts, mostRecentPost, lastPage} = response.data;
                 setTotalPosts(totalPosts);
-                setRecentPost(mostRecentPost)
+                setRecentPost(mostRecentPost);
+                setpageNumOfPost(lastPage);
             })
         } catch (error) {
             console.error(error);
@@ -118,6 +120,17 @@ const ForumListItem = ({ id, title, description, slug }) => {
         }
     }
 
+    function formatTopicURL(idOfTopic, slugOfTopic, pageOfTopic, idOfPost){
+        let url;
+        if(pageOfTopic == 1){
+            url = `/topic/${idOfTopic}/${slugOfTopic}/#post-${idOfPost}`;
+        }
+        else {
+            url = `/topic/${idOfTopic}/${slugOfTopic}/page/${pageOfTopic}/#post-${idOfPost}`;
+        }
+        return url;
+    }
+
     useEffect(() => {
         GetPostsDetails(id);
     }, [id]);
@@ -128,6 +141,7 @@ const ForumListItem = ({ id, title, description, slug }) => {
             GetTopicOfPost(recentPost.topicId);
         }
     }, [recentPost]);
+
 
     return (
         <li className="forumItem" id={id}>
@@ -168,7 +182,15 @@ const ForumListItem = ({ id, title, description, slug }) => {
                 </div> 
                 : 
                 <ul className="forumItem-lastPoster">
-                    <a href="#">
+                    {!topicOfRecentPost ? null : 
+                    <Link to={
+                        formatTopicURL(
+                            topicOfRecentPost.id,
+                            topicOfRecentPost.slug, 
+                            pageNumOfPost, 
+                            recentPost.id 
+                        )
+                    }>
                         <li className="forumItem_lastPoster_icon">
                             <i></i>
                         </li>
@@ -179,7 +201,9 @@ const ForumListItem = ({ id, title, description, slug }) => {
                                 : null
                             }
                         </li>
-                    </a>
+                    </Link>
+                    }
+
                     <li className="forumItem_lastPoster_timestamp">
                         <span className="longForm">
                             By {recentAuthor}, {longFormatTimestamp(recentPost.dateCreated)}
