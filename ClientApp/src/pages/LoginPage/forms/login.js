@@ -69,7 +69,7 @@ const Login  = ({showLoginForm}) => {
     }
 
     return (
-        <form id="login-form" className="account-forms">
+        <form id="login-form" className="account-forms box-shadow">
             <h1>Login</h1>
             <div className="form-group email-group">
                 <input 

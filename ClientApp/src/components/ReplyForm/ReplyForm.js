@@ -50,7 +50,7 @@ function ReplyForm ({topicId, topicSlug, forumId, getPostsByTopicId, currentPage
     }
 
     return(
-        <div className="reply-form-wrapper">
+        <div className="reply-form-wrapper box-shadow">
             <form 
                 id="reply-form"
                 onSubmit={handleSubmit}
@@ -63,6 +63,7 @@ function ReplyForm ({topicId, topicSlug, forumId, getPostsByTopicId, currentPage
                         </p>                
                     </div>
                     <textarea
+                        className='box-shadow'
                         id="post-text"
                         name="post-text"
                         required
@@ -72,6 +73,7 @@ function ReplyForm ({topicId, topicSlug, forumId, getPostsByTopicId, currentPage
                 </div>
                 <div className="row-two">
                     <button
+                        className="box-shadow"
                         type="submit"
                     >
                         <strong>

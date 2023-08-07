@@ -25,8 +25,8 @@ function TopicPost ({firstPost, topicAuthor, text, dateCreated, formatDate, getU
       <div 
         className=
             {firstPost ? 
-            "topic-post first-post" : 
-            "topic-post"
+            "topic-post first-post box-shadow" : 
+            "topic-post box-shadow" 
             }
         id={!firstPost ? `post-${postId}` : "first-post"}
       >

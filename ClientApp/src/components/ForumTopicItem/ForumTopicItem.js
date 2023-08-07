@@ -140,7 +140,7 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
     }, [mostRecentPost]);
 
     return (
-        <li className="forumTopicItem">
+        <li className="forumTopicItem box-shadow">
             <div className="forumTopicItem-main">
                 <h4 className="forumTopicItem_title">
                     <a href={`topic/${topicId}/${slug}`}>

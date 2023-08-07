@@ -144,7 +144,7 @@ const ForumListItem = ({ id, title, description, slug }) => {
 
 
     return (
-        <li className="forumItem" id={id}>
+        <li className="forumItem box-shadow" id={id}>
             <div className="forumItem-icon">
                 <span>
                 <i>

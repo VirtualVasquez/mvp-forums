@@ -13,7 +13,7 @@ function TopicHeader ({title, userId, forumId, dateCreated, formatDate, topicAut
     }, [])
     
     return (
-        <div className="topic-header">
+        <div className="topic-header box-shadow">
             <div className="topic-header_title">
                 <h1>{title}</h1>
             </div>

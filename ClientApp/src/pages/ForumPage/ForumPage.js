@@ -66,7 +66,7 @@ function ForumPage() {
         <p className="text-center">No topics were able to be succesfully fetched.</p> 
         :
         paginatedTopics.length > 0 ? 
-        <div>
+        <div className='box-shadow'>
         <Pagination 
             currentPage={currentPage}
             totalPages={totalPages}

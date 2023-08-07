@@ -74,7 +74,7 @@ function Pagination ({currentPage, totalPages, pageType, id, slug}) {
   }
 
     return (
-      <div className="pagination">
+      <div className="pagination box-shadow">
         <div className="page-numbers">
             {currentPage == 1 ? 
             null :

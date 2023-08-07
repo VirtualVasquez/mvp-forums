@@ -6,7 +6,7 @@ import './ForumTitle.scss';
 function ForumTitle({title, description, topicsTotal }) {    
 
     return (
-        <div className="forum-title">
+        <div className="forum-title box-shadow">
             <div className="row row-one">
                 <h1>{title}</h1>
             <div className="topics-quantity">

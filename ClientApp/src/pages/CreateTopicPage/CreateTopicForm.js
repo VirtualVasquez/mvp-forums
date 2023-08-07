@@ -61,7 +61,7 @@ function CreateTopicForm () {
     }
 
     return (
-        <div className="create-topic-form-wrapper">
+        <div className="create-topic-form-wrapper box-shadow">
             <form 
                 id="create-topic-form" 
                 onSubmit={handleSubmit}
@@ -69,7 +69,8 @@ function CreateTopicForm () {
                 <label htmlFor="title">
                     Title <span className='required'>REQUIRED</span>
                 </label>
-                <input 
+                <input
+                    className="box-shadow" 
                     type="text" 
                     id="title" 
                     name="title" 
@@ -80,7 +81,8 @@ function CreateTopicForm () {
                 <label htmlFor="topic-text">
                     Topic Text <span className='required'>REQUIRED</span>
                 </label>
-                <textarea 
+                <textarea
+                    className="box-shadow"  
                     id="topic-text" 
                     name="topic-text" 
                     required
@@ -88,9 +90,10 @@ function CreateTopicForm () {
                 >
                 </textarea>
                 <button 
+                    className="box-shadow" 
                     type="submit"
                 >
-                    Submit Topic
+                    <strong>SUBMIT TOPIC</strong>
                 </button> 
             </form>
         </div>

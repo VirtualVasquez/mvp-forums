@@ -6,7 +6,7 @@
         border-color: blue;
         .post_contents{
             border: solid blue;
-            border-width: 0 0 0 4px;
+            border-width: 0 0 0 1px;
             font-size: 1.2rem;
         }
     }
@@ -16,7 +16,7 @@
     }
    .post_contents{
         border: 4px solid gray;
-        border-width: 0 0 0 4px;
+        border-width: 0 0 0 1px;
     }
     .post_author{
         display: flex;

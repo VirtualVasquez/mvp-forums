@@ -5,7 +5,7 @@ import './TopicButtons.scss'
 function NewTopicButton({id, slug}){
     return(
         <Link to={`/forum/${id}/${slug}/addTopic`}>
-        <button>
+        <button className="box-shadow">
                 <strong>START NEW TOPIC</strong>
         </button>
         </Link>
@@ -21,7 +21,8 @@ function ReplyToTopicButton(){
     }
 
     return(
-        <button 
+        <button
+        className="box-shadow" 
         onClick={scollToReply}
       >
         <strong>REPLY TO THIS TOPIC</strong>

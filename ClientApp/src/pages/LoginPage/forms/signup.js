@@ -121,7 +121,7 @@ const Signup = props => {
 
 
     return(
-        <form id="register-form" className="account-forms">
+        <form id="register-form" className="account-forms box-shadow">
             <h1>Sign Up</h1>
             <div className="form-group email-group">
                 <input 
