@@ -161,7 +161,7 @@ const Signup = props => {
             </div>
             <div className="form-group confirm-password-group">
                 <input 
-                    type="confirm-password" 
+                    type="password" 
                     className="form-control" 
                     id="confirm-password" 
                     placeholder="Confirm password"
