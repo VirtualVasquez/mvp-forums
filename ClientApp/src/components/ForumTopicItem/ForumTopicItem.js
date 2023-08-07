@@ -8,6 +8,7 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
     const [totalReplies, setTotalReplies] = useState(null);
     const [mostRecentPost, setMostRecentPost] = useState(null);
     const [authorOfMostRecent, setAuthorOfMostRecent] = useState(null);
+    const [viewTotal, setViewTotal] = useState(null);
 
     async function getTopicCreatorById(id){
         try{
@@ -33,9 +34,20 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
         try {
             const response = await axios.get(`/api/Post/AllPostsByTopicId/${id}?page=${currentPage}&pageSize=9`);
             const { totalPosts, lastPost } = response.data;
-            setTotalReplies(totalPosts);
+            setTotalReplies(formatNumber(totalPosts));
             setMostRecentPost(lastPost);
         } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function getViewsByTopicId(id){
+        try{
+            await axios.get(`/api/View/TotalViews/${id}`).then(response => {
+                console.log(response.data);
+                setViewTotal(formatNumber(response.data));
+            })
+        } catch (error){
             console.error(error);
         }
     }
@@ -102,10 +114,24 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
           return formattedTime;
         }
     }
+
+    function formatNumber(total){
+        let calculation;
+        if(total > 999999){
+            calculation = total/1000000;
+            return `${calculation}m`
+        }
+        if(total > 999){
+            calculation = total/1000;
+            return `${calculation}k`
+        }
+        return total;
+    }
             
     useEffect(() => {
         getTopicCreatorById(userId);
         getTotalPostsByTopicId(topicId);
+        getViewsByTopicId(topicId);
     }, []);
 
     useEffect(() => {
@@ -134,7 +160,7 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
                     <span>&nbsp;replies</span>
                 </p>
                 <p className="views">
-                    <span>XX.Xk</span> 
+                    <span>{viewTotal}</span> 
                     <span>&nbsp;views</span>
                 </p>
             </div>
@@ -150,8 +176,8 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
                     <i></i>
                 </div>
                 <div className="lastPoster-info">
-                    <li className="forumTopicItem_lastPoster_username">{authorOfMostRecent ? authorOfMostRecent : null}</li>
-                    <li className="forumTopicItem_lastPoster_timestamp">
+                    <div className="forumTopicItem_lastPoster_username">{authorOfMostRecent ? authorOfMostRecent : null}</div>
+                    <div className="forumTopicItem_lastPoster_timestamp">
                     <span className="longForm">
                         {
                             mostRecentPost 
@@ -166,7 +192,7 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
                             : null
                     }
                     </span>
-                    </li>  
+                    </div>  
                 </div>            
             </div>   
             }           

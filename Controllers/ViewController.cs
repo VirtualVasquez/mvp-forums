@@ -28,12 +28,8 @@ namespace View.Controllers
                 .Views
                 .Where(v => v.TopicId == topicId)
                 .Count();
-            if(totalViews == 0) {
-                return NotFound();
-            } else{
-                Console.WriteLine(totalViews);
-                return Ok(totalViews);
-            }
+            
+            return Ok(totalViews);
         }
 
         [HttpPost("[action]")]
