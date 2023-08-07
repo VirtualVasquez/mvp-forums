@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 
@@ -10,8 +9,6 @@ const Login  = ({showLoginForm}) => {
     const [providedPassword, setPassword] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     
-    const navigate = useNavigate()
-
     function validateCredentials(email, password ){
         if (!email) {
             setErrorMessage('Please provide a email');
@@ -47,9 +44,28 @@ const Login  = ({showLoginForm}) => {
         }
     }
 
+    const handleInputChange =  (userInput, inputType) => {
+        if(inputType == "email"){
+            setEmail(userInput);
+        }
+        if(inputType == "password"){
+            setPassword(userInput);
+        }
+        if(errorMessage){
+            setErrorMessage(null);
+        }
+    }
+
     function handleSubmit(event) {
         event.preventDefault();
-        LoginUser(providedEmail, providedPassword);
+        const validation = validateCredentials(
+            providedEmail, providedPassword
+        );
+        if(validation.status){
+            LoginUser(providedEmail, providedPassword);
+        } else {
+            console.log(validation.msg);
+        }
     }
 
     return (
@@ -62,7 +78,8 @@ const Login  = ({showLoginForm}) => {
                     id="login-email" 
                     aria-describedby="emailHelp" 
                     placeholder="Enter email"
-                    onChange={e=>setEmail(e.target.value)}
+                    onChange={e=>handleInputChange(e.target.value, "email")}
+                    onClick={e=>setErrorMessage(null)}
                     >
                 </input>
 
@@ -73,7 +90,8 @@ const Login  = ({showLoginForm}) => {
                     className="form-control" 
                     id="login-password" 
                     placeholder="Password"
-                    onChange={e=>setPassword(e.target.value)}
+                    onChange={e=>handleInputChange(e.target.value, "password")}
+                    onClick={e=>setErrorMessage(null)}
                 >
                 </input>
             </div>
@@ -81,7 +99,7 @@ const Login  = ({showLoginForm}) => {
                 <div 
                     className="error-message"
                 >
-                    {errorMessage ? errorMessage : <p>&nbsp;</p> }
+                    {errorMessage ? <p>{errorMessage}</p> : <p>&nbsp;</p> }
                 </div>
                 <button 
                     type="submit" 
