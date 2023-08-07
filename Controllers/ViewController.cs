@@ -21,7 +21,7 @@ namespace View.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet("[action]/Id")]
+        [HttpGet("[action]/{topicId}")]
         public IActionResult TotalViews(int topicId)
         {
             var totalViews = _dbContext
