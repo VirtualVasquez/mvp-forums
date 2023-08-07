@@ -138,7 +138,14 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
                     <span>&nbsp;views</span>
                 </p>
             </div>
-            <div className="forumTopicItem-lastPoster">
+            {
+                totalReplies == 0 
+                ? 
+                <div className="forumTopicItem-lastPoster">
+                    <p className="no-posts"> No posts made yet.</p>
+                </div>
+                :
+                <div className="forumTopicItem-lastPoster">
                 <div className="forumTopicItem_lastPoster_icon">
                     <i></i>
                 </div>
@@ -161,7 +168,8 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
                     </span>
                     </li>  
                 </div>            
-            </div>              
+            </div>   
+            }           
         </li>
     );
 }

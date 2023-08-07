@@ -65,6 +65,11 @@
         max-width: unset;
         min-width: unset;
     }
+        .no-posts{
+            width: 100%;
+            margin-bottom: 0;
+            text-align: center;
+        }
         .forumTopicItem_lastPoster_icon{
             i{
                 &:before{
