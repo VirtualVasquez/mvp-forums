@@ -1,0 +1,12 @@
+-- Table: public.views
+
+-- DROP TABLE IF EXISTS public.views;
+
+CREATE TABLE IF NOT EXISTS public.views
+(
+    id integer NOT NULL DEFAULT nextval('views_id_seq'::regclass),
+    topic_id integer NOT NULL,
+    user_id integer NOT NULL,
+    visit_timestamp timestamp without time zone NOT NULL,
+    CONSTRAINT views_pkey PRIMARY KEY (id)
+)
