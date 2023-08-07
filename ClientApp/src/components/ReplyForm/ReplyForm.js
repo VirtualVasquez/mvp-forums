@@ -49,14 +49,6 @@ function ReplyForm ({topicId, topicSlug, forumId, getPostsByTopicId, currentPage
         }
     }
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         let activeUsername = await getUsernameById(activeId);
-    //         setloggedInUsername(activeUsername);
-    //     }
-    //     fetchData();
-    // })
-
     return(
         <div className="reply-form-wrapper">
             <form 
