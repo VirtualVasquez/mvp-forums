@@ -196,7 +196,7 @@ const ForumListItem = ({ id, title, description, slug }) => {
                         </div>
                     </Link>
 
-                    <div class="lastPoster_info">
+                    <div className="lastPoster_info">
                         <Link to={
                             topicOfRecentPost ?
                             formatTopicURL(
