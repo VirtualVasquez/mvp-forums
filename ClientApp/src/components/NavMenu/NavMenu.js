@@ -19,6 +19,17 @@ export const NavMenu = ({ localToken, setShowLoginForm }) => {
     }
   };
 
+  function logoutUser(){
+    localStorage.removeItem('mvp_forums_access_token');
+    localStorage.removeItem('mvp_forums_active_id');
+    window.location.reload();
+  }
+
+  const handleLogout = (event) => {
+    event.preventDefault();
+    logoutUser();
+  }
+
   return (
     <header>
       <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
@@ -32,7 +43,7 @@ export const NavMenu = ({ localToken, setShowLoginForm }) => {
                   <NavLink tag={Link} className="text-dark" to="/home">Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data" disabled>LogOut</NavLink>
+                  <NavLink tag={Link} className="text-dark" onClick={handleLogout} >LogOut</NavLink>
                 </NavItem>
               </ul>
             </Collapse>
