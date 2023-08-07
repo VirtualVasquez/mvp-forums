@@ -28,7 +28,6 @@ function TopicPage () {
   const [currentPage] = useState(page_number ? page_number : 1);  
   const [totalPages, setTotalPages] = useState(1);
   const [paginatedPosts, setPaginatedPosts] = useState(null);
-  const [totalTopicPosts, setTotalTopicPosts] = useState(null);
 
   async function GetTopicById(topicId) {
     try{
@@ -42,14 +41,23 @@ function TopicPage () {
   async function getPostsByTopicId(id, pageSize = 9){
     try {
         const response = await axios.get(`/api/Post/AllPostsByTopicId/${id}?page=${currentPage}&pageSize=${pageSize}`);
-        const { totalPosts, totalPages, posts } = response.data;
+        const { totalPages, posts } = response.data;
         setTotalPages(totalPages);
-        setTotalTopicPosts(totalPosts);
         setPaginatedPosts(posts);
     } catch (error) {
         console.error(error);
     }
   }
+  async function getUsernameById(id){
+    try{
+        const response = await axios.get(`/api/User/NameById/${id}`);
+        return response.data;
+    } catch (error){
+        console.error(error);
+    }
+  };
+
+
 
   const formatDate = (isoDate) => {
     const dateObj = new Date(isoDate);
@@ -60,14 +68,6 @@ function TopicPage () {
     });
     return formattedDate;
   }
-  async function getUsernameById(id){
-    try{
-        const response = await axios.get(`/api/User/NameById/${id}`);
-        return response.data;
-    } catch (error){
-        console.error(error);
-    }
-  };
 
   useEffect(() => {
     GetTopicById(topic_id);
