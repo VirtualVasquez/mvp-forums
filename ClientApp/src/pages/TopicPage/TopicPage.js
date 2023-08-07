@@ -28,6 +28,8 @@ function TopicPage () {
   const [currentPage] = useState(page_number ? page_number : 1);  
   const [totalPages, setTotalPages] = useState(1);
   const [paginatedPosts, setPaginatedPosts] = useState(null);
+  const [loggedInUsername, setloggedInUsername] = useState(null);
+  const [activeId] = useState(localStorage.getItem('mvp_forums_active_id'));
 
   async function GetTopicById(topicId) {
     try{
@@ -57,7 +59,17 @@ function TopicPage () {
     }
   };
 
-
+  async function addUserView(userId, topicId){
+    try{
+      const response = await axios.post(`/api/View/AddUserView`, {
+        UserId: userId,
+        TopicId: topicId
+      });
+      console.log(response.data);
+    } catch (error){
+        console.error(error);
+    }
+  }
 
   const formatDate = (isoDate) => {
     const dateObj = new Date(isoDate);
@@ -70,7 +82,13 @@ function TopicPage () {
   }
 
   useEffect(() => {
-    GetTopicById(topic_id);
+    async function fetchData() {
+      let activeUsername = await getUsernameById(activeId);
+      setloggedInUsername(activeUsername);
+      GetTopicById(topic_id);
+      addUserView(activeId, topic_id);
+    }
+    fetchData();
   }, [currentPage]);
 
   if (topic === null){
@@ -124,12 +142,12 @@ function TopicPage () {
         pageType="topic"
       />        
       <ReplyForm 
-        getUsernameById={getUsernameById}
         topicId={topic_id}
         topicSlug={topic_slug}
         forumId={topic.forumId}
         getPostsByTopicId={getPostsByTopicId}
         currentPage={currentPage}
+        loggedInUsername={loggedInUsername}
       />      
     </div>
   );

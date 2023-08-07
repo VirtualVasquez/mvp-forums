@@ -36,7 +36,6 @@ namespace View.Controllers
         public IActionResult AddUserView([FromBody] View.Data.Models.View view)
         {
             try{
-                Console.WriteLine("running");
                 //get the most recent view in the views table that match provided userId and topicId
                 var lastView = _dbContext
                     .Views
@@ -83,13 +82,9 @@ namespace View.Controllers
         {
             var currentTimestamp = DateTime.UtcNow;
 
-            TimeSpan timeDifference = currentTimestamp.Subtract(timestamp);
+            TimeSpan timeDifference = currentTimestamp - timestamp;
 
-            if(timeDifference.TotalMinutes >= 30) {
-                return false;
-            } else {
-                return true;
-            }     
+            return timeDifference.TotalMinutes >= 30;
         }
 
         

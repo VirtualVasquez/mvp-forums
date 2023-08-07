@@ -4,10 +4,8 @@ import axios from "axios";
 import './ReplyForm.scss';
 
 
-function ReplyForm ({getUsernameById, topicId, topicSlug, forumId, getPostsByTopicId,currentPage}) {
+function ReplyForm ({topicId, topicSlug, forumId, getPostsByTopicId, currentPage, loggedInUsername}) {
 
-    const [activeId] = useState(localStorage.getItem('mvp_forums_active_id'));
-    const [loggedInUsername, setloggedInUsername] = useState(null);
     const [postText, setPostText] = useState(null);
     const navigate = useNavigate()
 
@@ -51,13 +49,13 @@ function ReplyForm ({getUsernameById, topicId, topicSlug, forumId, getPostsByTop
         }
     }
 
-    useEffect(() => {
-        async function fetchData() {
-            let activeUsername = await getUsernameById(activeId);
-            setloggedInUsername(activeUsername);
-        }
-        fetchData();
-    })
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         let activeUsername = await getUsernameById(activeId);
+    //         setloggedInUsername(activeUsername);
+    //     }
+    //     fetchData();
+    // })
 
     return(
         <div className="reply-form-wrapper">
