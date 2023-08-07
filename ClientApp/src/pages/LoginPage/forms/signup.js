@@ -84,11 +84,27 @@ const Signup = props => {
     }
 
 
+    const handleInputChange =  (userInput, inputType) => {
+        if(inputType == "email"){
+            setEmail(userInput);
+        }
+        if(inputType == "username"){
+            setUsername(userInput);
+        }
+        if(inputType == "password"){
+            setPassword(userInput);
+        }
+        if(inputType == "passcheck"){
+            setPasswordCheck(userInput);
+        }
+        if(errorMessage){
+            setErrorMessage(null);
+        }
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         setErrorMessage(null);
-        //validate credentials
-            //if valid, create new user
         const validation = validateCredentials(
           providedEmail,
           providedUsername,
@@ -115,7 +131,8 @@ const Signup = props => {
                     aria-describedby="emailHelp" 
                     placeholder="Enter email"
                     required
-                    onChange={e=>setEmail(e.target.value)}
+                    onChange={e=>handleInputChange(e.target.value, "email")}
+                    onClick={e=>setErrorMessage(null)}
                 >
                 </input>
             </div>
@@ -126,7 +143,8 @@ const Signup = props => {
                     id="register-username" 
                     aria-describedby="usernameHelp" 
                     placeholder="Enter username"
-                    onChange={e=>setUsername(e.target.value)}
+                    onChange={e=>handleInputChange(e.target.value, "username")}
+                    onClick={e=>setErrorMessage(null)}
                 >
                 </input>
             </div>
@@ -136,7 +154,8 @@ const Signup = props => {
                     className="form-control" 
                     id="register-password" 
                     placeholder="Password"
-                    onChange={e=>setPassword(e.target.value)}
+                    onChange={e=>handleInputChange(e.target.value, "password")}
+                    onClick={e=>setErrorMessage(null)}
                 >
                 </input>
             </div>
@@ -146,7 +165,8 @@ const Signup = props => {
                     className="form-control" 
                     id="confirm-password" 
                     placeholder="Confirm password"
-                    onChange={e=>setPasswordCheck(e.target.value)}    
+                    onChange={e=>handleInputChange(e.target.value, "passcheck")}    
+                    onClick={e=>setErrorMessage(null)}
                 >
                 </input>
             </div>
@@ -154,7 +174,7 @@ const Signup = props => {
                 <div 
                     className="error-message"
                 >
-                    {errorMessage ? errorMessage : <p>&nbsp;</p> }
+                    {errorMessage ? <p>{errorMessage}</p> : <p>&nbsp;</p> }
                 </div>
                 <button 
                     type="submit" 
