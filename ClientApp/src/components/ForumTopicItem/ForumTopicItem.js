@@ -44,7 +44,6 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
     async function getViewsByTopicId(id){
         try{
             await axios.get(`/api/View/TotalViews/${id}`).then(response => {
-                console.log(response.data);
                 setViewTotal(formatNumber(response.data));
             })
         } catch (error){

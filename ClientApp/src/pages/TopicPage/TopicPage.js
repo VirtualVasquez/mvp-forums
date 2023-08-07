@@ -65,7 +65,6 @@ function TopicPage () {
         UserId: userId,
         TopicId: topicId
       });
-      console.log(response.data);
     } catch (error){
         console.error(error);
     }

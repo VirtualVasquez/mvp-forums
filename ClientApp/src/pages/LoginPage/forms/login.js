@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import axios from "axios";
 
 async function LoginUser(email, password) {
-    console.log(email);
-    console.log(password);
      try {
          //make axios request
          const response = await axios.post('/api/User/loginuser', {
@@ -11,7 +9,6 @@ async function LoginUser(email, password) {
              password: password
          })
          //save access token to localStorage
-         console.log(response.data.token);
          localStorage.setItem('mvp_forums_access_token', response.data.token); 
          //window.location.reload();
      } catch (error) {

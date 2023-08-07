@@ -13,11 +13,9 @@ export const NavMenu = ({ localToken, setShowLoginForm }) => {
   const toggleLogin = (navItem) => {
     if (navItem === 'login') {
       setShowLoginForm(true);
-      console.log(true);
     }
     if (navItem === 'signup') {
       setShowLoginForm(false);
-      console.log(false);
     }
   };
 
