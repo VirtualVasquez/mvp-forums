@@ -2,7 +2,8 @@ footer{
     bottom: 0;
     margin-top: 2rem;
     width: 100%;
-    border-top: gray 1px solid;
+    border-top: 1px solid #dee2e6;
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
     text-align: center;
     padding: 2rem;
     background-color: white;
@@ -15,6 +16,12 @@ footer{
         li{
             &:nth-child(2){
                 margin: 0 4rem;
+            }
+            a{
+                color: black;
+                &:hover{                
+                    text-decoration: underline;
+                }
             }
         }
     }
