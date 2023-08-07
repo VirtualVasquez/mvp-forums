@@ -6,7 +6,7 @@ function Pagination ({currentPage, totalPages, pageType, id, slug}) {
 
   const renderNumbers = () => {
     const links = [];
-    let startingNumber = totalPages < 5 ? 1 : currentPage;
+    let startingNumber = totalPages < 5 ? 1 : parseInt(currentPage);
     let endingNumber = totalPages < 5 ? totalPages : startingNumber + 4;
 
     for (let i = startingNumber; i <= endingNumber; i++){
@@ -30,7 +30,7 @@ function Pagination ({currentPage, totalPages, pageType, id, slug}) {
       return(
         <a 
           className="previous"
-          href={`/${pageType}/${id}/${slug}/page/${currentPage-1}`}
+          href={`/${pageType}/${id}/${slug}/page/${parseInt(currentPage)-1}`}
         >PREVIOUS</a>
       )
     }
@@ -39,7 +39,7 @@ function Pagination ({currentPage, totalPages, pageType, id, slug}) {
       return(
         <a 
           className="next"
-          href={`/${pageType}/${id}/${slug}/page/${currentPage+1}`}
+          href={`/${pageType}/${id}/${slug}/page/${parseInt(currentPage)+1}`}
         >NEXT</a>
       )
     }
