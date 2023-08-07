@@ -1,26 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
-async function LoginUser(email, password) {
-     try {
-         //make axios request
-         const response = await axios.post('/api/User/loginuser', {
-             email: email,
-             password: password
-         })
-         //save access token to localStorage
-         localStorage.setItem('mvp_forums_access_token', response.data.token); 
-         //window.location.reload();
-     } catch (error) {
-         console.error(error)
-     }
- }
+
 
 
 const Login  = ({showLoginForm}) => {
     const [providedEmail, setEmail] = useState(null);
     const [providedPassword, setPassword] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
+    
+    const navigate = useNavigate()
 
     function validateCredentials(email, password ){
         if (!email) {
@@ -40,6 +30,21 @@ const Login  = ({showLoginForm}) => {
             return {status: false, msg: 'No whitespace is allowed for the password' };
         }
         return {status: true, msg: 'valid' };
+    }
+
+    async function LoginUser(email, password) {
+        try {
+            //make axios request
+            const response = await axios.post('/api/User/loginuser', {
+                email: email,
+                password: password
+            })
+            //save access token to localStorage
+            localStorage.setItem('mvp_forums_access_token', response.data.token);
+            window.location.reload();         
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     function handleSubmit(event) {
