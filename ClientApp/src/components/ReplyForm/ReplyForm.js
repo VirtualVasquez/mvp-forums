@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import './ReplyForm.scss';
 
 
-function ReplyForm ({topicId, topicSlug, forumId, getPostsByTopicId, currentPage, loggedInUsername}) {
+function ReplyForm ({activeId, topicId, topicSlug, forumId, getPostsByTopicId, currentPage, loggedInUsername}) {
 
     const [postText, setPostText] = useState(null);
     const navigate = useNavigate()
@@ -21,18 +21,18 @@ function ReplyForm ({topicId, topicSlug, forumId, getPostsByTopicId, currentPage
             const newPostId = response.data.post.id;
             let topicUrl;
 
-            if(pageNumber == 1 ){
+            if(pageNumber === 1 ){
                 topicUrl = `/topic/${topicId}/${slugOfTopic}/#post-${newPostId}`;
             } else{
                 topicUrl = `/topic/${topicId}/${slugOfTopic}/page/${pageNumber}/#post-${newPostId}`
             }
 
-            if (pageNumber == currentPageNumber){
+            if (pageNumber === currentPageNumber){
                 getPostsByTopicId(idOfTopic);
                 navigate(topicUrl, {replace: true});
             } else{
                 navigate(topicUrl, {replace: true});
-                location.reload();
+                window.location.reload();
             }
 
         } catch (error) {

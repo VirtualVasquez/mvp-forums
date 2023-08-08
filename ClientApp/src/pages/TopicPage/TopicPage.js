@@ -141,6 +141,7 @@ function TopicPage () {
         pageType="topic"
       />        
       <ReplyForm 
+        activeId={activeId}
         topicId={topic_id}
         topicSlug={topic_slug}
         forumId={topic.forumId}
