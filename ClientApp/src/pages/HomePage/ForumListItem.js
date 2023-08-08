@@ -65,7 +65,6 @@ const ForumListItem = ({ id, title, description, slug }) => {
         const diffInMinutes = Math.floor(diffInSeconds / 60);
         const diffInHours = Math.floor(diffInMinutes / 60);
         const diffInDays = Math.floor(diffInHours / 24);
-        const diffInWeeks = Math.floor(diffInDays / 7);
       
         if (diffInMinutes < 60) {
           return `${diffInMinutes} minutes ago`;
@@ -103,7 +102,6 @@ const ForumListItem = ({ id, title, description, slug }) => {
         const diffInMinutes = Math.floor(diffInSeconds / 60);
         const diffInHours = Math.floor(diffInMinutes / 60);
         const diffInDays = Math.floor(diffInHours / 24);
-        const diffInWeeks = Math.floor(diffInDays / 7);
       
         if (diffInMinutes < 60) {
           return `${diffInMinutes} min`;
@@ -122,7 +120,7 @@ const ForumListItem = ({ id, title, description, slug }) => {
 
     function formatTopicURL(idOfTopic, slugOfTopic, pageOfTopic, idOfPost){
         let url;
-        if(pageOfTopic == 1){
+        if(pageOfTopic === 1){
             url = `/topic/${idOfTopic}/${slugOfTopic}/#post-${idOfPost}`;
         }
         else {

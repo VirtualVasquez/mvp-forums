@@ -45,10 +45,10 @@ const Login  = ({showLoginForm}) => {
     }
 
     const handleInputChange =  (userInput, inputType) => {
-        if(inputType == "email"){
+        if(inputType === "email"){
             setEmail(userInput);
         }
-        if(inputType == "password"){
+        if(inputType === "password"){
             setPassword(userInput);
         }
         if(errorMessage){

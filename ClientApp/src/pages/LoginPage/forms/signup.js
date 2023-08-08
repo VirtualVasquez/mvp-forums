@@ -85,16 +85,16 @@ const Signup = props => {
 
 
     const handleInputChange =  (userInput, inputType) => {
-        if(inputType == "email"){
+        if(inputType === "email"){
             setEmail(userInput);
         }
-        if(inputType == "username"){
+        if(inputType === "username"){
             setUsername(userInput);
         }
-        if(inputType == "password"){
+        if(inputType === "password"){
             setPassword(userInput);
         }
-        if(inputType == "passcheck"){
+        if(inputType === "passcheck"){
             setPasswordCheck(userInput);
         }
         if(errorMessage){
