@@ -17,8 +17,7 @@ import axios from "axios";
 import './custom.css'
 
 function App() {
-  const [localToken, setLocalToken] = useState(localStorage.getItem('mvp_forums_access_token'));
-  const [tempTestAuth, setTempTestAuth] = useState(false);
+  const [localToken] = useState(localStorage.getItem('mvp_forums_access_token'));
   const [showLoginForm, setShowLoginForm] = useState(true);
 
     async function verifyAccessToken(token) {

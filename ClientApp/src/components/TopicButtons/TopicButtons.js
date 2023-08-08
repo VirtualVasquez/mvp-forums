@@ -32,11 +32,11 @@ function ReplyToTopicButton(){
 
 
 function TopicButtons ({pageType, statusOpen, forumId, forumSlug}) {
-    if(forumId == null || forumSlug == null){
+    if(forumId === null || forumSlug === null){
         return null;
     }
     
-    if (pageType == "forum"){
+    if (pageType === "forum"){
         return(            
             <div className="button-container">
                 <NewTopicButton 
@@ -47,7 +47,7 @@ function TopicButtons ({pageType, statusOpen, forumId, forumSlug}) {
         )
     }
 
-    if (pageType == "topic"){
+    if (pageType === "topic"){
         return (
             <div className="button-container">
               <NewTopicButton 

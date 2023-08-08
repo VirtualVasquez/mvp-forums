@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
-import { useParams } from 'react-router-dom';
+import React from 'react';
 import './ForumTitle.scss';
 
 function ForumTitle({title, description, topicsTotal }) {    

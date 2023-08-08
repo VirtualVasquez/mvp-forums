@@ -59,7 +59,6 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
         const diffInMinutes = Math.floor(diffInSeconds / 60);
         const diffInHours = Math.floor(diffInMinutes / 60);
         const diffInDays = Math.floor(diffInHours / 24);
-        const diffInWeeks = Math.floor(diffInDays / 7);
       
         if (diffInMinutes < 60) {
           return `${diffInMinutes} minutes ago`;
@@ -97,7 +96,6 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
         const diffInMinutes = Math.floor(diffInSeconds / 60);
         const diffInHours = Math.floor(diffInMinutes / 60);
         const diffInDays = Math.floor(diffInHours / 24);
-        const diffInWeeks = Math.floor(diffInDays / 7);
       
         if (diffInMinutes < 60) {
           return `${diffInMinutes} min`;
