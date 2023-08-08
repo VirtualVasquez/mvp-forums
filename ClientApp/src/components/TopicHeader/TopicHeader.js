@@ -10,7 +10,7 @@ function TopicHeader ({title, userId, forumId, dateCreated, formatDate, topicAut
             GetForumById(forumId);
         }
         fetchData();
-    }, [])
+    })
     
     return (
         <div className="topic-header box-shadow">
@@ -35,9 +35,7 @@ function TopicHeader ({title, userId, forumId, dateCreated, formatDate, topicAut
                         &nbsp;in&nbsp; 
                         </span> 
                         <span className="parent">
-                        <a>
                             {forum ? forum.title : null}
-                        </a>
                         </span>
                     </p>
                 </div>
