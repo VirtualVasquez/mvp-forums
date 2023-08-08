@@ -131,7 +131,7 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
         getTopicCreatorById(userId);
         getTotalPostsByTopicId(topicId);
         getViewsByTopicId(topicId);
-    }, []);
+    });
 
     useEffect(() => {
         if(mostRecentPost){
@@ -148,9 +148,9 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
                     </a>
                 </h4>
                 <div className="forumTopicItem_author">
-                <a>
+                <p>
                     By {topicCreator}, {longFormatTimestamp(dateCreated)}
-                </a>
+                </p>
                 </div>
             </div>
             <div className="forumTopicItem-stats">
@@ -164,7 +164,7 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
                 </p>
             </div>
             {
-                totalReplies == 0 
+                totalReplies === 0 
                 ? 
                 <div className="forumTopicItem-lastPoster">
                     <p className="no-posts"> No posts made yet.</p>

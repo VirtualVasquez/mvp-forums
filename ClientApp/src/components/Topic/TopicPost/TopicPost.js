@@ -4,7 +4,7 @@ import './TopicPost.scss';
 function TopicPost ({firstPost, topicAuthor, text, dateCreated, formatDate, getUsernameById, postId, userId, postNum}) {
 
     const [author, setAuthor] = useState(null);
-    const [postNumber, setPostNumber] = useState(firstPost ? 1 : postNum);
+    const [postNumber] = useState(firstPost ? 1 : postNum);
 
     useEffect(() => {
         async function fetchData() {
@@ -19,7 +19,7 @@ function TopicPost ({firstPost, topicAuthor, text, dateCreated, formatDate, getU
             element.scrollIntoView({behavior: 'smooth'});
           }
         }
-    })
+    }, [])
 
     return (
       <div 

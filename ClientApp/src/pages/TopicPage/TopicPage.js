@@ -61,7 +61,7 @@ function TopicPage () {
 
   async function addUserView(userId, topicId){
     try{
-      const response = await axios.post(`/api/View/AddUserView`, {
+      await axios.post(`/api/View/AddUserView`, {
         UserId: userId,
         TopicId: topicId
       });
@@ -88,7 +88,7 @@ function TopicPage () {
       addUserView(activeId, topic_id);
     }
     fetchData();
-  }, [currentPage]);
+  });
 
   if (topic === null){
     return <div>Loading forum ...</div>
