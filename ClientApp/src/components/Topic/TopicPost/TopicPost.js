@@ -9,17 +9,17 @@ function TopicPost ({firstPost, topicAuthor, text, dateCreated, formatDate, getU
     useEffect(() => {
         async function fetchData() {
             const username = await getUsernameById(userId);
-            setAuthor(username); 
+            setAuthor(username);
         }
         firstPost ? setAuthor(topicAuthor) : fetchData();
         const hash = window.location.hash;
-        if (hash){
-          const element = document.querySelector(hash);
-          if(element){
-            element.scrollIntoView({behavior: 'smooth'});
-          }
+        if (hash) {
+            const element = document.querySelector(hash);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
         }
-    }, [])
+    }, [firstPost, getUsernameById, topicAuthor, userId]);
 
     return (
       <div 

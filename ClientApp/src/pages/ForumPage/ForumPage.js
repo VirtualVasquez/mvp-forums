@@ -12,10 +12,10 @@ function ForumPage() {
 
     const [forum, setForum] = useState(null);
 
-    const [currentPage, setCurrentPage] = useState(page_number ? page_number : 1);
+    const [currentPage] = useState(page_number ? page_number : 1);
     const [totalPages, setTotalPages] = useState(1);
     const [totalForumTopics, setTotalForumTopics] = useState(0);
-    const [paginatedTopics, setPaginatedTopics] = useState(null);
+    const [paginatedTopics, setPaginatedTopics] = useState([]);
 
     async function GetForumById(forumId) {
         try {
@@ -43,7 +43,7 @@ function ForumPage() {
     useEffect(() => {
         GetForumById(forum_id);
         GetTopicsByForumId(forum_id);
-    }, [currentPage]);
+    });
 
     if (forum === null) {
         return <div>Loading forum ...</div>
@@ -61,11 +61,8 @@ function ForumPage() {
             forumId={forum_id}
             forumSlug={forum_slug}
         />
-        {!paginatedTopics 
+        {paginatedTopics.length > 0 
         ? 
-        <p className="text-center">No topics were able to be succesfully fetched.</p> 
-        :
-        paginatedTopics.length > 0 ? 
         <div className='box-shadow'>
         <Pagination 
             currentPage={currentPage}
