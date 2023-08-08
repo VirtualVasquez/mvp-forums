@@ -13,9 +13,9 @@ function Pagination ({currentPage, totalPages, pageType, id, slug}) {
       links.push(
         <a 
           key={i}           
-          href={i == 1 ? `/${pageType}/${id}/${slug}` : `/${pageType}/${id}/${slug}/page/${i}`}
+          href={i === 1 ? `/${pageType}/${id}/${slug}` : `/${pageType}/${id}/${slug}/page/${i}`}
           data-value={i}
-          className={i == currentPage ? "active" : null}
+          className={i === currentPage ? "active" : null}
         >
           {i}
         </a>
@@ -26,7 +26,7 @@ function Pagination ({currentPage, totalPages, pageType, id, slug}) {
   
   function PageTurningButton ({direction}) {
 
-    if(direction == "previous"){
+    if(direction === "previous"){
       return(
         <a 
           className="previous"
@@ -35,7 +35,7 @@ function Pagination ({currentPage, totalPages, pageType, id, slug}) {
       )
     }
 
-    if(direction == "next"){
+    if(direction === "next"){
       return(
         <a 
           className="next"
@@ -45,7 +45,7 @@ function Pagination ({currentPage, totalPages, pageType, id, slug}) {
     }
 
     if(!direction){
-      null;
+      return null;
     }
 
   }
@@ -76,7 +76,7 @@ function Pagination ({currentPage, totalPages, pageType, id, slug}) {
     return (
       <div className="pagination box-shadow">
         <div className="page-numbers">
-            {currentPage == 1 ? 
+            {currentPage === 1 ? 
             null :
             <div>
               <EndPagesButton 
@@ -88,7 +88,7 @@ function Pagination ({currentPage, totalPages, pageType, id, slug}) {
             </div>
             }
             {renderNumbers()}            
-            {currentPage == totalPages ? 
+            {currentPage === totalPages ? 
             null :
             <div>
             <PageTurningButton 
