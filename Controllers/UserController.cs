@@ -273,7 +273,7 @@ namespace User.Controllers
             try
             {
                 // Validate the token
-                SecurityToken validatedToken;
+                //SecurityToken validatedToken;
                 var token = tokenHandler.ReadJwtToken(accessToken);
 
                 // Get the issuer and audience claims from the token
