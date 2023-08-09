@@ -154,6 +154,7 @@ const Signup = props => {
                     className="form-control" 
                     id="register-password" 
                     placeholder="Password"
+                    autoComplete="on"
                     onChange={e=>handleInputChange(e.target.value, "password")}
                     onClick={e=>setErrorMessage(null)}
                 >
@@ -165,6 +166,7 @@ const Signup = props => {
                     className="form-control" 
                     id="confirm-password" 
                     placeholder="Confirm password"
+                    autoComplete="on"
                     onChange={e=>handleInputChange(e.target.value, "passcheck")}    
                     onClick={e=>setErrorMessage(null)}
                 >

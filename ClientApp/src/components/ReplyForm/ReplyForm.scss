@@ -69,7 +69,7 @@
         .row-two{
             margin-top:1rem;
             display:flex;
-            justify-content: end;
+            justify-content: flex-end;
             @media (max-width: 768px){
                 justify-content: center;
             }       

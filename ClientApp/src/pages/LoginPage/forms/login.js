@@ -90,6 +90,7 @@ const Login  = ({showLoginForm}) => {
                     className="form-control" 
                     id="login-password" 
                     placeholder="Password"
+                    autoComplete="on"
                     onChange={e=>handleInputChange(e.target.value, "password")}
                     onClick={e=>setErrorMessage(null)}
                 >
