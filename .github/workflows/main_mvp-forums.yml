@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'mvp-forums'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_951DE4A84E4E4DCEA4BD3455541430E0 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_449E1DDDE97D4D8BBC0DB20A21A14402 }}
           package: .
