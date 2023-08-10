@@ -45,18 +45,25 @@ namespace my_new_app
                 configuration.RootPath = "ClientApp/build";
             });
 
-            var connectionString = GetConnectionStringFromEnv();
+            var connectionString = GetConnectionStringFromEnv() ?? Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
         }
         private string GetConnectionStringFromEnv()
         {
-            var host = Environment.GetEnvironmentVariable("DB_HOST");
-            var port = Environment.GetEnvironmentVariable("DB_PORT");
-            var dbName = Environment.GetEnvironmentVariable("DB_NAME");
-            var user = Environment.GetEnvironmentVariable("DB_USER");
-            var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                // Use your local environment variables here
+                var host = Environment.GetEnvironmentVariable("DB_HOST");
+                var port = Environment.GetEnvironmentVariable("DB_PORT");
+                var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+                var user = Environment.GetEnvironmentVariable("DB_USER");
+                var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
 
-            return $"Host={host};Port={port};Database={dbName};Username={user};Password={password}";
+                return $"Host={host};Port={port};Database={dbName};Username={user};Password={password}";
+            }
+
+            return null;
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
