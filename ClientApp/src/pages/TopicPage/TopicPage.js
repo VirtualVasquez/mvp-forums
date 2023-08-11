@@ -88,7 +88,7 @@ function TopicPage () {
       addUserView(activeId, topic_id);
     }
     fetchData();
-  });
+  }, []);
 
   if (topic === null){
     return <div>Loading forum ...</div>

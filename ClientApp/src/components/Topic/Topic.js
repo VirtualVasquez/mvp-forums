@@ -6,7 +6,7 @@ function Topic ({topicAuthor, topicId, topicSlug, currentPage, topicText, dateCr
 
     useEffect(() => {
       getPostsByTopicId(topicId)     
-    },);
+    }, []);
 
     return (
       <div className="topic">

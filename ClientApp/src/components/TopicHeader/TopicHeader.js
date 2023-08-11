@@ -10,7 +10,7 @@ function TopicHeader ({title, userId, forumId, dateCreated, formatDate, topicAut
             GetForumById(forumId);
         }
         fetchData();
-    })
+    }, [])
     
     return (
         <div className="topic-header box-shadow">

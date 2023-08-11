@@ -43,7 +43,7 @@ function ForumPage() {
     useEffect(() => {
         GetForumById(forum_id);
         GetTopicsByForumId(forum_id);
-    });
+    }, []);
 
     if (forum === null) {
         return <div>Loading forum ...</div>

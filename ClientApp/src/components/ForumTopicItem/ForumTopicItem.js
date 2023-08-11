@@ -129,13 +129,13 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
         getTopicCreatorById(userId);
         getTotalPostsByTopicId(topicId);
         getViewsByTopicId(topicId);
-    });
+    },[]);
 
     useEffect(() => {
         if(mostRecentPost){
             getAuthorofLastPostById(mostRecentPost.userId);
         }
-    }, [mostRecentPost]);
+    }, []);
 
     return (
         <li className="forumTopicItem box-shadow">
