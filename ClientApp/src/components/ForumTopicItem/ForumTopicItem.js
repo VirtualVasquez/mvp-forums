@@ -129,12 +129,14 @@ function ForumTopicItem ({topicId, userId, title, dateCreated, slug, currentPage
         getTopicCreatorById(userId);
         getTotalPostsByTopicId(topicId);
         getViewsByTopicId(topicId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(mostRecentPost){
             getAuthorofLastPostById(mostRecentPost.userId);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

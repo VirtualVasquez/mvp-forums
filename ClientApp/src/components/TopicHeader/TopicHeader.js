@@ -10,6 +10,7 @@ function TopicHeader ({title, userId, forumId, dateCreated, formatDate, topicAut
             GetForumById(forumId);
         }
         fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
     return (

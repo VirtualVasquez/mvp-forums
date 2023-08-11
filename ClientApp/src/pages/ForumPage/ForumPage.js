@@ -43,6 +43,7 @@ function ForumPage() {
     useEffect(() => {
         GetForumById(forum_id);
         GetTopicsByForumId(forum_id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (forum === null) {

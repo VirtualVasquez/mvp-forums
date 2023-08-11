@@ -6,6 +6,7 @@ function Topic ({topicAuthor, topicId, topicSlug, currentPage, topicText, dateCr
 
     useEffect(() => {
       getPostsByTopicId(topicId)     
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

@@ -88,6 +88,7 @@ function TopicPage () {
       addUserView(activeId, topic_id);
     }
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (topic === null){
