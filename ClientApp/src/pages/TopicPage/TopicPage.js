@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import TopicHeader from '../../components/TopicHeader/TopicHeader';
@@ -31,15 +31,29 @@ function TopicPage () {
   const [loggedInUsername, setloggedInUsername] = useState(null);
   const [activeId] = useState(localStorage.getItem('mvp_forums_active_id'));
 
-  async function GetTopicById(topicId) {
-    try{
-      await axios.get(`/api/topic/TopicById/${topicId}`).then( response => {
-        setTopic(response.data);
-      })
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  const GetTopicById = useCallback(async () => {
+      try {
+          await axios.get(`/api/topic/TopicById/${topic_id}`).then(response => {
+              setTopic(response.data);
+          })
+      } catch (error) {
+          console.error(error);
+      }
+  }, [topic_id]);
+
+    const addUserView = useCallback(async () => {
+        try {
+            await axios.post(`/api/View/AddUserView`, {
+                UserId: activeId,
+                TopicId: topic_id
+            });
+        } catch (error) {
+            console.error(error);
+        }
+  }, [activeId, topic_id]);
+
+
+
   async function getPostsByTopicId(id, pageSize = 9){
     try {
         const response = await axios.get(`/api/Post/AllPostsByTopicId/${id}?page=${currentPage}&pageSize=${pageSize}`);
@@ -59,16 +73,6 @@ function TopicPage () {
     }
   };
 
-  async function addUserView(userId, topicId){
-    try{
-      await axios.post(`/api/View/AddUserView`, {
-        UserId: userId,
-        TopicId: topicId
-      });
-    } catch (error){
-        console.error(error);
-    }
-  }
 
   const formatDate = (isoDate) => {
     const dateObj = new Date(isoDate);
@@ -84,12 +88,11 @@ function TopicPage () {
     async function fetchData() {
       let activeUsername = await getUsernameById(activeId);
       setloggedInUsername(activeUsername);
-      GetTopicById(topic_id);
-      addUserView(activeId, topic_id);
-    }
-    fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      }
+      GetTopicById();
+      addUserView();
+      fetchData();
+  }, [GetTopicById, addUserView, activeId]);
 
   if (topic === null){
     return <div>Loading forum ...</div>
