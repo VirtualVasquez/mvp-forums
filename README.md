@@ -72,6 +72,7 @@ Given more time, there are a number of features that would be implemented to cre
 - A WYSIWYG (what you see is what you get) editor would be great for creating topics and making replies.
 - User profile pages for users to be able to edit their own accounts, as well as be able to keep track of the forums they're currently following or have previously posted in.
 - The ability to follow topics to keep track of new posts and replies made, as well as the accompanying notifications. 
+- Make three types of user accounts possible: admin, moderator, and regular user. Regular user can continue to use the app as is. Moderators would have additional privileges of promoting or removing posts made on a topic, and flag troublesome users. Admins would gain further privileges of being able to construct new boards beyond the current five present and banning/deleting user profiles.
 
 
 ## Author
