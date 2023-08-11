@@ -133,7 +133,6 @@ function TopicPage () {
       />
       <Topic
         topicAuthor={topicAuthor}
-        topicId={topic_id}
         topicSlug={topic_slug}
         currentPage={currentPage}
         topicText={topic.text}
@@ -141,7 +140,6 @@ function TopicPage () {
         formatDate={formatDate}
         getUsernameById={getUsernameById}
         paginatedPosts={paginatedPosts}
-        getPostsByTopicId={getPostsByTopicId}
       />
       <Pagination 
         currentPage={currentPage}
