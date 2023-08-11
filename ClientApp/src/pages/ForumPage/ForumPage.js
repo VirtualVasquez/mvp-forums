@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import ForumTitle from '../../components/ForumTitle/ForumTitle';
@@ -16,21 +16,19 @@ function ForumPage() {
     const [totalPages, setTotalPages] = useState(1);
     const [totalForumTopics, setTotalForumTopics] = useState(0);
     const [paginatedTopics, setPaginatedTopics] = useState([]);
-
-    async function GetForumById(forumId) {
+    const GetForumById = useCallback(async () => {
         try {
-            await axios.get(`/api/forum/${forumId}`).then(response => {
+            await axios.get(`/api/forum/${forum_id}`).then(response => {
                 setForum(response.data);
             })
         } catch (error) {
             console.error(error);
         }
-    }
-
-    async function GetTopicsByForumId(forumId) {
+    }, [forum_id]);
+    const GetTopicsByForumId = useCallback(async () => {
         const pageSize = 10;
         try {
-            const response = await axios.get(`/api/Topic/AllTopicsByForumId/${forumId}?page=${currentPage}&pageSize=${pageSize}`);
+            const response = await axios.get(`/api/Topic/AllTopicsByForumId/${forum_id}?page=${currentPage}&pageSize=${pageSize}`);
             const { totalTopics, totalPages, topics } = response.data;
             setTotalPages(totalPages);
             setTotalForumTopics(totalTopics);
@@ -38,13 +36,12 @@ function ForumPage() {
         } catch (error) {
             console.error(error);
         }
-    }
+    }, [forum_id, currentPage])
 
     useEffect(() => {
-        GetForumById(forum_id);
-        GetTopicsByForumId(forum_id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        GetForumById();
+        GetTopicsByForumId();
+    }, [GetForumById, GetTopicsByForumId]);
 
     if (forum === null) {
         return <div>Loading forum ...</div>
