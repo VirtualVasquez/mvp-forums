@@ -51,16 +51,17 @@ function TopicPage () {
       }
   }, [activeId, topic_id]);
 
-  async function getPostsByTopicId(id, pageSize = 9){
-    try {
-        const response = await axios.get(`/api/Post/AllPostsByTopicId/${id}?page=${currentPage}&pageSize=${pageSize}`);
-        const { totalPages, posts } = response.data;
-        setTotalPages(totalPages);
-        setPaginatedPosts(posts);
-    } catch (error) {
-        console.error(error);
-    }
-  }
+    const getPostsByTopicId = useCallback(async () => {
+        try {
+            const response = await axios.get(`/api/Post/AllPostsByTopicId/${topic_id}?page=${currentPage}&pageSize=9`);
+            const { totalPages, posts } = response.data;
+            setTotalPages(totalPages);
+            setPaginatedPosts(posts);
+        } catch (error) {
+            console.error(error);
+        }
+    }, [currentPage, topic_id]);
+
   async function getUsernameById(id){
     try{
         const response = await axios.get(`/api/User/NameById/${id}`);
@@ -91,7 +92,8 @@ function TopicPage () {
       }
       fetchData();
       fetchDataTwo();
-  }, [GetTopicById, addUserView, activeId, topic.forumId, topic.userId]);
+      getPostsByTopicId();
+  }, [GetTopicById, addUserView, activeId, topic.forumId, topic.userId, getPostsByTopicId]);
 
   const formatDate = (isoDate) => {
       const dateObj = new Date(isoDate);

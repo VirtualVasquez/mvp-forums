@@ -28,7 +28,7 @@ function ReplyForm ({activeId, topicId, topicSlug, forumId, getPostsByTopicId, c
             }
 
             if (pageNumber === currentPageNumber){
-                getPostsByTopicId(idOfTopic);
+                getPostsByTopicId();
                 navigate(topicUrl, {replace: true});
             } else{
                 navigate(topicUrl, {replace: true});

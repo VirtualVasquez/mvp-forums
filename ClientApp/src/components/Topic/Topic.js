@@ -1,13 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import TopicPost from './TopicPost/TopicPost';
 import './Topic.scss';
 
-function Topic ({topicAuthor, topicId, topicSlug, currentPage, topicText, dateCreated, formatDate, getUsernameById, paginatedPosts, getPostsByTopicId}) {
-
-    useEffect(() => {
-      getPostsByTopicId(topicId)     
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+function Topic ({topicAuthor, topicSlug, currentPage, topicText, dateCreated, formatDate, getUsernameById, paginatedPosts}) {
 
     return (
       <div className="topic">
