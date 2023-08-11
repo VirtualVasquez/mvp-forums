@@ -1,17 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './TopicHeader.scss';
 
-function TopicHeader ({title, userId, forumId, dateCreated, formatDate, topicAuthor, setAuthor, getUsernameById, forum, GetForumById}) {
-    
-    useEffect(() => {
-        async function fetchData() {
-            const username = await getUsernameById(userId);
-            setAuthor(username);
-            GetForumById(forumId);
-        }
-        fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+function TopicHeader({ title, dateCreated, formatDate, topicAuthor, forum}) {
     
     return (
         <div className="topic-header box-shadow">

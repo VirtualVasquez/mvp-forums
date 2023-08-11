@@ -9,50 +9,47 @@ import TopicButtons from '../../components/TopicButtons/TopicButtons';
 import './TopicPage.scss'
 
 function TopicPage () {
-  const { topic_id, topic_slug, page_number} = useParams();
+  const { topic_id, topic_slug, page_number } = useParams();
 
-  const [forum, setForum] = useState(null);
-
-  async function GetForumById(id) {
-      try {
-          await axios.get(`/api/forum/${id}`).then(response => {
-              setForum(response.data);
-          })
-      } catch (error) {
-          console.error(error);
-      }
-  }
-
-  const [topic, setTopic] = useState(null);
+  const [topic, setTopic] = useState([]);
   const [topicAuthor, setAuthor] = useState(null);
   const [currentPage] = useState(page_number ? page_number : 1);  
   const [totalPages, setTotalPages] = useState(1);
   const [paginatedPosts, setPaginatedPosts] = useState(null);
   const [loggedInUsername, setloggedInUsername] = useState(null);
   const [activeId] = useState(localStorage.getItem('mvp_forums_active_id'));
+  const [forum, setForum] = useState(null);
+
+  async function GetForumById(id) {
+      try {
+          const response = await axios.get(`/api/forum/${id}`);
+          return response.data;
+      } catch (error) {
+          console.error(error);
+      }
+  }
 
   const GetTopicById = useCallback(async () => {
       try {
           await axios.get(`/api/topic/TopicById/${topic_id}`).then(response => {
               setTopic(response.data);
+              GetForumById(response.data.forumId);
           })
       } catch (error) {
           console.error(error);
       }
   }, [topic_id]);
 
-    const addUserView = useCallback(async () => {
-        try {
-            await axios.post(`/api/View/AddUserView`, {
-                UserId: activeId,
-                TopicId: topic_id
-            });
-        } catch (error) {
-            console.error(error);
-        }
+  const addUserView = useCallback(async () => {
+      try {
+          await axios.post(`/api/View/AddUserView`, {
+              UserId: activeId,
+              TopicId: topic_id
+          });
+      } catch (error) {
+          console.error(error);
+      }
   }, [activeId, topic_id]);
-
-
 
   async function getPostsByTopicId(id, pageSize = 9){
     try {
@@ -73,26 +70,38 @@ function TopicPage () {
     }
   };
 
-
-  const formatDate = (isoDate) => {
-    const dateObj = new Date(isoDate);
-    const formattedDate = dateObj.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    });
-    return formattedDate;
-  }
-
   useEffect(() => {
-    async function fetchData() {
-      let activeUsername = await getUsernameById(activeId);
-      setloggedInUsername(activeUsername);
-      }
+      async function fetchData() {
+          if (activeId) {
+              let activeUsername = await getUsernameById(activeId);
+              setloggedInUsername(activeUsername);
+          }
       GetTopicById();
       addUserView();
+      }
+      async function fetchDataTwo() {
+          if (topic.forumId) {
+              let tempForum = await GetForumById(topic.forumId);
+              setForum(tempForum);
+          }
+          if (topic.forumId) {
+              let tempAuthor = await getUsernameById(topic.userId);
+              setAuthor(tempAuthor);
+          }
+      }
       fetchData();
-  }, [GetTopicById, addUserView, activeId]);
+      fetchDataTwo();
+  }, [GetTopicById, addUserView, activeId, topic.forumId, topic.userId]);
+
+  const formatDate = (isoDate) => {
+      const dateObj = new Date(isoDate);
+      const formattedDate = dateObj.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+      });
+      return formattedDate;
+  }
 
   if (topic === null){
     return <div>Loading forum ...</div>
@@ -102,15 +111,10 @@ function TopicPage () {
     <div className="topic-page">
       <TopicHeader
         title={topic.title}
-        userId={topic.userId}
-        forumId={topic.forumId}
         dateCreated={topic.dateCreated}
         formatDate={formatDate}
         topicAuthor={topicAuthor}
-        getUsernameById={getUsernameById}
-        setAuthor={setAuthor}
         forum={forum}
-        GetForumById={GetForumById}
       />
       <TopicButtons 
           pageType="topic"
