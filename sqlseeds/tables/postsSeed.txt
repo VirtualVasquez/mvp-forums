@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS public.posts
     user_id integer,
     text text COLLATE pg_catalog."default",
     date_created timestamp without time zone NOT NULL DEFAULT now(),
+    forum_id integer,
     CONSTRAINT posts_pkey PRIMARY KEY (id),
     CONSTRAINT posts_topic_id_fkey FOREIGN KEY (topic_id)
         REFERENCES public.topics (id) MATCH SIMPLE
